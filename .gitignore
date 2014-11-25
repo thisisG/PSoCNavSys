@@ -6,6 +6,21 @@
 *.user
 *.sln.docstates
 
+# PSoC Creator specific files and directories
+.DS_Store
+*.cywrk.*
+*.cyprj.*
+*.cycdx
+*.cyfit
+*.rpt
+*.uvopt
+*.uvproj
+*_timing.html
+*/*.cydsn/codegentemp
+*/*.cydsn/DP8051
+*/*.cydsn/Generated_Source/PSoC5/*
+!*/*.cydsn/Generated_Source/PSoC5/*.hex
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -185,7 +200,8 @@ FakesAssemblies/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
