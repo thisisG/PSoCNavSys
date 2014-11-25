@@ -5,9 +5,9 @@
 
 int main()
 {
-    unsigned32Degree allBits = 4294967295;
-
-    // Test for longDegreeToFloat()
+    /*
+    Test for longDegreeToFloat()
+    */
     // First create a sequence of bits of known value and compare the calculated value to hand calculated values
     // Define the degrees we want to test with
 
@@ -31,7 +31,7 @@ int main()
 
     // Load the set into coordinate ADS
     
-    struct Coordinate coordA;
+    struct Coordinate coordA, coordB;
 
     coordA.dLatitude = degA;
     coordA.mLatitude = minA;
@@ -64,5 +64,57 @@ int main()
     printf("latitudeFromCoordinate(&coordArray[65]) = %6f\n", latitudeFromCoordinate(&coordArray[65]));
     printf("latitudeFromCoordinate(&coordArray[99]) = %6f\n", latitudeFromCoordinate(&coordArray[99]));
 
+    /*
+    Test the toDegree() and toRadian() functions
+    */
+    
+    floatDegree inDegA = 213.7453;
+    floatDegree inRadA = toRadian(&inDegA);
+
+    printf("%f in deg = %f in rad\n", inDegA, inRadA);
+
+    floatDegree inDegB = 180;
+    floatDegree inRadB = toRadian(&inDegB);
+
+    printf("%f in deg = %f in rad\n", inDegB, inRadB);
+
+    floatDegree inDegC = 0;
+    floatDegree inRadC = toRadian(&inDegC);
+
+    printf("%f in deg = %f in rad\n", inDegC, inRadC);
+
+    floatDegree inDegD = 360;
+    floatDegree inRadD = toRadian(&inDegD);
+
+    printf("%f in deg = %f in rad\n", inDegD, inRadD);
+
+    // Test great circle path function
+
+    // CoordA should be lat 36d37'26.65"N, lon 33d38'6.48"W
+    // Expecting a length around 1750512 m for this set
+    // dlatA = 36, mlatA = 37.4442 or dlatA = 36.62407
+    // dlonA = -33, mlonA = 38.1080 or dlongA = -33.63513
+    coordA.dLatitude = 36;
+    coordA.mLatitude = 374442;
+    coordA.dLongitude = -33;
+    coordA.mLongitude = 381080;
+
+    // CoordB should be lat 23d56'25.70"N, lon 44d31'18.55"W
+    // dlatB = 23, mlatA = 56.4283 or dlatB = 23.94047167
+    // dlonB = -44, mlonA = 31.3091 or dlongB = -44.5218183333
+    coordB.dLatitude = 23;
+    coordB.mLatitude = 564283;
+    coordB.dLongitude = -44;
+    coordB.mLongitude = 313091;
+
+    float distanceAB = distanceCirclePath(&coordA, &coordB);
+
+    printf("distance from coordA to coordB is %f\n", distanceAB);
+
+    /*
+    Random test area
+    */
+    //floatDegree testRadianFromFunction = distanceCirclePath(&coordA, &coordA);
+    //printf("expecting latitude, should be 32.956146 distanceCirclePath(&coordA, &coordA) = %f\n", testRadianFromFunction);
     return 0;
 }
