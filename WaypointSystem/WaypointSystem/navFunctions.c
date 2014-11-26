@@ -31,12 +31,12 @@ floatDegree longitudeFromCoordinate(const struct Coordinate *thisCoord)
 
 floatDegree toDegree(const floatDegree *rAngle)
 {
-    return ((*rAngle)*180) / pi;
+    return (floatDegree)(((*rAngle) * 180) / pi);
 }
 
 floatDegree toRadian(const floatDegree *dAngle)
 {
-    return ((*dAngle)*pi) / 180;
+    return (floatDegree)(((*dAngle)*pi) / 180);
 }
 
 floatDegree haversine(const floatDegree *rAngle)
@@ -75,9 +75,69 @@ floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coo
     // Find tempValue = deltaLon = rLonA - rLonB
     tempValue = rLonB - rLonA;
     // Calculate cos(rLatA)*cos(rLatB)*haversine(deltaLong) and add to rHaversine
-    rHaversine = rHaversine + cos(rLatA)*cos(rLatB)*haversine(&tempValue);
+    rHaversine = rHaversine + (floatDegree)(cos(rLatA)*cos(rLatB))*haversine(&tempValue);
 
     // Compute inverse haversine, multiply by radius of earth and return the greater circle path value
-    rHaversine = earthRadiusKM * inverseHaversine(&rHaversine);
+    rHaversine = (floatDegree)earthRadiusKM * inverseHaversine(&rHaversine);
     return rHaversine;
+}
+
+floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct Coordinate *coordB)
+{
+    // Get latitudeA in radians
+    floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
+    floatDegree rLatA = toRadian(&tempValue);
+
+    // Get latitudeB in radians
+    tempValue = longitudeFromCoordinate(&(*coordA));
+    floatDegree rLonA = toRadian(&tempValue);
+
+    // Get longitudeB in radians
+    tempValue = latitudeFromCoordinate(&(*coordB));
+    floatDegree rLatB = toRadian(&tempValue);
+
+    // Get longitudeA in radians
+    tempValue = longitudeFromCoordinate(&(*coordB));
+    floatDegree rLonB = toRadian(&tempValue);
+
+    // Find tempValue = deltaLon = rLonA - rLonB
+    tempValue = rLonB - rLonA;
+    // Calculate part of the inner product of law of spherical cosines and store in tempValue
+    tempValue = (floatDegree)(cos(rLatA)*cos(rLatB)*cos(tempValue));
+
+    // Calculate rest of inner product of law of spherical cosines and store in tempValue
+    tempValue = tempValue + (floatDegree)(sin(rLatA)*sin(rLatB));
+
+    // Return distance as a function of inverse cos() of tempValue times radius of earth
+    return (floatDegree)earthRadiusKM * (floatDegree)acos(tempValue);
+}
+
+floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coordinate *coordB)
+{
+    // Get latitudeA in radians
+    floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
+    floatDegree rLatA = toRadian(&tempValue);
+
+    // Get latitudeB in radians
+    tempValue = longitudeFromCoordinate(&(*coordA));
+    floatDegree rLonA = toRadian(&tempValue);
+
+    // Get longitudeB in radians
+    tempValue = latitudeFromCoordinate(&(*coordB));
+    floatDegree rLatB = toRadian(&tempValue);
+
+    // Get longitudeA in radians
+    tempValue = longitudeFromCoordinate(&(*coordB));
+    floatDegree rLonB = toRadian(&tempValue);
+    
+    // Find tempValue = avgLat = (rLatA + rLatB)/2
+    tempValue = (rLatA + rLatB) / 2;
+    // Calculate x = deltaLon * cos(avgLat) for equirectangular approximation
+    tempValue = (rLonA - rLonB) * (floatDegree)cos(tempValue);
+
+    // Calculate y = deltaLat = rLatA - rLatB for equirectangular approximation
+    floatDegree rY = (rLatA - rLatB);
+
+    // Return earth radius * sqrt(x^2+y^2)
+    return (floatDegree)earthRadiusKM * (floatDegree)sqrt(pow(tempValue, 2) + pow(rY, 2));
 }

@@ -88,7 +88,9 @@ int main()
 
     printf("%f in deg = %f in rad\n", inDegD, inRadD);
 
-    // Test great circle path function
+    /*
+    Test great circle path function
+    */
 
     // CoordA should be lat 36d37'26.65"N, lon 33d38'6.48"W
     // Expecting a length around 1750512 m for this set
@@ -109,8 +111,22 @@ int main()
 
     float distanceAB = distanceCirclePath(&coordA, &coordB);
 
-    printf("distance from coordA to coordB is %f\n", distanceAB);
+    printf("haversine distance from coordA to coordB is %f\n", distanceAB);
 
+    /*
+    Test law of spherical cosines function
+    */
+
+    distanceAB = distanceSphereCosine(&coordA, &coordB);
+
+    printf("spherical cosine distance from coordA to coordB is %f\n", distanceAB);
+
+    /*
+    Test equirectangular approximation function
+    */
+    distanceAB = distanceEquiRect(&coordA, &coordB);
+
+    printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
     /*
     Random test area
     */

@@ -36,8 +36,8 @@ remarks:
 // Standard library includes
 #include <math.h> // Need atan2(), cos(), sin()
 
-static const float pi = 3.141592;
-static const float earthRadiusKM = 6372.8; // Average earth radius in metres
+static const double pi = 3.141592;
+static const double earthRadiusKM = 6372.8; // Average earth radius in metres
 
 /* longDegreeToFloat();
 input:  
@@ -74,13 +74,13 @@ remarks:
 */
 floatDegree longitudeFromCoordinate(const struct Coordinate *thisCoord); // OK
 
-floatDegree toDegree(const floatDegree *rAngle); // TO TEST
-floatDegree toRadian(const floatDegree *dAngle); // TO TEST
+floatDegree toDegree(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
+floatDegree toRadian(const floatDegree *dAngle); // TO TEST WITH BORDERLINE VALUES
 
 floatDegree haversine(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
 floatDegree inverseHaversine(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
 
-/* longitudeFromCoordinate();
+/* distanceCirclePath();
 input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
@@ -90,5 +90,27 @@ remarks:
     Returns the great circle distance between two coordinate points assuming an average earth radius of 6372.8 km.
 */
 floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
+
+/* distanceSphereCosine();
+input:
+    (reference) Coordinate coordA
+    (reference) Coordinate coordB
+output:
+    (value) floatDegree distanceInKm
+remarks:
+    Returns the spherical cosine law distance between two coordinate points assuming an average earth radius of 6372.8 km.
+*/
+floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
+
+/* distanceEquiRect();
+input:
+    (reference) Coordinate coordA
+    (reference) Coordinate coordB
+output:
+    (value) floatDegree distanceInKm
+remarks:
+    Returns the equirectangular approximation of distance between two coordinate points assuming an average earth radius of 6372.8 km.
+*/
+floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
 
 #endif
