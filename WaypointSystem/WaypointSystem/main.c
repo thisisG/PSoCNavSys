@@ -127,6 +127,7 @@ int main()
     distanceAB = distanceEquiRect(&coordA, &coordB);
 
     printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
+
     /*
     Random test area
     */

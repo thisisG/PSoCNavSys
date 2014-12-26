@@ -13,6 +13,7 @@ typedef int32_t int32;
 typedef uint32_t uint32;
 #endif
 
+// Change this type to double if additional precision is required
 typedef float floatDegree;
 
 typedef int8 signed8Degree;
@@ -26,6 +27,14 @@ typedef uint32 unsigned32Degree;
 
 typedef int8 coordinateCode;
 
+enum NavStates
+{
+    Uninitialized = 0,
+    SearchingForNextWp,
+    HeadingToWp,
+    ReachedWp
+};
+
 struct Coordinate
 {
     signed16Degree dLongitude;
@@ -34,6 +43,14 @@ struct Coordinate
     signed32Degree mLatitude;
 
     coordinateCode priority;
+};
+
+struct NavCore
+{
+    struct Coordinate currentPosition;
+    struct Coordinate nextWaypoint;
+    struct Coordinate waypointStack[10];
+    enum NavStates CurrentState;
 };
 
 #endif

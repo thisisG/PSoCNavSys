@@ -1,0 +1,15 @@
+function [ angSep ] = Haversine( latA, lonA, latB, lonB )
+%Haversine function that returns the angular separation between two
+%coordinate sets. The input should be in degrees.
+%   Detailed explanation goes here
+
+latA = (latA*pi/180);
+latA = (latA*pi/180);
+latB = (latB*pi/180);
+
+
+deltaLat = latA - latB;
+
+
+end
+
