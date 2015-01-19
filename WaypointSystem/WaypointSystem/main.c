@@ -118,6 +118,7 @@ int main()
     distanceAB = distanceEquiRect(&coordA, &coordB);
     printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
 
+<<<<<<< HEAD
     /*
     Test the creation of a NavState and its initialization
     */
@@ -127,6 +128,8 @@ int main()
     myNavState.currentLocation = coordA;
     std::cout << "New latitude in myNavState.currentLocation: " << myNavState.currentLocation.dLatitude << std::endl;
 
+=======
+>>>>>>> origin/master
     /*
     Random test area
     */
