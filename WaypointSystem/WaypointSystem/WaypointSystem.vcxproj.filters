@@ -20,18 +20,21 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="navFunctions.c">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="navfunctions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="navtypes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="navFunctions.h">
+    <ClInclude Include="navfunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="navTypes.h">
+    <ClInclude Include="navtypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

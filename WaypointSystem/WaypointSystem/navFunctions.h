@@ -31,18 +31,22 @@ remarks:
 #define NAVFUNCTIONS_H
 
 // Local includes
-#include "navTypes.h"
+#include "navtypes.h"
 
 // Standard library includes
 #include <math.h> // Need atan2(), cos(), sin()
 
-static const double pi = 3.141592;
-static const double earthRadiusKM = 6372.8; // Average earth radius in metres
+// Define M_PI if not defined previously
+#ifndef M_PI 
+#define M_PI 3.1415926535 
+#endif
+
+static const double earthRadiusM = 6371008.7714; // Average earth radius in metres
 
 /* longDegreeToFloat();
 input:  
-    (reference) signed16Degree degree
-    (reference) signed32Degree minutes
+    signed16Degree degree
+    signed32Degree minutes
 output: 
     (value) floatDegree fracDegree
 remarks: 
@@ -50,7 +54,7 @@ remarks:
     Works for both positive and negative degree.
     Note that the value calculated could be both degrees or radians, so care should be taken to convert the results to the appropriate form before performing mathematical operations on the result.
 */
-floatDegree longDegreeToFloat(const signed16Degree *degree, const signed32Degree *minutes); // OK
+floatDegree longDegreeToFloat(const signed16Degree degree, const signed32Degree minutes); // OK
 
 /* latitudeFromCoordinate();
 input:
@@ -74,20 +78,20 @@ remarks:
 */
 floatDegree longitudeFromCoordinate(const struct Coordinate *thisCoord); // OK
 
-floatDegree toDegree(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
-floatDegree toRadian(const floatDegree *dAngle); // TO TEST WITH BORDERLINE VALUES
+floatDegree toDegree(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
+floatDegree toRadian(const floatDegree dAngle); // TO TEST WITH BORDERLINE VALUES
 
-floatDegree haversine(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
-floatDegree inverseHaversine(const floatDegree *rAngle); // TO TEST WITH BORDERLINE VALUES
+floatDegree haversine(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
+floatDegree inverseHaversine(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
 
 /* distanceCirclePath();
 input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
 output:
-    (value) floatDegree distanceInKm
+    (value) floatDegree distanceInM
 remarks:
-    Returns the great circle distance between two coordinate points assuming an average earth radius of 6372.8 km.
+    Returns the great circle distance between two coordinate points assuming an average earth radius
 */
 floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
 
@@ -98,7 +102,7 @@ input:
 output:
     (value) floatDegree distanceInKm
 remarks:
-    Returns the spherical cosine law distance between two coordinate points assuming an average earth radius of 6372.8 km.
+    Returns the spherical cosine law distance between two coordinate points assuming an average earth radius
 */
 floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
 
@@ -107,9 +111,9 @@ input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
 output:
-    (value) floatDegree distanceInKm
+    (value) floatDegree distanceInM
 remarks:
-    Returns the equirectangular approximation of distance between two coordinate points assuming an average earth radius of 6372.8 km.
+    Returns the equirectangular approximation of distance between two coordinate points assuming an average earth radius
 */
 floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
 

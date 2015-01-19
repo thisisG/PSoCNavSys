@@ -10,16 +10,18 @@
  * ========================================
 */
 #include <project.h>
-#include "navFunctions.h"
-
+#include "navtypes.h"
+coordinateCode
 int main()
 {
+    // Create an instance of NavState and initialize all members to 0
+    struct NavState myNavState = {0,0,0,0,0,0,0,0,0,0,0,0};
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     /* CyGlobalIntEnable; */ /* Uncomment this line to enable global interrupts. */
     for(;;)
     {
-        /* Place your application code here. */
+        
     }
 }
 

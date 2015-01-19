@@ -1,31 +1,33 @@
 #ifndef NAVTYPES_H
 #define NAVTYPES_H
-
-#ifdef _MSC_BUILD // For coding in VS where the types below are undefined
+    
 #include <stdint.h>
-typedef int8_t int8;
-typedef uint8_t uint8;
+    
+#ifdef _MSC_BUILD // For coding in VS where the types below are undefined
 
-typedef int16_t int16;
-typedef uint16_t uint16;
-
-typedef int32_t int32;
-typedef uint32_t uint32;
 #endif
 
 typedef float floatDegree;
 
-typedef int8 signed8Degree;
-typedef uint8 unsigned8Degree;
+typedef int8_t signed8Degree;
+typedef uint8_t unsigned8Degree;
 
-typedef int16 signed16Degree;
-typedef uint16 unsigned16Degree;
+typedef int16_t signed16Degree;
+typedef uint16_t unsigned16Degree;
 
-typedef int32 signed32Degree;
-typedef uint32 unsigned32Degree;
+typedef int32_t signed32Degree;
+typedef uint32_t unsigned32Degree;
 
-typedef int8 coordinateCode;
+typedef int8_t coordinateCode;
 
+/* STRUCT COORDINATE
+input:
+    NA
+output:
+    NA
+remarks:
+    ADS that contain coordinate information.
+*/
 struct Coordinate
 {
     signed16Degree dLongitude;
@@ -35,5 +37,22 @@ struct Coordinate
 
     coordinateCode priority;
 };
+
+/* STRUCT NAVSTATE
+input:
+    NA
+output:
+    NA
+remarks:
+    ADS that contain the navigation status of the system. For a single platform there should only one instance of this ADS which contains the navigation state and variables.
+*/
+struct NavState
+{
+    struct Coordinate currentLocation;
+    struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
+    floatDegree dCurrentHeading;
+    floatDegree dOverallHeading;
+};
+
 
 #endif

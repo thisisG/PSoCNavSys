@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <CompileAs>CompileAsC</CompileAs>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -83,11 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
-    <ClCompile Include="navFunctions.c" />
+    <ClCompile Include="navfunctions.c" />
+    <ClCompile Include="navtypes.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="navFunctions.h" />
-    <ClInclude Include="navTypes.h" />
+    <ClInclude Include="navfunctions.h" />
+    <ClInclude Include="navtypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
