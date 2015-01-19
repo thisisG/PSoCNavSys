@@ -21,7 +21,6 @@ typedef uint32_t unsigned32Degree;
 
 typedef int8_t coordinateCode;
 
-<<<<<<< HEAD
 /* STRUCT COORDINATE
 input:
     NA
@@ -30,16 +29,6 @@ output:
 remarks:
     ADS that contain coordinate information.
 */
-=======
-enum NavStates
-{
-    Uninitialized = 0,
-    SearchingForNextWp,
-    HeadingToWp,
-    ReachedWp
-};
-
->>>>>>> origin/master
 struct Coordinate
 {
     signed16Degree dLongitude;
@@ -50,7 +39,6 @@ struct Coordinate
     coordinateCode priority;
 };
 
-<<<<<<< HEAD
 /* STRUCT NAVSTATE
 input:
     NA
@@ -66,16 +54,4 @@ struct NavState
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
 };
-
-
-=======
-struct NavCore
-{
-    struct Coordinate currentPosition;
-    struct Coordinate nextWaypoint;
-    struct Coordinate waypointStack[10];
-    enum NavStates CurrentState;
-};
-
->>>>>>> origin/master
 #endif
