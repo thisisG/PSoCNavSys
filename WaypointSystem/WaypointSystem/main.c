@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include "csv.h"
 #ifdef __cplusplus
 extern "C"
 {
@@ -65,6 +66,7 @@ int main()
     printf("latitudeFromCoordinate(&coordArray[65]) = %6f\n", latitudeFromCoordinate(&coordArray[65]));
     printf("latitudeFromCoordinate(&coordArray[99]) = %6f\n", latitudeFromCoordinate(&coordArray[99]));
 
+    std::cout << std::endl;
     /*
     Test the toDegree() and toRadian() functions
     */
@@ -84,6 +86,7 @@ int main()
     floatDegree inRadD = toRadian(inDegD);
     printf("%f in deg = %f in rad\n", inDegD, inRadD);
 
+    std::cout << std::endl;
     /*
     Test great circle path function
     */
@@ -107,18 +110,21 @@ int main()
     float distanceAB = distanceCirclePath(&coordA, &coordB);
     printf("haversine distance from coordA to coordB is %f\n", distanceAB);
 
+    std::cout << std::endl;
     /*
     Test law of spherical cosines function
     */
     distanceAB = distanceSphereCosine(&coordA, &coordB);
     printf("spherical cosine distance from coordA to coordB is %f\n", distanceAB);
 
+    std::cout << std::endl;
     /*
     Test equirectangular approximation function
     */
     distanceAB = distanceEquiRect(&coordA, &coordB);
     printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
 
+    std::cout << std::endl;
     /*
     Test the creation of a NavState and its initialization
     */
@@ -128,10 +134,96 @@ int main()
     myNavState.currentLocation = coordA;
     std::cout << "New latitude in myNavState.currentLocation: " << myNavState.currentLocation.dLatitude << std::endl;
 
+    std::cout << std::endl;
+    /*
+    Test CSV reader with csv.h in exe directory
+    */
+    io::CSVReader<9> in("csvtest.csv");
+    std::cout << "Loaded file" << std::endl;
+
+    // Variables to contain read data and count
+    std::string csvType, csvName, csvDesc;
+    int csvLineCount = 0, wpCount = 0, wpDivisor = 10;
+    float csvLat = 0, csvLon = 0, csvAlt = 0, csvCourse = 0, csvTotDistKm = 0, csvIntervalDistM = 0;
+    
+    // Create array to hold all coordinates and a buffer structure
+    std::vector<Coordinate> coordVector;
+    std::vector<Coordinate> wpVector;
+    Coordinate csvCoordBuffer;
+    // Check if the thing is empty
+    std::cout << "Size of coordVector at creation: " << int(coordVector.size()) << std::endl;
+
+    floatDegree tempFloatDeg = 0;
+    signed16Degree tempSig16Deg = 0;
+    signed32Degree tempSig32Deg = 0;
+    while (in.read_row(csvType, csvLat, csvLon, csvAlt, csvCourse, csvTotDistKm, csvIntervalDistM, csvName, csvDesc))
+    {
+        tempSig16Deg = csvLat;
+        csvCoordBuffer.dLatitude = tempSig16Deg;
+        tempFloatDeg = csvLat - tempSig16Deg;
+        tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
+        csvCoordBuffer.mLatitude = tempSig32Deg;
+
+        tempSig16Deg = csvLon;
+        csvCoordBuffer.dLongitude = tempSig16Deg;
+        tempFloatDeg = csvLon - tempSig16Deg;
+        tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
+        csvCoordBuffer.mLongitude = tempSig32Deg;
+
+        if (csvLineCount == 0)
+        {
+            std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, " << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, " << csvCoordBuffer.mLongitude << std::endl;
+        }
+
+        if (csvLineCount%wpDivisor == 0)
+        {
+            ++wpCount;
+            wpVector.push_back(csvCoordBuffer);
+        }
+
+        ++csvLineCount;
+        coordVector.push_back(csvCoordBuffer);
+    }
+
+    // How many csv entries did we have?
+    std::cout << "Number of entries in csv file: " << csvLineCount << std::endl;
+    // How many WP do we have?
+    std::cout << "Number of wps: " << wpCount << std::endl;
+    // Check if the coordVector is filled and equal to entries
+    std::cout << "Size of coordVector at end: " << int(coordVector.size()) << std::endl;
+    // Check if the wpVector is filled and equal to wps
+    std::cout << "Size of wpVector at end: " << int(wpVector.size()) << std::endl;
+
+    // Check if the coordVector contains data
+    std::cout << "Latitude for first coordVector entry: " << coordVector.front().dLatitude << std::endl;
+    std::cout << "Latitude for last coordVector entry: " << coordVector.back().dLatitude << std::endl;
+
+    // Check if the wpVector contains data
+    std::cout << "Latitude for first wpVector entry: " << wpVector.front().dLatitude << std::endl;
+    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude << std::endl;
+
+    // Check if the last WP is same as last coord, if not increment wpCount and add last coord as an extra WP
+    if (wpVector.back().dLatitude != coordVector.back().dLatitude)
+    {
+        ++wpCount;
+        wpVector.push_back(coordVector.back());
+    }
+
+    // Check that last value for vectors is the same
+    std::cout << "Latitude for last coordVector entry: " << coordVector.back().dLatitude << std::endl;
+    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude << std::endl;
+
+    // How many WP do we have?
+    std::cout << "Number of wps updated: " << wpCount << std::endl;
+    // Check if the wpVector is filled and equal to wps
+    std::cout << "Size of wpVector at end updated: " << int(wpVector.size()) << std::endl;
+
     /*
     Random test area
     */
     //floatDegree testRadianFromFunction = distanceCirclePath(&coordA, &coordA);
     //printf("expecting latitude, should be 32.956146 distanceCirclePath(&coordA, &coordA) = %f\n", testRadianFromFunction);
+
+    //std::cout << sizeof(Coordinate) << std::endl;
     return 0;
 }
