@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "csv.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -8,10 +9,78 @@ extern "C"
 
 #include "navfunctions.h"
 #include "navtypes.h"
+#include "./nmea/nmea.h"
 
 #ifdef __cplusplus
 }
 #endif
+
+void csvDataToCoord(const float csvLat, const float csvLon, Coordinate &coord)
+{
+    floatDegree tempFloatDeg = 0;
+    signed16Degree tempSig16Deg = 0;
+    signed32Degree tempSig32Deg = 0;
+
+    tempSig16Deg = csvLat;
+    coord.dLatitude = tempSig16Deg;
+    tempFloatDeg = csvLat - tempSig16Deg;
+    tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
+    coord.mLatitude = tempSig32Deg;
+
+    tempSig16Deg = csvLon;
+    coord.dLongitude = tempSig16Deg;
+    tempFloatDeg = csvLon - tempSig16Deg;
+    tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
+    coord.mLongitude = tempSig32Deg;
+}
+
+floatDegree longDegreeToNmeaFloat(const signed16Degree degree, const signed32Degree minutes)
+{
+    floatDegree fracDeg = 100.0*(floatDegree)(degree);
+    floatDegree fracMin = (((floatDegree)(minutes)) / 10000);
+
+    // The fractional degrees from the minutes should conserve the sign of the degrees. 
+    // If the degrees have negative sign subtract the minutes, if not add the minutes.
+    if (fracDeg < 0)
+    {
+        fracDeg = fracDeg - fracMin;
+    }
+    else
+    {
+        fracDeg = fracDeg + fracMin;
+    }
+
+    return fracDeg;
+}
+
+floatDegree nmeaLatitudeFromCoord(const struct Coordinate *thisCoord)
+{
+    {
+        return longDegreeToNmeaFloat((thisCoord->dLatitude), (thisCoord->mLatitude));
+    }
+}
+
+floatDegree nmeaLongitudeFromCoord(const struct Coordinate *thisCoord)
+{
+    {
+        return longDegreeToNmeaFloat((thisCoord->dLongitude), (thisCoord->mLongitude));
+    }
+}
+
+void coordToNmeaInfo(Coordinate &i_coord, nmeaINFO &o_nmeaInfo)
+{
+    nmea_zero_INFO(&o_nmeaInfo);
+
+    o_nmeaInfo.lat = nmeaLatitudeFromCoord(&i_coord);
+    o_nmeaInfo.lon = nmeaLongitudeFromCoord(&i_coord);
+    o_nmeaInfo.sig = 3;
+    o_nmeaInfo.fix = 3;
+    o_nmeaInfo.speed = 1 * NMEA_TUS_MS;
+    o_nmeaInfo.elv = 4.7;
+    o_nmeaInfo.satinfo.inuse = 1;
+    o_nmeaInfo.satinfo.inview = 1;
+}
+
 
 int main()
 {
@@ -67,6 +136,7 @@ int main()
     printf("latitudeFromCoordinate(&coordArray[99]) = %6f\n", latitudeFromCoordinate(&coordArray[99]));
 
     std::cout << std::endl;
+
     /*
     Test the toDegree() and toRadian() functions
     */
@@ -87,6 +157,7 @@ int main()
     printf("%f in deg = %f in rad\n", inDegD, inRadD);
 
     std::cout << std::endl;
+
     /*
     Test great circle path function
     */
@@ -111,6 +182,7 @@ int main()
     printf("haversine distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
+
     /*
     Test law of spherical cosines function
     */
@@ -118,6 +190,7 @@ int main()
     printf("spherical cosine distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
+
     /*
     Test equirectangular approximation function
     */
@@ -125,6 +198,7 @@ int main()
     printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
+
     /*
     Test the creation of a NavState and its initialization
     */
@@ -135,6 +209,7 @@ int main()
     std::cout << "New latitude in myNavState.currentLocation: " << myNavState.currentLocation.dLatitude << std::endl;
 
     std::cout << std::endl;
+
     /*
     Test CSV reader with csv.h in exe directory
     */
@@ -158,21 +233,11 @@ int main()
     signed32Degree tempSig32Deg = 0;
     while (in.read_row(csvType, csvLat, csvLon, csvAlt, csvCourse, csvTotDistKm, csvIntervalDistM, csvName, csvDesc))
     {
-        tempSig16Deg = csvLat;
-        csvCoordBuffer.dLatitude = tempSig16Deg;
-        tempFloatDeg = csvLat - tempSig16Deg;
-        tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
-        csvCoordBuffer.mLatitude = tempSig32Deg;
-
-        tempSig16Deg = csvLon;
-        csvCoordBuffer.dLongitude = tempSig16Deg;
-        tempFloatDeg = csvLon - tempSig16Deg;
-        tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
-        csvCoordBuffer.mLongitude = tempSig32Deg;
+        csvDataToCoord(csvLat, csvLon, csvCoordBuffer);
 
         if (csvLineCount == 0)
         {
-            std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, " << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, " << csvCoordBuffer.mLongitude << std::endl;
+            std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, " << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, " << csvCoordBuffer.mLongitude << "m/" << std::endl;
         }
 
         if (csvLineCount%wpDivisor == 0)
@@ -217,6 +282,35 @@ int main()
     std::cout << "Number of wps updated: " << wpCount << std::endl;
     // Check if the wpVector is filled and equal to wps
     std::cout << "Size of wpVector at end updated: " << int(wpVector.size()) << std::endl;
+
+    /*
+    Test Coord to GPS string function
+    */
+
+    const int gpsStringBufferSize = 1024;
+    char gpsStringBuffer[gpsStringBufferSize] = "";
+    // Check that string is empty
+    std::cout << "empty gpsString: " << gpsStringBuffer << std::endl;
+
+    // Create structures for testing
+    nmeaINFO nmeaBuffer;
+    Coordinate coordBuffer = coordVector[0];
+
+    // Load test data into NMEA buffer
+    coordToNmeaInfo(coordBuffer, nmeaBuffer);
+
+    // Generate a string from buffer
+    int gpsStringLength = 0;
+
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize, &nmeaBuffer, GPGGA);
+
+    gpsStringBuffer[gpsStringLength] = 0;
+    std::cout << "Test GPS strings: \n" << gpsStringBuffer;
+    
+    // Compare to data stored in coordBuffer
+    std::cout << "Latitude for coordBuffer: " << coordBuffer.dLatitude << "d" << coordBuffer.mLatitude << "m" << std::endl;
+    std::cout << "Longitude for coordBuffer: " << coordBuffer.dLongitude << "d" << coordBuffer.mLongitude << "m" << std::endl;
+    std::cout << "Longitude for coordBuffer in float: " << longDegreeToNmeaFloat(coordBuffer.dLongitude, coordBuffer.mLongitude) << std::endl;
 
     /*
     Random test area

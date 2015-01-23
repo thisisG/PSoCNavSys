@@ -54,4 +54,13 @@ struct NavState
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
 };
+
+/* Try this format in psoc creator
+
+typedef struct NavState Navstate2;
+
+float getHeading(Navstate2 thisnavstate);
+
+*/
+
 #endif
