@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaypointSystem", "WaypointSystem\WaypointSystem.vcxproj", "{BBDFF6C0-B166-4A18-9E0F-980DCBE1088F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NavTester", "NavTester\NavTester.vcxproj", "{BB46A3AC-050C-418B-97E3-1B7E3A9C1EF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{BBDFF6C0-B166-4A18-9E0F-980DCBE1088F}.Debug|Win32.Build.0 = Debug|Win32
 		{BBDFF6C0-B166-4A18-9E0F-980DCBE1088F}.Release|Win32.ActiveCfg = Release|Win32
 		{BBDFF6C0-B166-4A18-9E0F-980DCBE1088F}.Release|Win32.Build.0 = Release|Win32
+		{BB46A3AC-050C-418B-97E3-1B7E3A9C1EF6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB46A3AC-050C-418B-97E3-1B7E3A9C1EF6}.Debug|Win32.Build.0 = Debug|Win32
+		{BB46A3AC-050C-418B-97E3-1B7E3A9C1EF6}.Release|Win32.ActiveCfg = Release|Win32
+		{BB46A3AC-050C-418B-97E3-1B7E3A9C1EF6}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
