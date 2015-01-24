@@ -13,6 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\NMEA">
+      <UniqueIdentifier>{286dae00-4308-4a00-90cd-b92788d1f35b}</UniqueIdentifier>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files\NMEA">
+      <UniqueIdentifier>{f5c1e79e-9245-460a-815f-bf6ad27846ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WaypointSystem.rc">
@@ -35,6 +42,36 @@
     <ClCompile Include="nmeafunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nmea\context.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\generate.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\generator.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\gmath.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\info.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\parse.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\parser.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\sentence.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\time.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="nmea\tok.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
@@ -51,6 +88,45 @@
     </ClInclude>
     <ClInclude Include="nmeafunctions.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\config.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\context.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\generate.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\generator.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\gmath.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\info.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\nmea.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\time.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\tok.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\units.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\sentence.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\parser.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="nmea\parse.h">
+      <Filter>Header Files\NMEA</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

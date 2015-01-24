@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include "csv.h"
 
 #ifdef __cplusplus
@@ -22,13 +23,13 @@ void csvDataToCoord(const float csvLat, const float csvLon, Coordinate &coord)
     signed16Degree tempSig16Deg = 0;
     signed32Degree tempSig32Deg = 0;
 
-    tempSig16Deg = csvLat;
+    tempSig16Deg = (signed16Degree)csvLat;
     coord.dLatitude = tempSig16Deg;
     tempFloatDeg = csvLat - tempSig16Deg;
     tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
     coord.mLatitude = tempSig32Deg;
 
-    tempSig16Deg = csvLon;
+    tempSig16Deg = (signed16Degree)csvLon;
     coord.dLongitude = tempSig16Deg;
     tempFloatDeg = csvLon - tempSig16Deg;
     tempSig32Deg = (signed32Degree)(tempFloatDeg * 600000);
@@ -204,7 +205,7 @@ int main()
 
         if (csvLineCount == 0)
         {
-            std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, " << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, " << csvCoordBuffer.mLongitude << "m/" << std::endl;
+            std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, " << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, " << csvCoordBuffer.mLongitude << "m" << std::endl;
         }
 
         if (csvLineCount%wpDivisor == 0)
@@ -249,11 +250,11 @@ int main()
     std::cout << "Number of wps updated: " << wpCount << std::endl;
     // Check if the wpVector is filled and equal to wps
     std::cout << "Size of wpVector at end updated: " << int(wpVector.size()) << std::endl;
+    std::cout << std::endl;
 
     /*
     Test Coord to GPS string function
     */
-
     const int gpsStringBufferSize = 1024;
     char gpsStringBuffer[gpsStringBufferSize] = "";
     // Check that string is empty
@@ -261,7 +262,8 @@ int main()
 
     // Create structures for testing
     nmeaINFO nmeaBuffer;
-    Coordinate coordBuffer = coordVector[0];
+    nmea_zero_INFO(&nmeaBuffer);
+    Coordinate_t coordBuffer = coordVector[0];
 
     // Load test data into NMEA buffer
     coordToNmeaInfo(coordBuffer, nmeaBuffer);
@@ -278,6 +280,21 @@ int main()
     std::cout << "Latitude for coordBuffer: " << coordBuffer.dLatitude << "d" << coordBuffer.mLatitude << "m" << std::endl;
     std::cout << "Longitude for coordBuffer: " << coordBuffer.dLongitude << "d" << coordBuffer.mLongitude << "m" << std::endl;
     std::cout << "Longitude for coordBuffer in float: " << nmeaFloatFromLongDegree(coordBuffer.dLongitude, coordBuffer.mLongitude) << std::endl;
+    std::cout << std::endl;
+
+    /*
+    Test GPS string to Coord conversion
+    */
+    nmea_zero_INFO(&nmeaBuffer);
+    nmeaGPGGA GPGGAbuffer;
+    nmea_zero_GPGGA(&GPGGAbuffer);
+
+    nmea_parse_GPGGA(&gpsStringBuffer[0], gpsStringBufferSize, &GPGGAbuffer);
+    nmea_GPGGA2info(&GPGGAbuffer, &nmeaBuffer);
+
+    std::cout << std::setprecision(8) << nmeaBuffer.lat << std::endl;
+
+    //nmea_degree2radian();
 
     /*
     Random test area
