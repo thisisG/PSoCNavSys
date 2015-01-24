@@ -10,6 +10,7 @@ extern "C"
 #include "navfunctions.h"
 #include "navtypes.h"
 #include "./nmea/nmea.h"
+#include "nmeafunctions.h"
 
 #ifdef __cplusplus
 }
@@ -34,39 +35,6 @@ void csvDataToCoord(const float csvLat, const float csvLon, Coordinate &coord)
     coord.mLongitude = tempSig32Deg;
 }
 
-floatDegree longDegreeToNmeaFloat(const signed16Degree degree, const signed32Degree minutes)
-{
-    floatDegree fracDeg = 100.0*(floatDegree)(degree);
-    floatDegree fracMin = (((floatDegree)(minutes)) / 10000);
-
-    // The fractional degrees from the minutes should conserve the sign of the degrees. 
-    // If the degrees have negative sign subtract the minutes, if not add the minutes.
-    if (fracDeg < 0)
-    {
-        fracDeg = fracDeg - fracMin;
-    }
-    else
-    {
-        fracDeg = fracDeg + fracMin;
-    }
-
-    return fracDeg;
-}
-
-floatDegree nmeaLatitudeFromCoord(const struct Coordinate *thisCoord)
-{
-    {
-        return longDegreeToNmeaFloat((thisCoord->dLatitude), (thisCoord->mLatitude));
-    }
-}
-
-floatDegree nmeaLongitudeFromCoord(const struct Coordinate *thisCoord)
-{
-    {
-        return longDegreeToNmeaFloat((thisCoord->dLongitude), (thisCoord->mLongitude));
-    }
-}
-
 void coordToNmeaInfo(Coordinate &i_coord, nmeaINFO &o_nmeaInfo)
 {
     nmea_zero_INFO(&o_nmeaInfo);
@@ -81,11 +49,10 @@ void coordToNmeaInfo(Coordinate &i_coord, nmeaINFO &o_nmeaInfo)
     o_nmeaInfo.satinfo.inview = 1;
 }
 
-
 int main()
 {
     /*
-    Test for longDegreeToFloat()
+    Test for floatFromLongDegree()
     */
     // First create a sequence of bits of known value and compare the calculated value to hand calculated values
     // Define the degrees we want to test with
@@ -99,11 +66,11 @@ int main()
     signed32Degree minA = 573688;
     signed32Degree minB = 239534;
 
-    floatDegree floatingDegreesA = longDegreeToFloat(degA, minA);
-    printf("longDegreeToFloat() = %6f\n", floatingDegreesA);
+    floatDegree floatingDegreesA = floatFromLongDegree(degA, minA);
+    printf("floatFromLongDegree() = %6f\n", floatingDegreesA);
 
-    floatDegree floatingDegreesB = longDegreeToFloat(degB, minB);
-    printf("longDegreeToFloat() = %6f\n", floatingDegreesB);
+    floatDegree floatingDegreesB = floatFromLongDegree(degB, minB);
+    printf("floatFromLongDegree() = %6f\n", floatingDegreesB);
 
     // Load the set into coordinate ADS
     struct Coordinate coordA, coordB;
@@ -310,7 +277,7 @@ int main()
     // Compare to data stored in coordBuffer
     std::cout << "Latitude for coordBuffer: " << coordBuffer.dLatitude << "d" << coordBuffer.mLatitude << "m" << std::endl;
     std::cout << "Longitude for coordBuffer: " << coordBuffer.dLongitude << "d" << coordBuffer.mLongitude << "m" << std::endl;
-    std::cout << "Longitude for coordBuffer in float: " << longDegreeToNmeaFloat(coordBuffer.dLongitude, coordBuffer.mLongitude) << std::endl;
+    std::cout << "Longitude for coordBuffer in float: " << nmeaFloatFromLongDegree(coordBuffer.dLongitude, coordBuffer.mLongitude) << std::endl;
 
     /*
     Random test area

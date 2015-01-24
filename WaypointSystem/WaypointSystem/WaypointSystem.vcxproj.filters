@@ -32,6 +32,9 @@
     <ClCompile Include="coordimport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nmeafunctions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
@@ -44,6 +47,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="csv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nmeafunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

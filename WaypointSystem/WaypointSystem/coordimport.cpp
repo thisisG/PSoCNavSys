@@ -8,7 +8,6 @@ CoordImport::CoordImport()
     entriesWpBuffer = 0;
 }
 
-
 CoordImport::~CoordImport()
 {
 

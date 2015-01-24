@@ -29,7 +29,7 @@ output:
 remarks:
     ADS that contain coordinate information.
 */
-struct Coordinate
+typedef struct Coordinate
 {
     signed16Degree dLongitude;
     signed32Degree mLongitude;
@@ -37,7 +37,7 @@ struct Coordinate
     signed32Degree mLatitude;
 
     coordinateCode priority;
-};
+}Coordinate_t;
 
 /* STRUCT NAVSTATE
 input:
@@ -47,13 +47,13 @@ output:
 remarks:
     ADS that contain the navigation status of the system. For a single platform there should only one instance of this ADS which contains the navigation state and variables.
 */
-struct NavState
+typedef struct NavState
 {
     struct Coordinate currentLocation;
     struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
-};
+}NavState_t;
 
 /* Try this format in psoc creator
 

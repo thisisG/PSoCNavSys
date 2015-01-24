@@ -87,12 +87,14 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="navfunctions.c" />
     <ClCompile Include="navtypes.c" />
+    <ClCompile Include="nmeafunctions.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="coordimport.h" />
     <ClInclude Include="csv.h" />
     <ClInclude Include="navfunctions.h" />
     <ClInclude Include="navtypes.h" />
+    <ClInclude Include="nmeafunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="csvtest.csv" />

@@ -43,7 +43,7 @@ remarks:
 
 static const double earthRadiusM = 6371008.7714; // Average earth radius in metres
 
-/* longDegreeToFloat();
+/* floatFromLongDegree();
 input:  
     signed16Degree degree
     signed32Degree minutes
@@ -54,7 +54,7 @@ remarks:
     Works for both positive and negative degree.
     Note that the value calculated could be both degrees or radians, so care should be taken to convert the results to the appropriate form before performing mathematical operations on the result.
 */
-floatDegree longDegreeToFloat(const signed16Degree degree, const signed32Degree minutes); // OK
+floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degree minutes); // OK
 
 /* latitudeFromCoordinate();
 input:
