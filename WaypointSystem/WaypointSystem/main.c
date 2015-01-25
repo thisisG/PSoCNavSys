@@ -67,7 +67,6 @@ int main()
     // Define the minutes we want to test with
     signed32Degree minA = 573688;
     signed32Degree minB = 239534;
-    floatFromLongDegree();
     floatDegree floatingDegreesA = floatFromLongDegree(degA, minA);
     printf("floatFromLongDegree() = %6f\n", floatingDegreesA);
 
