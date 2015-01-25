@@ -36,7 +36,7 @@ remarks:
 // Standard library includes
 #include <math.h> // Need atan2(), cos(), sin()
 
-// Define M_PI if not defined previously
+// Define M_PI if not defined previously, note it is a double since no f appended
 #ifndef M_PI
 #define M_PI 3.1415926535
 #endif
