@@ -1,6 +1,5 @@
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 #include "navfunctions.h"
 #ifdef __cplusplus
@@ -14,19 +13,19 @@ floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degre
     return fracDeg + fracMin;
 }
 
-floatDegree latitudeFromCoordinate(const struct Coordinate *thisCoord)
+floatDegree latitudeFromCoordinate(const struct Coordinate* thisCoord)
 {
     return floatFromLongDegree((thisCoord->dLatitude), (thisCoord->mLatitude));
 }
 
-floatDegree longitudeFromCoordinate(const struct Coordinate *thisCoord)
+floatDegree longitudeFromCoordinate(const struct Coordinate* thisCoord)
 {
     return floatFromLongDegree((thisCoord->dLongitude), (thisCoord->mLongitude));
 }
 
 floatDegree toDegree(const floatDegree rAngle)
 {
-    return (floatDegree)(((rAngle) * 180) / M_PI);
+    return (floatDegree)(((rAngle)*180) / M_PI);
 }
 
 floatDegree toRadian(const floatDegree dAngle)
@@ -41,15 +40,14 @@ floatDegree haversine(const floatDegree rAngle)
 
 floatDegree inverseHaversine(const floatDegree rAngle)
 {
-    return (floatDegree)(2 * atan2(sqrt((rAngle)), (sqrt(1 - (rAngle))) ) );
+    return (floatDegree)(2 * atan2(sqrt((rAngle)), (sqrt(1 - (rAngle)))));
 }
 
-floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coordinate *coordB)
+floatDegree distanceCirclePath(const struct Coordinate* coordA, const struct Coordinate* coordB)
 {
     // Get latitudeA in radians
     floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
     floatDegree rLatA = toRadian(tempValue);
-
     // Get latitudeB in radians
     tempValue = longitudeFromCoordinate(&(*coordA));
     floatDegree rLonA = toRadian(tempValue);
@@ -70,14 +68,14 @@ floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coo
     // Find tempValue = deltaLon = rLonA - rLonB
     tempValue = rLonB - rLonA;
     // Calculate cos(rLatA)*cos(rLatB)*haversine(deltaLong) and add to rHaversine
-    rHaversine = rHaversine + (floatDegree)(cos(rLatA)*cos(rLatB))*haversine(tempValue);
+    rHaversine = rHaversine + (floatDegree)(cos(rLatA) * cos(rLatB)) * haversine(tempValue);
 
     // Compute inverse haversine, multiply by radius of earth and return the greater circle path value
     rHaversine = (floatDegree)earthRadiusM * inverseHaversine(rHaversine);
     return rHaversine;
 }
 
-floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct Coordinate *coordB)
+floatDegree distanceSphereCosine(const struct Coordinate* coordA, const struct Coordinate* coordB)
 {
     // Get latitudeA in radians
     floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
@@ -98,16 +96,16 @@ floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct C
     // Find tempValue = deltaLon = rLonA - rLonB
     tempValue = rLonB - rLonA;
     // Calculate part of the inner product of law of spherical cosines and store in tempValue
-    tempValue = (floatDegree)(cos(rLatA)*cos(rLatB)*cos(tempValue));
+    tempValue = (floatDegree)(cos(rLatA) * cos(rLatB) * cos(tempValue));
 
     // Calculate rest of inner product of law of spherical cosines and store in tempValue
-    tempValue = tempValue + (floatDegree)(sin(rLatA)*sin(rLatB));
+    tempValue = tempValue + (floatDegree)(sin(rLatA) * sin(rLatB));
 
     // Return distance as a function of inverse cos() of tempValue times radius of earth
     return (floatDegree)earthRadiusM * (floatDegree)acos(tempValue);
 }
 
-floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coordinate *coordB)
+floatDegree distanceEquiRect(const struct Coordinate* coordA, const struct Coordinate* coordB)
 {
     // Get latitudeA in radians
     floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
@@ -124,7 +122,7 @@ floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coord
     // Get longitudeA in radians
     tempValue = longitudeFromCoordinate(&(*coordB));
     floatDegree rLonB = toRadian(tempValue);
-    
+
     // Find tempValue = avgLat = (rLatA + rLatB)/2
     tempValue = (rLatA + rLatB) / 2;
     // Calculate x = deltaLon * cos(avgLat) for equirectangular approximation

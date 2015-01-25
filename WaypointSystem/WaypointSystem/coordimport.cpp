@@ -10,10 +10,8 @@ CoordImport::CoordImport()
 
 CoordImport::~CoordImport()
 {
-
 }
 
 void CoordImport::importCsvToBuffer()
 {
-
 }

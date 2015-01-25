@@ -37,8 +37,8 @@ remarks:
 #include <math.h> // Need atan2(), cos(), sin()
 
 // Define M_PI if not defined previously
-#ifndef M_PI 
-#define M_PI 3.1415926535 
+#ifndef M_PI
+#define M_PI 3.1415926535
 #endif
 
 static const double earthRadiusM = 6371008.7714; // Average earth radius in metres
@@ -65,7 +65,7 @@ remarks:
     Extracts the latitude from a Coordinate ADS and returns a fractional floating value.
     Note that the value stored in the ADS should be in degrees and NOT radians. Care should be taken to ensure that this is upheld throughout the program.
 */
-floatDegree latitudeFromCoordinate(const struct Coordinate *thisCoord); // OK
+floatDegree latitudeFromCoordinate(const struct Coordinate* thisCoord); // OK
 
 /* longitudeFromCoordinate();
 input:
@@ -76,7 +76,7 @@ remarks:
     Extracts the longitude from a Coordinate ADS and returns a fractional floating value.
     Note that the value stored in the ADS should be in degrees and NOT radians. Care should be taken to ensure that this is upheld throughout the program.
 */
-floatDegree longitudeFromCoordinate(const struct Coordinate *thisCoord); // OK
+floatDegree longitudeFromCoordinate(const struct Coordinate* thisCoord); // OK
 
 floatDegree toDegree(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
 floatDegree toRadian(const floatDegree dAngle); // TO TEST WITH BORDERLINE VALUES
@@ -93,7 +93,7 @@ output:
 remarks:
     Returns the great circle distance between two coordinate points assuming an average earth radius
 */
-floatDegree distanceCirclePath(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
+floatDegree distanceCirclePath(const struct Coordinate* coordA, const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
 /* distanceSphereCosine();
 input:
@@ -104,7 +104,7 @@ output:
 remarks:
     Returns the spherical cosine law distance between two coordinate points assuming an average earth radius
 */
-floatDegree distanceSphereCosine(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
+floatDegree distanceSphereCosine(const struct Coordinate* coordA, const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
 /* distanceEquiRect();
 input:
@@ -115,6 +115,6 @@ output:
 remarks:
     Returns the equirectangular approximation of distance between two coordinate points assuming an average earth radius
 */
-floatDegree distanceEquiRect(const struct Coordinate *coordA, const struct Coordinate *coordB); // TO TEST WITH BORDERLINE VALUES
+floatDegree distanceEquiRect(const struct Coordinate* coordA, const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
 #endif

@@ -1,8 +1,8 @@
 #ifndef NAVTYPES_H
 #define NAVTYPES_H
-    
+
 #include <stdint.h>
-    
+
 #ifdef _MSC_BUILD // For coding in VS where the types below are undefined
 
 #endif
@@ -29,15 +29,14 @@ output:
 remarks:
     ADS that contain coordinate information.
 */
-typedef struct Coordinate
-{
+typedef struct Coordinate{
     signed16Degree dLongitude;
     signed32Degree mLongitude;
     signed16Degree dLatitude;
     signed32Degree mLatitude;
 
     coordinateCode priority;
-}Coordinate_t;
+} Coordinate;
 
 /* STRUCT NAVSTATE
 input:
@@ -47,13 +46,12 @@ output:
 remarks:
     ADS that contain the navigation status of the system. For a single platform there should only one instance of this ADS which contains the navigation state and variables.
 */
-typedef struct NavState
-{
+typedef struct NavState{
     struct Coordinate currentLocation;
     struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
-}NavState_t;
+} NavState;
 
 /* Try this format in psoc creator
 

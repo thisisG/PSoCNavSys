@@ -2,8 +2,7 @@
 #define NMEAFUNCTIONS_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 #include "navfunctions.h"
@@ -15,7 +14,7 @@ extern "C"
 #endif
 
 floatDegree nmeaFloatFromLongDegree(const signed16Degree degree, const signed32Degree minutes);
-floatDegree nmeaLatitudeFromCoord(const struct Coordinate *thisCoord); 
-floatDegree nmeaLongitudeFromCoord(const struct Coordinate *thisCoord);
+floatDegree nmeaLatitudeFromCoord(const struct Coordinate* thisCoord);
+floatDegree nmeaLongitudeFromCoord(const struct Coordinate* thisCoord);
 
 #endif
