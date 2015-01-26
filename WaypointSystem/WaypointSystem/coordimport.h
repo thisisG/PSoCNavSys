@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COORDIMPORT_H
+#define COORDIMPORT_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,3 +33,5 @@ public:
     ~CsvLine();
     std::string Type;
 };
+
+#endif

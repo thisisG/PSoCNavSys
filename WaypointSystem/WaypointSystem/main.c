@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
@@ -6,7 +8,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 #include "navfunctions.h"
 #include "navtypes.h"
 #include "./nmea/nmea.h"
@@ -15,6 +16,7 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+
 
 void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)
 {
@@ -264,7 +266,8 @@ int main()
               << std::endl;
     std::cout << std::endl;
 
-    /*
+    
+/*
     Test Coord to GPS string function
     */
     const int gpsStringBufferSize = 1024;
@@ -309,9 +312,31 @@ int main()
     nmea_parse_GPGGA(&gpsStringBuffer[0], gpsStringBufferSize, &GPGGAbuffer);
     nmea_GPGGA2info(&GPGGAbuffer, &nmeaBuffer);
 
-    std::cout << std::setprecision(8) << nmeaBuffer.lat << std::endl;
+    std::cout << "nmeaBuffer.lat: " << std::setprecision(8) << nmeaBuffer.lat << std::endl;
+    std::cout << "nmeaBuffer.lon: " << std::setprecision(8) << nmeaBuffer.lon << std::endl;
 
-    // nmea_degree2radian();
+    // Get latitude in longDegree format from nmeaBuffer
+    signed16Degree dlatitudeBuffer = 0;
+    signed32Degree mlatitudeBuffer = 0;
+    signed16Degree dlongitudeBuffer = 0;
+    signed32Degree mlongitudeBuffer = 0;
+
+    longLatitudeFromNmeaInfo(&nmeaBuffer, &dlatitudeBuffer, &mlatitudeBuffer);
+    std::cout << "lat from buff: " << dlatitudeBuffer << "d" << mlatitudeBuffer << "m" << std::endl;
+    longLongitudeFromNmeaInfo(&nmeaBuffer, &dlongitudeBuffer, &mlongitudeBuffer);
+    std::cout << "lon from buff: " << dlongitudeBuffer << "d" << mlongitudeBuffer << "m" << std::endl;
+
+    // Zero coordinate buffer and load nmea info to it
+    zeroCoordinate(&coordBuffer);
+    printCoordData(&coordBuffer);
+    nmeaInfoToCoord(&nmeaBuffer, &coordBuffer);
+    printCoordData(&coordBuffer);
+    std::cout << std::endl;
+
+    /*
+    Some new test
+    */
+
 
     /*
     Random test area

@@ -72,6 +72,9 @@
     <ClCompile Include="nmea\tok.c">
       <Filter>Source Files\NMEA</Filter>
     </ClCompile>
+    <ClCompile Include="gpsinterface.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
@@ -128,10 +131,17 @@
     <ClInclude Include="nmea\parse.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gpsinterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="csvtest.csv">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

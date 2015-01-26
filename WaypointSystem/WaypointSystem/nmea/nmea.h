@@ -22,10 +22,10 @@ extern "C"
 #include "./info.h"
 #include "./sentence.h"
 #include "./generate.h"
-#include "./generator.h"
+//#include "./generator.h"
 #include "./parse.h"
-#include "./parser.h"
-#include "./context.h"
+//#include "./parser.h"
+//#include "./context.h"
 
 #ifdef __cplusplus
 }

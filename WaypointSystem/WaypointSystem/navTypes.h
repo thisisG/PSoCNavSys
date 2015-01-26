@@ -3,9 +3,17 @@
 
 #include <stdint.h>
 
-#ifdef _MSC_BUILD // For coding in VS where the types below are undefined
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
-#endif
+#ifdef _WIN32
+#include <stdio.h>
+#endif // _WIN32
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 // Change this type to double if additional precision is required
 typedef float floatDegree;
@@ -29,7 +37,7 @@ output:
 remarks:
     ADS that contain coordinate information.
 */
-typedef struct Coordinate{
+typedef struct Coordinate {
     signed16Degree dLongitude;
     signed32Degree mLongitude;
     signed16Degree dLatitude;
@@ -46,19 +54,19 @@ output:
 remarks:
     ADS that contain the navigation status of the system. For a single platform there should only one instance of this ADS which contains the navigation state and variables.
 */
-typedef struct NavState{
+typedef struct NavState {
     struct Coordinate currentLocation;
     struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
 } NavState;
 
-/* Try this format in psoc creator
+void zeroCoordinate(Coordinate* coord);
+void printCoordData(Coordinate* coord);
+void zeroNavState(NavState* navS);
 
-typedef struct NavState Navstate2;
-
-float getHeading(Navstate2 thisnavstate);
-
-*/
+#ifdef _WIN32
+void printCoordData(Coordinate* coord);
+#endif // _WIN32
 
 #endif

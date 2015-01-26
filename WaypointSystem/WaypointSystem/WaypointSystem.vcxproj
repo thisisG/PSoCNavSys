@@ -84,7 +84,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="coordimport.cpp" />
-    <ClCompile Include="main.c" />
+    <ClCompile Include="gpsinterface.c" />
+    <ClCompile Include="main.c">
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ShowIncludes>
+    </ClCompile>
     <ClCompile Include="navfunctions.c" />
     <ClCompile Include="navtypes.c" />
     <ClCompile Include="nmeafunctions.c" />
@@ -100,8 +103,10 @@
     <ClCompile Include="nmea\tok.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="config.h" />
     <ClInclude Include="coordimport.h" />
     <ClInclude Include="csv.h" />
+    <ClInclude Include="gpsinterface.h" />
     <ClInclude Include="navfunctions.h" />
     <ClInclude Include="navtypes.h" />
     <ClInclude Include="nmeafunctions.h" />
@@ -120,6 +125,7 @@
     <ClInclude Include="nmea\units.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="csvtest.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

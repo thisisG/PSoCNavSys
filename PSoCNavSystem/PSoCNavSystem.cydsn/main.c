@@ -12,14 +12,16 @@
 #include <project.h>
 
 #include "navtypes.h"
+#include "navfunctions.h"
+#include "./nmea/nmea.h"
+
 // coordinateCode;
 int main()
 {
-    const int = 4;
-    // Create an instance of NavState and initialize all members to 0
-    struct NavState myNavState = {0,0,0,0,0,0,0,0,0,0,0,0};
+    // Create an instance of NavState
+    struct NavState myNavState;
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-
+    zeroNavState(&myNavState);
     /* CyGlobalIntEnable; */ /* Uncomment this line to enable global interrupts. */
     for(;;)
     {
