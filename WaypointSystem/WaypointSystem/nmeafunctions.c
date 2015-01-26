@@ -8,7 +8,7 @@ extern "C" {
 
 floatDegree nmeaFloatFromLongDegree(const signed16Degree degree, const signed32Degree minutes)
 {
-    floatDegree fracDeg = 100.0 * (floatDegree)(degree);
+    floatDegree fracDeg = (floatDegree)(100.0 * (floatDegree)(degree));
     floatDegree fracMin = (((floatDegree)(minutes)) / 10000);
 
     return fracDeg + fracMin;
@@ -26,9 +26,9 @@ floatDegree nmeaLongitudeFromCoord(const struct Coordinate* thisCoord)
 
 floatDegree floatFromNmeaDegree(const floatDegree nmeaDeg)
 {
-    // Get the degrees using an int typecast to remove fractions
-    floatDegree tempValue = (int)(nmeaDeg / 100);
-    // Extract minutes and add to tempValue
+    // Get the degrees using floor
+    floatDegree tempValue = floorf(nmeaDeg / 100);
+    // Extract minutes and add to tempValue as fractional degrees
     tempValue = tempValue + (((nmeaDeg / 100) - tempValue) / 60);
     return tempValue;
 }
@@ -43,12 +43,12 @@ void longDegreeFromNmeaFloat(const floatDegree nmeaDeg, signed16Degree* ptrDegre
 
 void longLatitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree, signed32Degree* ptrMinutes)
 {
-    longDegreeFromNmeaFloat(nmeaInfo->lat, ptrDegree, ptrMinutes);
+    longDegreeFromNmeaFloat((const floatDegree)nmeaInfo->lat, ptrDegree, ptrMinutes);
 }
 
 void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree, signed32Degree* ptrMinutes)
 {
-    longDegreeFromNmeaFloat(nmeaInfo->lon, ptrDegree, ptrMinutes);
+    longDegreeFromNmeaFloat((const floatDegree)nmeaInfo->lon, ptrDegree, ptrMinutes);
 }
 
 void nmeaInfoToCoord(nmeaINFO* nmeaInfo, Coordinate* coord)

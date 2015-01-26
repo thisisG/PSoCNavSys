@@ -10,6 +10,7 @@ extern "C" {
 #endif
 
 #include <iostream>
+#include "csv.h"
 
 class CoordImport {
 public:
@@ -25,13 +26,6 @@ private:
     int entriesWpBuffer;
     struct Coordinate* ptrCoordBuffer;
     struct Coordinate* ptrWpBuffer;
-};
-
-class CsvLine {
-public:
-    CsvLine();
-    ~CsvLine();
-    std::string Type;
 };
 
 #endif

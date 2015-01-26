@@ -211,8 +211,8 @@ int main()
 
         if (csvLineCount == 0) {
             std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, "
-                      << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude
-                      << "d, " << csvCoordBuffer.mLongitude << "m" << std::endl;
+                << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude
+                << "d, " << csvCoordBuffer.mLongitude << "m" << std::endl;
         }
 
         if (csvLineCount % wpDivisor == 0) {
@@ -334,9 +334,28 @@ int main()
     std::cout << std::endl;
 
     /*
-    Some new test
+    Set current position in NavState from GPS string
+    For this we're interested in the GPRMC string string containing much of the same data as GPGGA but also provides current speed and whatnot. This is the string that we want to use the most, and if need be the only string to use if we can only use one!
     */
+    nmeaGPRMC gprmcBuffer;
+    nmea_zero_GPRMC(&gprmcBuffer);
+    nmea_info2GPRMC(&nmeaBuffer, &gprmcBuffer);
 
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize,
+        &nmeaBuffer, GPRMC);
+
+    gpsStringBuffer[gpsStringLength] = 0;
+    std::cout << "Test GPS strings: \n" << gpsStringBuffer;
+
+    // The string lacks heading. Not great! Create a mock heading.
+    nmeaBuffer.direction = 214.3;
+    nmea_info2GPRMC(&nmeaBuffer, &gprmcBuffer);
+
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize,
+        &nmeaBuffer, GPRMC);
+
+    gpsStringBuffer[gpsStringLength] = 0;
+    std::cout << "Test GPS strings: \n" << gpsStringBuffer;
 
     /*
     Random test area
