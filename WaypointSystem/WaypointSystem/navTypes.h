@@ -37,7 +37,8 @@ output:
 remarks:
     ADS that contain coordinate information.
 */
-typedef struct Coordinate {
+typedef struct Coordinate
+{
     signed16Degree dLongitude;
     signed32Degree mLongitude;
     signed16Degree dLatitude;
@@ -52,9 +53,11 @@ input:
 output:
     NA
 remarks:
-    ADS that contain the navigation status of the system. For a single platform there should only one instance of this ADS which contains the navigation state and variables.
+    ADS that contain the navigation status of the system. For a single platform there should only
+    one instance of this ADS which contains the navigation state and variables.
 */
-typedef struct NavState {
+typedef struct NavState
+{
     struct Coordinate currentLocation;
     struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
     floatDegree dCurrentHeading;
@@ -67,6 +70,7 @@ void zeroNavState(NavState* navS);
 
 #ifdef _WIN32
 void printCoordData(Coordinate* coord);
+void printCurrentCoordAndHeading(NavState* navS);
 #endif // _WIN32
 
 #endif

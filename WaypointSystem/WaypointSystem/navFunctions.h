@@ -117,4 +117,6 @@ remarks:
 */
 floatDegree distanceEquiRect(const Coordinate* coordA, const Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
+void setCurrentPosition();
+
 #endif

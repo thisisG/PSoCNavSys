@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include "csv.h"
+#include "gpsemulator.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,11 +13,11 @@ extern "C" {
 #include "navtypes.h"
 #include "./nmea/nmea.h"
 #include "nmeafunctions.h"
+#include "gpsinterface.h"
 
 #ifdef __cplusplus
 }
 #endif
-
 
 void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)
 {
@@ -77,6 +78,8 @@ int main()
 
     // Load the set into coordinate ADS
     struct Coordinate coordA, coordB;
+    zeroCoordinate(&coordA);
+    zeroCoordinate(&coordB);
 
     coordA.dLatitude = degA;
     coordA.mLatitude = minA;
@@ -92,7 +95,8 @@ int main()
     // Test if coordinates work in an array
     struct Coordinate coordArray[100];
 
-    for (int arrayIndex = 0; arrayIndex < 100; arrayIndex++) {
+    for (int arrayIndex = 0; arrayIndex < 100; arrayIndex++)
+    {
         coordArray[arrayIndex].dLatitude = degA;
         coordArray[arrayIndex].mLatitude = minA;
         coordArray[arrayIndex].dLongitude = degB;
@@ -100,31 +104,31 @@ int main()
     }
 
     // Check a few random ones if the correct value is stored
-    printf("latitudeFromCoordinate(&coordArray[0]) = %6f\n",
-        latitudeFromCoordinate(&coordArray[0]));
-    printf("latitudeFromCoordinate(&coordArray[65]) = %6f\n",
-        latitudeFromCoordinate(&coordArray[65]));
-    printf("latitudeFromCoordinate(&coordArray[99]) = %6f\n",
-        latitudeFromCoordinate(&coordArray[99]));
+    printf(
+        "latitudeFromCoordinate(&coordArray[0]) = %6f\n", latitudeFromCoordinate(&coordArray[0]));
+    printf(
+        "latitudeFromCoordinate(&coordArray[65]) = %6f\n", latitudeFromCoordinate(&coordArray[65]));
+    printf(
+        "latitudeFromCoordinate(&coordArray[99]) = %6f\n", latitudeFromCoordinate(&coordArray[99]));
 
     std::cout << std::endl;
 
     /*
     Test the toDegree() and toRadian() functions
     */
-    floatDegree inDegA = 213.7453;
+    floatDegree inDegA = 213.7453f;
     floatDegree inRadA = toRadian(inDegA);
     printf("%f in deg = %f in rad\n", inDegA, inRadA);
 
-    floatDegree inDegB = 180;
+    floatDegree inDegB = 180.0f;
     floatDegree inRadB = toRadian(inDegB);
     printf("%f in deg = %f in rad\n", inDegB, inRadB);
 
-    floatDegree inDegC = 0;
+    floatDegree inDegC = 0.0f;
     floatDegree inRadC = toRadian(inDegC);
     printf("%f in deg = %f in rad\n", inDegC, inRadC);
 
-    floatDegree inDegD = 360;
+    floatDegree inDegD = 360.0f;
     floatDegree inRadD = toRadian(inDegD);
     printf("%f in deg = %f in rad\n", inDegD, inRadD);
 
@@ -167,17 +171,16 @@ int main()
     Test equirectangular approximation function
     */
     distanceAB = distanceEquiRect(&coordA, &coordB);
-    printf("equirectangular approximation distance from coordA to coordB is %f\n",
-        distanceAB);
+    printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
 
     /*
     Test the creation of a NavState and its initialization
     */
-    struct NavState myNavState = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    std::cout << "0 latitude in myNavState.currentLocation: "
-              << myNavState.currentLocation.dLatitude << std::endl;
+    struct NavState myNavState;
+    zeroNavState(&myNavState);
+    printCurrentCoordAndHeading(&myNavState);
 
     myNavState.currentLocation = coordA;
     std::cout << "New latitude in myNavState.currentLocation: "
@@ -194,28 +197,29 @@ int main()
     // Variables to contain read data and count
     std::string csvType, csvName, csvDesc;
     int csvLineCount = 0, wpCount = 0, wpDivisor = 10;
-    float csvLat = 0, csvLon = 0, csvAlt = 0, csvCourse = 0, csvTotDistKm = 0,
-          csvIntervalDistM = 0;
+    float csvLat = 0, csvLon = 0, csvAlt = 0, csvCourse = 0, csvTotDistKm = 0, csvIntervalDistM = 0;
 
     // Create array to hold all coordinates and a buffer structure
     std::vector<Coordinate> coordVector;
     std::vector<Coordinate> wpVector;
     Coordinate csvCoordBuffer;
     // Check if the thing is empty
-    std::cout << "Size of coordVector at creation: " << int(coordVector.size())
-              << std::endl;
+    std::cout << "Size of coordVector at creation: " << int(coordVector.size()) << std::endl;
 
-    while (in.read_row(csvType, csvLat, csvLon, csvAlt, csvCourse, csvTotDistKm,
-        csvIntervalDistM, csvName, csvDesc)) {
+    while (in.read_row(csvType, csvLat, csvLon, csvAlt, csvCourse, csvTotDistKm, csvIntervalDistM,
+        csvName, csvDesc))
+    {
         csvDataToCoord(csvLat, csvLon, csvCoordBuffer);
 
-        if (csvLineCount == 0) {
+        if (csvLineCount == 0)
+        {
             std::cout << "First coord lat/lon: " << csvCoordBuffer.dLatitude << "d, "
-                << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude
-                << "d, " << csvCoordBuffer.mLongitude << "m" << std::endl;
+                      << csvCoordBuffer.mLatitude << "m/" << csvCoordBuffer.dLongitude << "d, "
+                      << csvCoordBuffer.mLongitude << "m" << std::endl;
         }
 
-        if (csvLineCount % wpDivisor == 0) {
+        if (csvLineCount % wpDivisor == 0)
+        {
             ++wpCount;
             wpVector.push_back(csvCoordBuffer);
         }
@@ -229,47 +233,42 @@ int main()
     // How many WP do we have?
     std::cout << "Number of wps: " << wpCount << std::endl;
     // Check if the coordVector is filled and equal to entries
-    std::cout << "Size of coordVector at end: " << int(coordVector.size())
-              << std::endl;
+    std::cout << "Size of coordVector at end: " << int(coordVector.size()) << std::endl;
     // Check if the wpVector is filled and equal to wps
     std::cout << "Size of wpVector at end: " << int(wpVector.size()) << std::endl;
 
     // Check if the coordVector contains data
-    std::cout << "Latitude for first coordVector entry: "
-              << coordVector.front().dLatitude << std::endl;
-    std::cout << "Latitude for last coordVector entry: "
-              << coordVector.back().dLatitude << std::endl;
+    std::cout << "Latitude for first coordVector entry: " << coordVector.front().dLatitude
+              << std::endl;
+    std::cout << "Latitude for last coordVector entry: " << coordVector.back().dLatitude
+              << std::endl;
 
     // Check if the wpVector contains data
-    std::cout << "Latitude for first wpVector entry: "
-              << wpVector.front().dLatitude << std::endl;
-    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude
-              << std::endl;
+    std::cout << "Latitude for first wpVector entry: " << wpVector.front().dLatitude << std::endl;
+    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude << std::endl;
 
     // Check if the last WP is same as last coord, if not increment wpCount and
     // add last coord as an extra WP
-    if (wpVector.back().dLatitude != coordVector.back().dLatitude) {
+    if (wpVector.back().dLatitude != coordVector.back().dLatitude)
+    {
         ++wpCount;
         wpVector.push_back(coordVector.back());
     }
 
     // Check that last value for vectors is the same
-    std::cout << "Latitude for last coordVector entry: "
-              << coordVector.back().dLatitude << std::endl;
-    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude
+    std::cout << "Latitude for last coordVector entry: " << coordVector.back().dLatitude
               << std::endl;
+    std::cout << "Latitude for last wpVector entry: " << wpVector.back().dLatitude << std::endl;
 
     // How many WP do we have?
     std::cout << "Number of wps updated: " << wpCount << std::endl;
     // Check if the wpVector is filled and equal to wps
-    std::cout << "Size of wpVector at end updated: " << int(wpVector.size())
-              << std::endl;
+    std::cout << "Size of wpVector at end updated: " << int(wpVector.size()) << std::endl;
     std::cout << std::endl;
 
-    
-/*
-    Test Coord to GPS string function
-    */
+    /*
+        Test Coord to GPS string function
+        */
     const int gpsStringBufferSize = 1024;
     char gpsStringBuffer[gpsStringBufferSize] = "";
     // Check that string is empty
@@ -286,8 +285,7 @@ int main()
     // Generate a string from buffer
     int gpsStringLength = 0;
 
-    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize,
-        &nmeaBuffer, GPGGA);
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize, &nmeaBuffer, GPGGA);
 
     gpsStringBuffer[gpsStringLength] = 0;
     std::cout << "Test GPS strings: \n" << gpsStringBuffer;
@@ -298,8 +296,8 @@ int main()
     std::cout << "Longitude for coordBuffer: " << coordBuffer.dLongitude << "d"
               << coordBuffer.mLongitude << "m" << std::endl;
     std::cout << "Longitude for coordBuffer in float: "
-              << nmeaFloatFromLongDegree(coordBuffer.dLongitude,
-                     coordBuffer.mLongitude) << std::endl;
+              << nmeaFloatFromLongDegree(coordBuffer.dLongitude, coordBuffer.mLongitude)
+              << std::endl;
     std::cout << std::endl;
 
     /*
@@ -324,7 +322,8 @@ int main()
     longLatitudeFromNmeaInfo(&nmeaBuffer, &dlatitudeBuffer, &mlatitudeBuffer);
     std::cout << "lat from buff: " << dlatitudeBuffer << "d" << mlatitudeBuffer << "m" << std::endl;
     longLongitudeFromNmeaInfo(&nmeaBuffer, &dlongitudeBuffer, &mlongitudeBuffer);
-    std::cout << "lon from buff: " << dlongitudeBuffer << "d" << mlongitudeBuffer << "m" << std::endl;
+    std::cout << "lon from buff: " << dlongitudeBuffer << "d" << mlongitudeBuffer << "m"
+              << std::endl;
 
     // Zero coordinate buffer and load nmea info to it
     zeroCoordinate(&coordBuffer);
@@ -335,14 +334,16 @@ int main()
 
     /*
     Set current position in NavState from GPS string
-    For this we're interested in the GPRMC string string containing much of the same data as GPGGA but also provides current speed and whatnot. This is the string that we want to use the most, and if need be the only string to use if we can only use one!
+    For this we're interested in the GPRMC string string containing much of the
+    same data as GPGGA but also provides current speed and whatnot. This is the
+    string that we want to use the most, and if need be the only string to use if
+    we can only use one!
     */
     nmeaGPRMC gprmcBuffer;
     nmea_zero_GPRMC(&gprmcBuffer);
     nmea_info2GPRMC(&nmeaBuffer, &gprmcBuffer);
 
-    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize,
-        &nmeaBuffer, GPRMC);
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize, &nmeaBuffer, GPRMC);
 
     gpsStringBuffer[gpsStringLength] = 0;
     std::cout << "Test GPS strings: \n" << gpsStringBuffer;
@@ -351,12 +352,30 @@ int main()
     nmeaBuffer.direction = 214.3;
     nmea_info2GPRMC(&nmeaBuffer, &gprmcBuffer);
 
-    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize,
-        &nmeaBuffer, GPRMC);
+    gpsStringLength = nmea_generate(&gpsStringBuffer[0], gpsStringBufferSize, &nmeaBuffer, GPRMC);
 
     gpsStringBuffer[gpsStringLength] = 0;
-    std::cout << "Test GPS strings: \n" << gpsStringBuffer;
+    std::cout << "Test GPS string: \n" << gpsStringBuffer;
+    std::cout << std::endl;
 
+    /*
+    Testing GpsEmulator
+    */
+    GpsEmulator gpsEmu;
+    gpsEmu.parseCsvToInfoVector("csvtest.csv");
+
+    gpsEmu.getNextString(gpsStringBuffer, gpsStringBufferSize);
+    std::cout << "Test GPS taken from testing interface: \n" << gpsStringBuffer;
+    std::cout << std::endl;
+
+    for (size_t i = 0; i < 3; i++)
+    {
+        gpsEmu.getNextString(gpsStringBuffer, gpsStringBufferSize);
+        std::cout << "String: \n" << gpsStringBuffer;
+        gpsStringToNavState(&gpsStringBuffer[0], gpsStringBufferSize, GPRMC, &myNavState);
+        printCurrentCoordAndHeading(&myNavState);
+        std::cout << std::endl;
+    }
     /*
     Random test area
     */

@@ -27,6 +27,14 @@ void zeroNavState(NavState* navS)
 void printCoordData(Coordinate* coord)
 {
     printf("Coordinate data: \n");
-    printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude, coord->mLatitude, coord->dLongitude, coord->mLongitude, coord->priority);
+    printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude, coord->mLatitude,
+        coord->dLongitude, coord->mLongitude, coord->priority);
+}
+
+void printCurrentCoordAndHeading(NavState* navS)
+{
+    printf("Current data: \n");
+    printCoordData(&(navS->currentLocation));
+    printf("heading: %f\n", navS->dCurrentHeading);
 }
 #endif

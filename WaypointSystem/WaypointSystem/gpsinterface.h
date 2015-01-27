@@ -5,18 +5,21 @@
 extern "C" {
 #endif // __cplusplus
 
+#include "nmea\nmea.h"
+#include "nmeafunctions.h"
 #include "navfunctions.h"
-
-#ifdef _WIN32
-#endif // _WIN32
-
-#ifdef __GNUC__
-#endif // __GNUC__
 
 #ifdef __cplusplus
 }
 #endif // __cplusplus
 
+#ifdef _WIN32 // Windows specific implementations
+#endif // _WIN32
 
+#ifdef __GNUC__ // ARM specific implementation
+#endif // __GNUC__
+
+void gpsStringToNavState(
+    const char* gpsString, const int gpsStringSize, nmeaPACKTYPE pack, NavState* navS);
 
 #endif

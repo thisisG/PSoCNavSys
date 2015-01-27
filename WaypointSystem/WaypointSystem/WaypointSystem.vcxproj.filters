@@ -75,6 +75,9 @@
     <ClCompile Include="gpsinterface.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gpsemulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
@@ -135,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gpsinterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gpsemulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
