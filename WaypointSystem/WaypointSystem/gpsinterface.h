@@ -19,7 +19,6 @@ extern "C" {
 #ifdef __GNUC__ // ARM specific implementation
 #endif // __GNUC__
 
-void gpsStringToNavState(
-    const char* gpsString, const int gpsStringSize, nmeaPACKTYPE pack, NavState* navS);
+void gpsStringToNavState(NavState* navS);
 
 #endif

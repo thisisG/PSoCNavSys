@@ -9,6 +9,7 @@ extern "C" {
 #endif // __cplusplus
 
 #include "nmea\nmea.h"
+#include "navtypes.h"
 
 #ifdef __cplusplus
 }
@@ -19,7 +20,8 @@ class GpsEmulator
 public:
     GpsEmulator();
     ~GpsEmulator();
-    void getNextString(char* buffer, int bufferSize);
+    void getNextStringToCharBuffer(char* buffer, int bufferSize);
+    void getNextStringToNavState(NavState* navS);
     void parseCsvToInfoVector(const std::string& csvFile);
 
 private:

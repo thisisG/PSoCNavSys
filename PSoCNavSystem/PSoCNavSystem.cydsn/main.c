@@ -16,6 +16,11 @@
 #include "./nmea/nmea.h"
 #include <math.h>
 
+typedef struct someStruct
+{
+ const int somevalue = 3;
+}someStruct;
+
 // coordinateCode;
 int main()
 {

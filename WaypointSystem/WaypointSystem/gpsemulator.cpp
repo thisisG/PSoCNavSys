@@ -26,7 +26,7 @@ void GpsEmulator::parseCsvToInfoVector(const std::string& csvFile)
     nmeaVectorLength = nmeaInfoVector.size();
 }
 
-void GpsEmulator::getNextString(char* buffer, int bufferSize)
+void GpsEmulator::getNextStringToCharBuffer(char* buffer, int bufferSize)
 {
     static int strCounter = 0;
     int gpsStringLength = nmea_generate(&buffer[0], bufferSize, &nmeaInfoVector[strCounter], GPRMC);
@@ -39,6 +39,11 @@ void GpsEmulator::getNextString(char* buffer, int bufferSize)
     {
         // Do not increment counter since we are at the final point
     }
+}
+
+void GpsEmulator::getNextStringToNavState(NavState* navS)
+{
+    getNextStringToCharBuffer(navS->gpsBuffer.gpsBuffer, navS->gpsBuffer.gpsBufferLength);
 }
 
 void GpsEmulator::csvDataToNmeaInfo(

@@ -15,12 +15,19 @@ void zeroCoordinate(Coordinate* coord)
     coord->priority = 0;
 }
 
+void zeroGpsBuffer(GpsBuffer* gpsB)
+{
+    gpsB->gpsBufferLength = GPS_STR_BFR_LEN;
+    gpsB->gpsBuffer[0] = 0;
+}
+
 void zeroNavState(NavState* navS)
 {
+    zeroGpsBuffer(&(navS->gpsBuffer));
     zeroCoordinate(&(navS->currentLocation));
+    zeroCoordinate(&(navS->nextWaypoint));
     navS->dCurrentHeading = 0;
     navS->dOverallHeading = 0;
-    zeroCoordinate(&(navS->nextWaypoint));
 }
 
 #ifdef _WIN32

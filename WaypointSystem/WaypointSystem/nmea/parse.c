@@ -99,6 +99,9 @@ int _nmea_parse_time(const char *buff, int buff_sz, nmeaTIME *res)
  */
 int nmea_pack_type(const char *buff, int buff_sz)
 {
+    //DEBUG
+    //printf(buff);
+    //printf("received buff size: %d\n", buff_sz);
     static const char *pheads[] = {
         "GPGGA",
         "GPGSA",

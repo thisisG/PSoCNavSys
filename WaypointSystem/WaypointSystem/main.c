@@ -364,15 +364,15 @@ int main()
     GpsEmulator gpsEmu;
     gpsEmu.parseCsvToInfoVector("csvtest.csv");
 
-    gpsEmu.getNextString(gpsStringBuffer, gpsStringBufferSize);
+    gpsEmu.getNextStringToNavState(&myNavState);
     std::cout << "Test GPS taken from testing interface: \n" << gpsStringBuffer;
     std::cout << std::endl;
 
     for (size_t i = 0; i < 3; i++)
     {
-        gpsEmu.getNextString(gpsStringBuffer, gpsStringBufferSize);
+        gpsEmu.getNextStringToNavState(&myNavState);
         std::cout << "String: \n" << gpsStringBuffer;
-        gpsStringToNavState(&gpsStringBuffer[0], gpsStringBufferSize, GPRMC, &myNavState);
+        gpsStringToNavState(&myNavState);
         printCurrentCoordAndHeading(&myNavState);
         std::cout << std::endl;
     }

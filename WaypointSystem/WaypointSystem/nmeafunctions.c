@@ -33,20 +33,24 @@ floatDegree floatFromNmeaDegree(const floatDegree nmeaDeg)
     return tempValue;
 }
 
-void longDegreeFromNmeaFloat(const floatDegree nmeaDeg, signed16Degree* ptrDegree, signed32Degree* ptrMinutes)
+void longDegreeFromNmeaFloat(const floatDegree nmeaDeg, signed16Degree* ptrDegree,
+                             signed32Degree* ptrMinutes)
 {
     // Get the degrees by division of 100 and typecasting. DDMM.mmmmmm -> DD.MMmmmm -> DD
     *ptrDegree = (signed16Degree)(nmeaDeg / 100);
-    // Get minutes by subtracting (*ptrDegree)*100 then multiplying by 10000. DDMM.mmmm -> MM.mmmm -> MMmmmm
+    // Get minutes by subtracting (*ptrDegree)*100 then multiplying by 10000. DDMM.mmmm -> MM.mmmm
+    // -> MMmmmm
     *ptrMinutes = (signed32Degree)((nmeaDeg - ((*ptrDegree) * 100)) * 10000);
 }
 
-void longLatitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree, signed32Degree* ptrMinutes)
+void longLatitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,
+                              signed32Degree* ptrMinutes)
 {
     longDegreeFromNmeaFloat((const floatDegree)nmeaInfo->lat, ptrDegree, ptrMinutes);
 }
 
-void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree, signed32Degree* ptrMinutes)
+void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,
+                               signed32Degree* ptrMinutes)
 {
     longDegreeFromNmeaFloat((const floatDegree)nmeaInfo->lon, ptrDegree, ptrMinutes);
 }
