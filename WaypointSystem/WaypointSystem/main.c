@@ -363,15 +363,17 @@ int main()
     */
     GpsEmulator gpsEmu;
     gpsEmu.parseCsvToInfoVector("csvtest.csv");
+    gpsEmu.generatePseudoRandomData();
+
 
     gpsEmu.getNextStringToNavState(&myNavState);
-    std::cout << "Test GPS taken from testing interface: \n" << gpsStringBuffer;
+    std::cout << "Test GPS taken from testing interface: \n" << myNavState.gpsBuffer.gpsStringBuffer;
     std::cout << std::endl;
 
     for (size_t i = 0; i < 3; i++)
     {
         gpsEmu.getNextStringToNavState(&myNavState);
-        std::cout << "String: \n" << gpsStringBuffer;
+        std::cout << "String: \n" << myNavState.gpsBuffer.gpsStringBuffer;
         gpsStringToNavState(&myNavState);
         printCurrentCoordAndHeading(&myNavState);
         std::cout << std::endl;

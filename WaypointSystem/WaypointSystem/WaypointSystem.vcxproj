@@ -90,7 +90,7 @@
     <ClCompile Include="gpsemulator.cpp" />
     <ClCompile Include="gpsinterface.c" />
     <ClCompile Include="main.c">
-      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ShowIncludes>
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
     <ClCompile Include="navfunctions.c" />
     <ClCompile Include="navtypes.c" />

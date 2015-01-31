@@ -54,7 +54,7 @@ ADS that contain a GPS string buffer and buffer size.
 typedef struct GpsBuffer
 {
     int gpsBufferLength;
-    char gpsBuffer[GPS_STR_BFR_LEN];
+    char gpsStringBuffer[GPS_STR_BFR_LEN];
 };
 
 /* STRUCT NAVSTATE

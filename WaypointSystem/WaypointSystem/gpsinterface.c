@@ -13,14 +13,14 @@ extern "C" {
 void gpsStringToNavState(NavState* navS)
 {
     // Need to pass the address to the second char value since the 0th is occupied by '$'
-    int pack = nmea_pack_type(&(navS->gpsBuffer.gpsBuffer)[1], navS->gpsBuffer.gpsBufferLength);
+    int pack = nmea_pack_type(&(navS->gpsBuffer.gpsStringBuffer)[1], navS->gpsBuffer.gpsBufferLength);
     // DEBUG
     // printf("pack number: %d", pack);
     if (pack == GPRMC)
     {
         nmeaGPRMC gprmcBuffer;
         nmea_zero_GPRMC(&gprmcBuffer);
-        nmea_parse_GPRMC((navS->gpsBuffer.gpsBuffer), navS->gpsBuffer.gpsBufferLength,
+        nmea_parse_GPRMC((navS->gpsBuffer.gpsStringBuffer), navS->gpsBuffer.gpsBufferLength,
                          &gprmcBuffer);
 
         nmeaINFO nmeaBuffer;

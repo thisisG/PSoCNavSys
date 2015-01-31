@@ -18,7 +18,7 @@ void zeroCoordinate(Coordinate* coord)
 void zeroGpsBuffer(GpsBuffer* gpsB)
 {
     gpsB->gpsBufferLength = GPS_STR_BFR_LEN;
-    gpsB->gpsBuffer[0] = 0;
+    gpsB->gpsStringBuffer[0] = 0;
 }
 
 void zeroNavState(NavState* navS)
