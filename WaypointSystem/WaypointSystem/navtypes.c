@@ -15,19 +15,40 @@ void zeroCoordinate(Coordinate* coord)
     coord->priority = 0;
 }
 
-void zeroGpsBuffer(GpsBuffer* gpsB)
+void initGpsBuffer(GpsBuffer* gpsB)
 {
     gpsB->gpsBufferLength = GPS_STR_BFR_LEN;
     gpsB->gpsStringBuffer[0] = 0;
 }
 
+void initSerialBuffer(SerialBuffer* serialB)
+{
+    serialB->serialBufferLength = SERIAL_STR_BFR_LEN;
+    serialB->serialStringBuffer[0] = 0;
+}
+
+void zeroSystemTime(SystemTime* time)
+{
+    time->Sec = 0;
+    time->Min = 0;
+    time->Hour = 0;
+    time->DayOfWeek = 0;
+    time->DayOfMonth = 0;
+    time->DayOfYear = 0;
+    time->Month = 0;
+    time->Year = 0;
+}
+
 void zeroNavState(NavState* navS)
 {
-    zeroGpsBuffer(&(navS->gpsBuffer));
+    initGpsBuffer(&(navS->gpsBuffer));
+    initSerialBuffer(&(navS->serialBuffer));
     zeroCoordinate(&(navS->currentLocation));
     zeroCoordinate(&(navS->nextWaypoint));
+    zeroSystemTime(&(navS->time));
     navS->dCurrentHeading = 0;
     navS->dOverallHeading = 0;
+    navS->currentSpeedKmh = 0;
 }
 
 #ifdef _WIN32
@@ -43,5 +64,6 @@ void printCurrentCoordAndHeading(NavState* navS)
     printf("Current data: \n");
     printCoordData(&(navS->currentLocation));
     printf("heading: %f\n", navS->dCurrentHeading);
+    printf("speed: %f\n", navS->currentSpeedKmh);
 }
-#endif
+#endif // _WIN32

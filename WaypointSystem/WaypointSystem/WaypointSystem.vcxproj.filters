@@ -36,9 +36,6 @@
     <ClCompile Include="navtypes.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="coordimport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="nmeafunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -78,15 +75,15 @@
     <ClCompile Include="gpsemulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="serialcom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="navtypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="coordimport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="csv.h">
@@ -141,6 +138,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gpsemulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="serialcom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

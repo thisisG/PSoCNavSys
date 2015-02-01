@@ -14,6 +14,7 @@ extern "C" {
 #include "./nmea/nmea.h"
 #include "nmeafunctions.h"
 #include "gpsinterface.h"
+#include "serialcom.h"
 
 #ifdef __cplusplus
 }
@@ -104,12 +105,12 @@ int main()
     }
 
     // Check a few random ones if the correct value is stored
-    printf(
-        "latitudeFromCoordinate(&coordArray[0]) = %6f\n", latitudeFromCoordinate(&coordArray[0]));
-    printf(
-        "latitudeFromCoordinate(&coordArray[65]) = %6f\n", latitudeFromCoordinate(&coordArray[65]));
-    printf(
-        "latitudeFromCoordinate(&coordArray[99]) = %6f\n", latitudeFromCoordinate(&coordArray[99]));
+    printf("latitudeFromCoordinate(&coordArray[0]) = %6f\n",
+           latitudeFromCoordinate(&coordArray[0]));
+    printf("latitudeFromCoordinate(&coordArray[65]) = %6f\n",
+           latitudeFromCoordinate(&coordArray[65]));
+    printf("latitudeFromCoordinate(&coordArray[99]) = %6f\n",
+           latitudeFromCoordinate(&coordArray[99]));
 
     std::cout << std::endl;
 
@@ -207,7 +208,7 @@ int main()
     std::cout << "Size of coordVector at creation: " << int(coordVector.size()) << std::endl;
 
     while (in.read_row(csvType, csvLat, csvLon, csvAlt, csvCourse, csvTotDistKm, csvIntervalDistM,
-        csvName, csvDesc))
+                       csvName, csvDesc))
     {
         csvDataToCoord(csvLat, csvLon, csvCoordBuffer);
 
@@ -365,9 +366,9 @@ int main()
     gpsEmu.parseCsvToInfoVector("csvtest.csv");
     gpsEmu.generatePseudoRandomData();
 
-
     gpsEmu.getNextStringToNavState(&myNavState);
-    std::cout << "Test GPS taken from testing interface: \n" << myNavState.gpsBuffer.gpsStringBuffer;
+    std::cout << "Test GPS taken from testing interface: \n"
+              << myNavState.gpsBuffer.gpsStringBuffer;
     std::cout << std::endl;
 
     for (size_t i = 0; i < 3; i++)
@@ -378,6 +379,15 @@ int main()
         printCurrentCoordAndHeading(&myNavState);
         std::cout << std::endl;
     }
+
+    /*
+    Testing navDataToSerialBufferThing
+    */
+
+    navDataToSerialBuffer(&myNavState);
+    std::cout << "Created string:\n" << myNavState.serialBuffer.serialStringBuffer;
+
+
     /*
     Random test area
     */

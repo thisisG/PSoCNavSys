@@ -30,15 +30,15 @@ public:
 private:
     int nmeaVectorLength = 0;
     std::vector<nmeaINFO> nmeaInfoVector;
+    std::default_random_engine* genSpeed;
+    std::uniform_real_distribution<double>* distSpeed;
+    std::default_random_engine* genHeading;
+    std::uniform_real_distribution<double>* distHeading;
+
     void csvDataToNmeaInfo(const float dLat, const float dLong, const float dHeading,
                            nmeaINFO* nmeaBuffer);
     void initRandomGenerators();
     void cleanupRandomGenerators();
     double generateSpeed();
     double generateHeading();
-
-    std::default_random_engine *genSpeed;
-    std::normal_distribution<double> *distSpeed;
-    std::default_random_engine *genHeading;
-    std::uniform_real_distribution<double> *distHeading;
 };

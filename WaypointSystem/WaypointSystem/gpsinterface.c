@@ -30,6 +30,8 @@ void gpsStringToNavState(NavState* navS)
         nmeaInfoToCoord(&nmeaBuffer, &(navS->currentLocation));
 
         navS->dCurrentHeading = (floatDegree)nmeaBuffer.direction;
+
+        navS->currentSpeedKmh = nmeaBuffer.speed;
     }
     else
     {

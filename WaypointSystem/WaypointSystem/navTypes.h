@@ -34,6 +34,7 @@ typedef uint32_t unsigned32Degree;
 typedef int8_t coordinateCode;
 
 #define GPS_STR_BFR_LEN 128
+#define SERIAL_STR_BFR_LEN 90
 
 /* STRUCT COORDINATE
     ADS that contain coordinate information.
@@ -55,23 +56,54 @@ typedef struct GpsBuffer
 {
     int gpsBufferLength;
     char gpsStringBuffer[GPS_STR_BFR_LEN];
+} GpsBuffer;
+
+/* STRUCT SERIALBUFFER
+ADS that contain a serial string buffer and buffer size
+*/
+typedef struct SerialBuffer
+{
+    int serialBufferLength;
+    char serialStringBuffer[SERIAL_STR_BFR_LEN];
 };
+
+/* STRUCT SYSTEMTIME
+ADS that contain time information, note that this is the same structure as RTC_TIME_DATE used in
+PSoC Creator for time interactions.
+*/
+typedef struct SystemTime
+{
+    uint8_t Sec;
+    uint8_t Min;
+    uint8_t Hour;
+    uint8_t DayOfWeek;
+    uint8_t DayOfMonth;
+    uint16_t DayOfYear;
+    uint8_t Month;
+    uint16_t Year;
+} SystemTime;
 
 /* STRUCT NAVSTATE
 ADS that contain the navigation status of the system. For a single platform there should normally
-only be one instance of this ADS which contains the navigation state and variables.
+only be one instance of this ADS which contains the navigation state, variables and buffers needed
+for the system to function.
 */
 typedef struct NavState
 {
     struct GpsBuffer gpsBuffer;
+    struct SerialBuffer serialBuffer;
     struct Coordinate currentLocation;
     struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
+    struct SystemTime time;
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
+    float currentSpeedKmh;
 } NavState;
 
 void zeroCoordinate(Coordinate* coord);
-void zeroGpsBuffer(GpsBuffer* gpsB);
+void initGpsBuffer(GpsBuffer* gpsB);
+void initSerialBuffer(SerialBuffer* serialB);
+void zeroSystemTime(SystemTime* time);
 void zeroNavState(NavState* navS);
 
 #ifdef _WIN32

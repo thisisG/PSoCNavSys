@@ -86,7 +86,6 @@
     <ResourceCompile Include="WaypointSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="coordimport.cpp" />
     <ClCompile Include="gpsemulator.cpp" />
     <ClCompile Include="gpsinterface.c" />
     <ClCompile Include="main.c">
@@ -105,10 +104,10 @@
     <ClCompile Include="nmea\sentence.c" />
     <ClCompile Include="nmea\time.c" />
     <ClCompile Include="nmea\tok.c" />
+    <ClCompile Include="serialcom.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.h" />
-    <ClInclude Include="coordimport.h" />
     <ClInclude Include="csv.h" />
     <ClInclude Include="gpsemulator.h" />
     <ClInclude Include="gpsinterface.h" />
@@ -128,6 +127,7 @@
     <ClInclude Include="nmea\time.h" />
     <ClInclude Include="nmea\tok.h" />
     <ClInclude Include="nmea\units.h" />
+    <ClInclude Include="serialcom.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

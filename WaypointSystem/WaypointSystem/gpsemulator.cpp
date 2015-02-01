@@ -1,9 +1,6 @@
 #include "gpsemulator.h"
 
-GpsEmulator::GpsEmulator()
-{
-
-}
+GpsEmulator::GpsEmulator() {}
 
 GpsEmulator::~GpsEmulator()
 {
@@ -74,9 +71,9 @@ void GpsEmulator::csvDataToNmeaInfo(const float dLat, const float dLong, const f
 
 void GpsEmulator::initRandomGenerators()
 {
-    unsigned randomSeed = 10;
+    unsigned randomSeed = 1337;
     genSpeed = new std::default_random_engine(randomSeed);
-    distSpeed = new std::normal_distribution<double>(0.0, 1.85);
+    distSpeed = new std::uniform_real_distribution<double>(0.0, 1.85);
     genHeading = new std::default_random_engine(randomSeed);
     distHeading = new std::uniform_real_distribution<double>(0.0, 360.0);
 }

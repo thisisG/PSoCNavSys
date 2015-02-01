@@ -15,6 +15,7 @@
 #include "navfunctions.h"
 #include "./nmea/nmea.h"
 #include <math.h>
+#include "stdio.h"
 
 // coordinateCode;
 int main()
