@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
-#include "csv.h"
-#include "gpsemulator.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,6 +17,8 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
+#include "csv.h"
+#include "gpsemulator.h"
 
 void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)
 {
@@ -384,9 +384,16 @@ int main()
     Testing navDataToSerialBufferThing
     */
 
-    navDataToSerialBuffer(&myNavState);
-    std::cout << "Created string:\n" << myNavState.serialBuffer.serialStringBuffer;
-
+    for (size_t j = 0; j < 3; j++)
+    {
+        gpsEmu.getNextStringToNavState(&myNavState);
+        std::cout << "String: \n" << myNavState.gpsBuffer.gpsStringBuffer;
+        gpsStringToNavState(&myNavState);
+        printCurrentCoordAndHeading(&myNavState);
+        navDataToSerialBuffer(&myNavState);
+        std::cout << "Created string:\n" << myNavState.serialBuffer.serialStringBuffer;
+        std::cout << std::endl;
+    }
 
     /*
     Random test area

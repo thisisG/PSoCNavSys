@@ -92,7 +92,6 @@
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
     <ClCompile Include="navfunctions.c" />
-    <ClCompile Include="navtypes.c" />
     <ClCompile Include="nmeafunctions.c" />
     <ClCompile Include="nmea\context.c" />
     <ClCompile Include="nmea\generate.c" />

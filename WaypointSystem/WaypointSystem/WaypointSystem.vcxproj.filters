@@ -33,9 +33,6 @@
     <ClCompile Include="navfunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="navtypes.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="nmeafunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>

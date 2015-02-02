@@ -5,6 +5,7 @@
 extern "C" {
 #endif // __cplusplus
 
+#include "navtypes.h"
 #include "nmea\nmea.h"
 #include "nmeafunctions.h"
 #include "navfunctions.h"

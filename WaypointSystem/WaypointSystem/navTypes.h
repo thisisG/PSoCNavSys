@@ -1,15 +1,15 @@
 #ifndef NAVTYPES_H
 #define NAVTYPES_H
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+#include <stdint.h>
 
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
+//#include "navfunctions.h"
 
 #ifdef __cplusplus
 }
@@ -99,16 +99,5 @@ typedef struct NavState
     floatDegree dOverallHeading;
     float currentSpeedKmh;
 } NavState;
-
-void zeroCoordinate(Coordinate* coord);
-void initGpsBuffer(GpsBuffer* gpsB);
-void initSerialBuffer(SerialBuffer* serialB);
-void zeroSystemTime(SystemTime* time);
-void zeroNavState(NavState* navS);
-
-#ifdef _WIN32
-void printCoordData(Coordinate* coord);
-void printCurrentCoordAndHeading(NavState* navS);
-#endif // _WIN32
 
 #endif
