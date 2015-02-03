@@ -13,6 +13,7 @@ extern "C" {
 #include "nmeafunctions.h"
 #include "gpsinterface.h"
 #include "serialcom.h"
+#include "navmath.h"
 
 #ifdef __cplusplus
 }
@@ -155,7 +156,7 @@ int main()
     coordB.dLongitude = -44;
     coordB.mLongitude = 313091;
 
-    float distanceAB = distanceCirclePath(&coordA, &coordB);
+    float distanceAB = distanceCirclePathAtoB(&coordA, &coordB);
     printf("haversine distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
@@ -163,7 +164,7 @@ int main()
     /*
     Test law of spherical cosines function
     */
-    distanceAB = distanceSphereCosine(&coordA, &coordB);
+    distanceAB = distanceSphereCosineAtoB(&coordA, &coordB);
     printf("spherical cosine distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
@@ -171,7 +172,7 @@ int main()
     /*
     Test equirectangular approximation function
     */
-    distanceAB = distanceEquiRect(&coordA, &coordB);
+    distanceAB = distanceEquiRectAtoB(&coordA, &coordB);
     printf("equirectangular approximation distance from coordA to coordB is %f\n", distanceAB);
 
     std::cout << std::endl;
@@ -398,8 +399,8 @@ int main()
     /*
     Random test area
     */
-    // floatDegree testRadianFromFunction = distanceCirclePath(&coordA, &coordA);
-    // printf("expecting latitude, should be 32.956146 distanceCirclePath(&coordA,
+    // floatDegree testRadianFromFunction = distanceCirclePathAtoB(&coordA, &coordA);
+    // printf("expecting latitude, should be 32.956146 distanceCirclePathAtoB(&coordA,
     // &coordA) = %f\n", testRadianFromFunction);
 
     // std::cout << sizeof(Coordinate) << std::endl;

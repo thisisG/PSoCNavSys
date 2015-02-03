@@ -13,7 +13,7 @@ void navDataToSerialBuffer(NavState* navS)
     floatDegree currentNmeaLon = nmeaLongitudeFromCoord(&(navS->currentLocation));
     floatDegree currentHeading = navS->dCurrentHeading;
     floatDegree headingToWp = dHeadingToCurrentWP(navS);
-    float distanceToWp = distanceCirclePath(&(navS->currentLocation), &(navS->nextWaypoint));
+    float distanceToWp = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
     floatDegree nextWpNmeaLat = nmeaLatitudeFromCoord(&(navS->nextWaypoint));
     floatDegree nextWpNmeaLon = nmeaLongitudeFromCoord(&(navS->nextWaypoint));
 #ifdef _WIN32

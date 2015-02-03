@@ -92,6 +92,7 @@
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
     <ClCompile Include="navfunctions.c" />
+    <ClCompile Include="navmath.c" />
     <ClCompile Include="nmeafunctions.c" />
     <ClCompile Include="nmea\context.c" />
     <ClCompile Include="nmea\generate.c" />
@@ -111,6 +112,7 @@
     <ClInclude Include="gpsemulator.h" />
     <ClInclude Include="gpsinterface.h" />
     <ClInclude Include="navfunctions.h" />
+    <ClInclude Include="navmath.h" />
     <ClInclude Include="navtypes.h" />
     <ClInclude Include="nmeafunctions.h" />
     <ClInclude Include="nmea\config.h" />

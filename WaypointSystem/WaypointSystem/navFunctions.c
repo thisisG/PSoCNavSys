@@ -74,145 +74,45 @@ void printCurrentCoordAndHeading(NavState* navS)
 }
 #endif // _WIN32
 
-floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degree minutes)
-{
-    floatDegree fracDeg = (floatDegree)(degree);
-    floatDegree fracMin = (((floatDegree)(minutes)) / 600000);
-    return fracDeg + fracMin;
-}
-
 floatDegree latitudeFromCoordinate(const struct Coordinate* thisCoord)
 {
     return floatFromLongDegree((thisCoord->dLatitude), (thisCoord->mLatitude));
 }
 
-floatDegree longitudeFromCoordinate(const struct Coordinate* thisCoord)
+floatDegree longitudeFromCoordinate(const Coordinate* thisCoord)
 {
     return floatFromLongDegree((thisCoord->dLongitude), (thisCoord->mLongitude));
 }
 
-floatDegree toDegree(const floatDegree rAngle) { return (floatDegree)(((rAngle)*180) / M_PI); }
-
-floatDegree toRadian(const floatDegree dAngle) { return (floatDegree)(((dAngle)*M_PI) / 180); }
-
-floatDegree rHaversine(const floatDegree rAngle)
+floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA, const struct Coordinate* coordB)
 {
-    return (floatDegree)(pow(sin((rAngle) / 2), 2));
+    floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
+    floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
+    floatDegree rLatB = toRadian(latitudeFromCoordinate(coordB));
+    floatDegree rLonB = toRadian(longitudeFromCoordinate(coordB));
+
+    return distanceCirclePath(rLatA, rLonA, rLatB, rLonB);
 }
 
-floatDegree rInverseHaversine(const floatDegree rAngle)
+floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
+                                     const struct Coordinate* coordB)
 {
-    return (floatDegree)(2 * atan2(sqrt((rAngle)), (sqrt(1 - (rAngle)))));
+    floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
+    floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
+    floatDegree rLatB = toRadian(latitudeFromCoordinate(coordB));
+    floatDegree rLonB = toRadian(longitudeFromCoordinate(coordB));
+
+    return distanceSphereCosine(rLatA, rLonA, rLatB, rLonB);
 }
 
-floatDegree distanceCirclePath(const struct Coordinate* coordA, const struct Coordinate* coordB)
+floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA, const struct Coordinate* coordB)
 {
-    // Get latitudeA in radians
-    floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
-    floatDegree rLatA = toRadian(tempValue);
-    // Get latitudeB in radians
-    tempValue = longitudeFromCoordinate(&(*coordA));
-    floatDegree rLonA = toRadian(tempValue);
+    floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
+    floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
+    floatDegree rLatB = toRadian(latitudeFromCoordinate(coordB));
+    floatDegree rLonB = toRadian(longitudeFromCoordinate(coordB));
 
-    // Get longitudeB in radians
-    tempValue = latitudeFromCoordinate(&(*coordB));
-    floatDegree rLatB = toRadian(tempValue);
-
-    // Get longitudeA in radians
-    tempValue = longitudeFromCoordinate(&(*coordB));
-    floatDegree rLonB = toRadian(tempValue);
-
-    // Find tempValue = deltaLat = rLatA - rLatB
-    tempValue = rLatB - rLatA;
-    // Calculate rHaversine() of deltaLat and store in rHaversine
-    floatDegree rHaver = rHaversine(tempValue);
-
-    // Find tempValue = deltaLon = rLonA - rLonB
-    tempValue = rLonB - rLonA;
-    // Calculate cos(rLatA)*cos(rLatB)*rHaversine(deltaLong) and add to rHaversine
-    rHaver = rHaver + (floatDegree)(cos(rLatA) * cos(rLatB)) * rHaversine(tempValue);
-
-    // Compute inverse rHaversine, multiply by radius of earth and return the greater circle path
-    // value
-    rHaver = (floatDegree)earthRadiusM * rInverseHaversine(rHaver);
-    return rHaver;
-}
-
-floatDegree distanceSphereCosine(const struct Coordinate* coordA, const struct Coordinate* coordB)
-{
-    // Get latitudeA in radians
-    floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
-    floatDegree rLatA = toRadian(tempValue);
-
-    // Get latitudeB in radians
-    tempValue = longitudeFromCoordinate(&(*coordA));
-    floatDegree rLonA = toRadian(tempValue);
-
-    // Get longitudeB in radians
-    tempValue = latitudeFromCoordinate(&(*coordB));
-    floatDegree rLatB = toRadian(tempValue);
-
-    // Get longitudeA in radians
-    tempValue = longitudeFromCoordinate(&(*coordB));
-    floatDegree rLonB = toRadian(tempValue);
-
-    // Find tempValue = deltaLon = rLonA - rLonB
-    tempValue = rLonB - rLonA;
-    // Calculate part of the inner product of law of spherical cosines and store in tempValue
-    tempValue = (floatDegree)(cos(rLatA) * cos(rLatB) * cos(tempValue));
-
-    // Calculate rest of inner product of law of spherical cosines and store in tempValue
-    tempValue = tempValue + (floatDegree)(sin(rLatA) * sin(rLatB));
-
-    // Return distance as a function of inverse cos() of tempValue times radius of earth
-    return (floatDegree)earthRadiusM * (floatDegree)acos(tempValue);
-}
-
-floatDegree distanceEquiRect(const struct Coordinate* coordA, const struct Coordinate* coordB)
-{
-    // Get latitudeA in radians
-    floatDegree tempValue = latitudeFromCoordinate(&(*coordA));
-    floatDegree rLatA = toRadian(tempValue);
-
-    // Get latitudeB in radians
-    tempValue = longitudeFromCoordinate(&(*coordA));
-    floatDegree rLonA = toRadian(tempValue);
-
-    // Get longitudeB in radians
-    tempValue = latitudeFromCoordinate(&(*coordB));
-    floatDegree rLatB = toRadian(tempValue);
-
-    // Get longitudeA in radians
-    tempValue = longitudeFromCoordinate(&(*coordB));
-    floatDegree rLonB = toRadian(tempValue);
-
-    // Find tempValue = avgLat = (rLatA + rLatB)/2
-    tempValue = (rLatA + rLatB) / 2;
-    // Calculate x = deltaLon * cos(avgLat) for equirectangular approximation
-    tempValue = (rLonA - rLonB) * (floatDegree)cos(tempValue);
-
-    // Calculate y = deltaLat = rLatA - rLatB for equirectangular approximation
-    floatDegree rY = (rLatA - rLatB);
-
-    // Return earth radius * sqrt(x^2+y^2)
-    return (floatDegree)earthRadiusM * (floatDegree)sqrt(pow(tempValue, 2) + pow(rY, 2));
-}
-
-floatDegree dInitialHeading(const floatDegree dLatA, const floatDegree dLonA,
-                            const floatDegree dLatB, const floatDegree dLonB)
-{
-    floatDegree rLatA = toRadian(dLatA);
-    floatDegree rLonA = toRadian(dLonA);
-    floatDegree rLatB = toRadian(dLatB);
-    floatDegree rLonB = toRadian(dLonB);
-
-    floatDegree rY = sin(rLonB - rLonA) * cos(rLatB);
-
-    floatDegree rX = (cos(rLatA) * sin(rLatB)) - (sin(rLatA) * cos(rLatB) * cos(rLonB - rLonA));
-
-    floatDegree dBearing = fmodf(toDegree(atan2f(rY, rX) + 180), 360);
-
-    return dBearing;
+    return distanceEquiRect(rLatA, rLonA, rLatB, rLonB);
 }
 
 floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB)

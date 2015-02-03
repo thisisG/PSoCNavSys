@@ -75,6 +75,9 @@
     <ClCompile Include="serialcom.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="navmath.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="navfunctions.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="serialcom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="navmath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,29 +31,21 @@ remarks:
 
 #define NAVFUNCDEBUG
 
-// Standard library includes
-#include <math.h> // Need atan2(), cos(), sin()
-
 // Local includes
 #ifdef __cplusplus
 extern "C" {
 #endif
 #include <stdint.h>
-#include "navtypes.h"
 
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
+
+#include "navtypes.h"
+#include "navmath.h"
 #ifdef __cplusplus
 }
 #endif
-
-// Define M_PI if not defined previously, note it is a double since no f appended
-#ifndef M_PI
-#define M_PI 3.1415926535
-#endif
-
-static const double earthRadiusM = 6371008.7714; // Average earth radius in metres
 
 void zeroCoordinate(Coordinate* coord);
 void initGpsBuffer(GpsBuffer* gpsB);
@@ -61,28 +53,12 @@ void initSerialBuffer(SerialBuffer* serialB);
 void zeroSystemTime(SystemTime* time);
 void zeroNavState(NavState* navS);
 
-void updateNavState(NavState *navS);
+void updateNavState(NavState* navS);
 
 #ifdef _WIN32
 void printCoordData(Coordinate* coord);
 void printCurrentCoordAndHeading(NavState* navS);
 #endif // _WIN32
-
-/* floatFromLongDegree();
-input:
-    signed16Degree degree
-    signed32Degree minutes
-output:
-    (value) floatDegree fracDegree
-remarks:
-    Converts a set of two numbers representing a coordinate to a floating point value with
-fractional parts.
-    Works for both positive and negative degree.
-    Note that the value calculated could be both degrees or radians, so care should be taken to
-    convert the results to the appropriate form before performing mathematical operations on the
-    result.
-*/
-floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degree minutes); // OK
 
 /* latitudeFromCoordinate();
 input:
@@ -108,13 +84,7 @@ to ensure that this is upheld throughout the program.
 */
 floatDegree longitudeFromCoordinate(const Coordinate* thisCoord); // OK
 
-floatDegree toDegree(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
-floatDegree toRadian(const floatDegree dAngle); // TO TEST WITH BORDERLINE VALUES
-
-floatDegree rHaversine(const floatDegree rAngle);        // TO TEST WITH BORDERLINE VALUES
-floatDegree rInverseHaversine(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
-
-/* distanceCirclePath();
+/* distanceCirclePathAtoB();
 input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
@@ -123,10 +93,11 @@ output:
 remarks:
     Returns the great circle distance between two coordinate points assuming an average earth radius
 */
-floatDegree distanceCirclePath(const struct Coordinate* coordA,
-                               const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
+floatDegree
+distanceCirclePathAtoB(const struct Coordinate* coordA,
+                       const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
-/* distanceSphereCosine();
+/* distanceSphereCosineAtoB();
 input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
@@ -136,10 +107,10 @@ remarks:
     Returns the spherical cosine law distance between two coordinate points assuming an average
 earth radius
 */
-floatDegree distanceSphereCosine(const Coordinate* coordA,
-                                 const Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
+floatDegree distanceSphereCosineAtoB(const Coordinate* coordA,
+                                     const Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
-/* distanceEquiRect();
+/* distanceEquiRectAtoB();
 input:
     (reference) Coordinate coordA
     (reference) Coordinate coordB
@@ -149,11 +120,8 @@ remarks:
     Returns the equirectangular approximation of distance between two coordinate points assuming an
     average earth radius
 */
-floatDegree distanceEquiRect(const Coordinate* coordA,
-                             const Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
-floatDegree dInitialHeading(const floatDegree dLatA, const floatDegree dLonA,
-                            const floatDegree dLatB, const floatDegree dLonB);
+floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA, const struct Coordinate* coordB);
 
 floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB);
 
