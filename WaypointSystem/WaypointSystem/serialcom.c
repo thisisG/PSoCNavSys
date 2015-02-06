@@ -2,7 +2,6 @@
 extern "C" {
 #endif
 #include "serialcom.h"
-#include "nmeafunctions.h"
 #ifdef __cplusplus
 }
 #endif
@@ -21,12 +20,18 @@ void initUartBuffer(UartBuffer* uartBuff)
 ssize_t uartOutputWriter(void* outCookie, const char* buffer, size_t size)
 {
     UartBuffer* cookie = (UartBuffer*)outCookie;
+    ssize_t byteCount = 0;
+    int headPlusOne = ((cookie->outputHead) + 1) % ((cookie->bufferLength) - 1);
 
-    //// Ensure that the buffer will not over flor
-    // if (outCookie->)
-    //{
-
-    //}
+    while ((headPlusOne != (cookie->outputHead)) && (byteCount < size))
+    {
+        cookie->outputHead = headPlusOne;
+        cookie->outputBuffer[(cookie->outputHead)] = buffer[byteCount];
+        headPlusOne = (headPlusOne + 1) % ((cookie->bufferLength) - 1);
+        ++byteCount;
+    }
+    // Might be an idea to add an error check here in case the buffer do overflow
+    return byteCount;
 }
 
 void navDataToSerialBuffer(NavState* navS)
@@ -44,6 +49,7 @@ void navDataToSerialBuffer(NavState* navS)
               currentNmeaLon, currentHeading, headingToWp, distanceToWp, nextWpNmeaLat,
               nextWpNmeaLon);
 #endif // _WIN32
+
 #ifdef __GNUC__ // ARM specific implementation
     snprintf(navS->serialBuffer.serialStringBuffer, navS->serialBuffer.serialBufferLength,
              "hhmmss.ss,%4.4f,%5.4f,%3.3f,%3.3f,%8.1f,%4.4f,%4.4f\n", currentNmeaLat,

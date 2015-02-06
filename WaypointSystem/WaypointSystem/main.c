@@ -1,12 +1,13 @@
 #include "config.h"
 
-#include <stdio.h>
 #include <iostream>
 #include <iomanip>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include <stdio.h>
+
 #include "navfunctions.h"
 #include "navtypes.h"
 #include "./nmea/nmea.h"
@@ -26,7 +27,7 @@ void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)
     floatDegree tempFloatDeg = 0;
     signed16Degree tempSig16Deg = 0;
     signed32Degree tempSig32Deg = 0;
-
+    
     tempSig16Deg = (signed16Degree)csvLat;
     coord.dLatitude = tempSig16Deg;
     tempFloatDeg = csvLat - tempSig16Deg;
@@ -395,6 +396,13 @@ int main()
         std::cout << "Created string:\n" << myNavState.serialBuffer.serialStringBuffer;
         std::cout << std::endl;
     }
+
+    /*
+    Test the UartBuffer cookie interactions
+    */
+
+    //cookie_io_functions_t
+    
 
     /*
     Random test area
