@@ -15,10 +15,12 @@ extern "C" {
 
 #define UART_BUFFER_LENGTH (128)
 
+// Typedefs required so that VS2013 will not complain, included on a POSIX system such as the PSoC
 #ifdef _WIN32
 typedef int ssize_t;
 typedef int64_t _off_t;
 typedef _off_t off_t;
+typedef int64_t off64_t;
 // START COPYRIGHT NOTICE UoC
 /*
 * Copyright (c) 1990 The Regents of the University of California.
@@ -69,7 +71,10 @@ typedef struct UartBuffer
 
 void initUartBuffer(UartBuffer* uartBuff);
 
-ssize_t uartOutputWriter();
+ssize_t uartWriter(void* outCookie, const char* buffer, size_t size);
+ssize_t uartReader(void* inCookie, char* buffer, size_t size);
+int uartSeeker(void *cookie, off64_t *position, int whence);
+int cleaner(void *cookie);
 
 void navDataToSerialBuffer(NavState* navS);
 
