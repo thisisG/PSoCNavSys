@@ -65,7 +65,7 @@ typedef struct SerialBuffer
 {
     int serialBufferLength;
     char serialStringBuffer[SERIAL_STR_BFR_LEN];
-};
+}SerialBuffer;
 
 /* STRUCT SYSTEMTIME
 ADS that contain time information, note that this is the same structure as RTC_TIME_DATE used in

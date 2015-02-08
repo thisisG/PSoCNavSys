@@ -6,6 +6,9 @@ extern "C" {
 #endif // __cplusplus
 #include <stdio.h>
 #include <stddef.h>
+#ifdef __GNUC__
+#include <sys/types.h>
+#endif // __GNUC__
 #include "navtypes.h"
 #include "navFunctions.h"
 #include "nmeafunctions.h"
@@ -55,8 +58,11 @@ typedef struct
     cookie_close_function_t* close;
 } cookie_io_functions_t;
 // END COPYRIGHT NOTICE UoC
-
 #endif // _WIN32
+
+#ifdef __GNUC__
+typedef _off64_t off64_t;
+#endif // __GNUC__
 
 typedef struct UartBuffer
 {
@@ -73,8 +79,8 @@ void initUartBuffer(UartBuffer* uartBuff);
 
 ssize_t uartWriter(void* outCookie, const char* buffer, size_t size);
 ssize_t uartReader(void* inCookie, char* buffer, size_t size);
-int uartSeeker(void *cookie, off64_t *position, int whence);
-int cleaner(void *cookie);
+int uartSeeker(void *cookie, off_t *position, int whence);
+int uartCleaner(void *cookie);
 
 void navDataToSerialBuffer(NavState* navS);
 
