@@ -49,14 +49,14 @@ ssize_t uartReader(void* inCookie, char* buffer, size_t size)
     return byteCount;
 }
 
-int uartSeeker(void *cookie, off64_t *position, int whence)
+int uartSeeker(void* cookie, off64_t* position, int whence)
 {
     // This function SHOULD normally be unused as the buffer is a FIFO buffer and should do cyclic
     // read/write on the buffer. Return -1 as this is interpreted as an error.
     return -1;
 }
 
-int cleaner(void *cookie)
+int cleaner(void* cookie)
 {
     // Since we are using statically assigned memory there should be no need for closing the file.
     // Return -1 as this is interpreted as an error.
