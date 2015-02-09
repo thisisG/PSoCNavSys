@@ -830,7 +830,7 @@
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@C/C++@Optimization@Inline Functions" v="False" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@C/C++@Optimization@Optimization Level" v="None" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@C/C++@Optimization@Link Time Optimization" v="False" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@C/C++@Command Line@Command Line" v="-std=gnu99" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@C/C++@Command Line@Command Line" v="" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@Library Generation@Command Line@Command Line" v="" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@Linker@General@Additional Libraries" v="" />
 <name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM3@Linker@General@Additional Library Directories" v="" />
@@ -1075,7 +1075,7 @@
 <last_selected_tab v="Cypress" />
 <component_dependent_projects_generation v="(69eeda1b-ded5-4da3-a74d-3a98f2d5d4ab , 2.1PR) | (b1a3f413-e018-46a5-a51c-20818b2f118e , 3.0) | (cd381074-8dad-4f43-bb88-7719b3e16126 , 2.1) | (29420278-6fcc-46a7-a651-999ec5c253d2 , 2.1)" />
 <WriteAppVersionLastSavedWith v="3.1.0.1570" />
-<WriteAppMarketingVersionLastSavedWith v=" 3.1" />
+<WriteAppMarketingVersionLastSavedWith v=" 3.1 Component Pack 1" />
 <project_id v="bdd6ab9e-e7b4-4257-9fd4-237d80a86e8d" />
 </CyGuid_49cfd574-032a-4a64-b7be-d4eeeaf25e43>
 </CyGuid_60697ce6-dce2-4816-8680-4de0635742eb>

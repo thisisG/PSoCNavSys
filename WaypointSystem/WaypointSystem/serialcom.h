@@ -6,9 +6,7 @@ extern "C" {
 #endif // __cplusplus
 #include <stdio.h>
 #include <stddef.h>
-#ifdef __GNUC__
 #include <sys/types.h>
-#endif // __GNUC__
 #include "navtypes.h"
 #include "navFunctions.h"
 #include "nmeafunctions.h"
@@ -18,11 +16,10 @@ extern "C" {
 
 #define UART_BUFFER_LENGTH (128)
 
-// Typedefs required so that VS2013 will not complain, included on a POSIX system such as the PSoC
+// Typedefs required so that VS2013 will not complain, included on a POSIX
+// system such as the PSoC
 #ifdef _WIN32
 typedef int ssize_t;
-typedef int64_t _off_t;
-typedef _off_t off_t;
 typedef int64_t off64_t;
 // START COPYRIGHT NOTICE UoC
 /*
@@ -44,7 +41,8 @@ typedef int64_t off64_t;
 *	@(#)stdio.h	5.3 (Berkeley) 3/15/86
 */
 typedef ssize_t cookie_read_function_t(void* __cookie, char* __buf, size_t __n);
-typedef ssize_t cookie_write_function_t(void* __cookie, const char* __buf, size_t __n);
+typedef ssize_t cookie_write_function_t(void* __cookie, const char* __buf,
+                                        size_t __n);
 typedef int cookie_seek_function_t(void* __cookie, off_t* __off, int __whence);
 typedef int cookie_close_function_t(void* __cookie);
 
@@ -68,19 +66,19 @@ typedef struct UartBuffer
 {
     char outputBuffer[UART_BUFFER_LENGTH];
     char inputBuffer[UART_BUFFER_LENGTH];
-    int bufferLength;
-    int outputHead;
-    int outputTail;
-    int inputHead;
-    int inputTail;
+    size_t bufferLength;
+    size_t outputHead;
+    size_t outputTail;
+    size_t inputHead;
+    size_t inputTail;
 } UartBuffer;
 
 void initUartBuffer(UartBuffer* uartBuff);
 
 ssize_t uartWriter(void* outCookie, const char* buffer, size_t size);
 ssize_t uartReader(void* inCookie, char* buffer, size_t size);
-int uartSeeker(void *cookie, off_t *position, int whence);
-int uartCleaner(void *cookie);
+int uartSeeker(void* cookie, off_t* position, int whence);
+int uartCleaner(void* cookie);
 
 void navDataToSerialBuffer(NavState* navS);
 

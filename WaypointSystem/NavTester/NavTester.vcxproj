@@ -47,16 +47,17 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>./../WaypointSystem/lib/nmea_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,10 +81,51 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\WaypointSystem\config.h" />
+    <ClInclude Include="..\WaypointSystem\coordimport.h" />
+    <ClInclude Include="..\WaypointSystem\csv.h" />
+    <ClInclude Include="..\WaypointSystem\gpsemulator.h" />
+    <ClInclude Include="..\WaypointSystem\gpsinterface.h" />
+    <ClInclude Include="..\WaypointSystem\navfunctions.h" />
+    <ClInclude Include="..\WaypointSystem\navmath.h" />
+    <ClInclude Include="..\WaypointSystem\navsys.h" />
+    <ClInclude Include="..\WaypointSystem\navtypes.h" />
+    <ClInclude Include="..\WaypointSystem\nmeafunctions.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\config.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\context.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\generate.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\generator.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\gmath.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\info.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\nmea.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\parse.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\parser.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\sentence.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\time.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\tok.h" />
+    <ClInclude Include="..\WaypointSystem\nmea\units.h" />
+    <ClInclude Include="..\WaypointSystem\serialcom.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\WaypointSystem\gpsemulator.cpp" />
+    <ClCompile Include="..\WaypointSystem\gpsinterface.c" />
+    <ClCompile Include="..\WaypointSystem\navfunctions.c" />
+    <ClCompile Include="..\WaypointSystem\navmath.c" />
+    <ClCompile Include="..\WaypointSystem\navtypes.c" />
+    <ClCompile Include="..\WaypointSystem\nmeafunctions.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\context.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\generate.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\generator.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\gmath.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\info.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\parse.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\parser.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\sentence.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\time.c" />
+    <ClCompile Include="..\WaypointSystem\nmea\tok.c" />
+    <ClCompile Include="..\WaypointSystem\serialcom.c" />
     <ClCompile Include="NavTester.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
