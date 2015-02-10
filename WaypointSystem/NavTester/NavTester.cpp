@@ -26,11 +26,11 @@ int main()
     zeroNavState(&myNavState);
 
     GpsEmulator myGpsEmulator;
-    myGpsEmulator.parseCsvToInfoVector("./../TestData/csvtestC.csv");
+    myGpsEmulator.parseCsvToInfoVector("./../TestData/csvtestD.csv");
     // myGpsEmulator.generatePseudoRandomData();
 
     std::ofstream myFile;
-    myFile.open("./../TestData/outcsvtestC.csv",
+    myFile.open("./../TestData/outcsvtestD.csv",
                 std::ios_base::out | std::ios_base::binary);
 
     floatDegree lastLat = NAN;

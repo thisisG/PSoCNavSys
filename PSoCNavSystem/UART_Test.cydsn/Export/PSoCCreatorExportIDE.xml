@@ -97,6 +97,12 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_GPS_BOOT.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_GPS_IntClock.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\UART_GPS_IntClock.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_LCDPort_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_LCDPort.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_LCDPort.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Export\ARM_GCC_Generic">
