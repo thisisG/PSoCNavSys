@@ -422,8 +422,48 @@ int main()
     Test the UartBuffer cookie interactions
     */
 
-    // cookie_io_functions_t
+    UartBuffer myUartBuffer;
+    initUartBuffer(&myUartBuffer);
+    char uartCharBuff[6] = "12345";
+    std::cout << "strlen(uartCharBuff): " << strlen(uartCharBuff) << std::endl;
+    std::cout << "written bytes: "
+              << uartWriter(&myUartBuffer, uartCharBuff, strlen(uartCharBuff))
+              << std::endl;
 
+    std::cout << "strlen(myUartBuffer.outputBuffer): "
+              << strlen(myUartBuffer.outputBuffer) << std::endl;
+    std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
+              << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout
+        << "Move tail to head position to test continuing writing to the buffer"
+        << std::endl;
+    myUartBuffer.outputTail = myUartBuffer.outputHead;
+    std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
+              << std::endl;
+    std::cout << "strlen(uartCharBuff): " << strlen(uartCharBuff) << std::endl;
+    std::cout << "written bytes: "
+              << uartWriter(&myUartBuffer, uartCharBuff, strlen(uartCharBuff))
+              << std::endl;
+    std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
+              << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "Move tail to head and write to the buffer to test "
+                 "overwriting parts of it" << std::endl;
+    myUartBuffer.outputTail = myUartBuffer.outputHead;
+    std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
+        << std::endl;
+    char uartCharBuffB[10] = "abcd";
+    std::cout << "strlen(uartCharBuff): " << strlen(uartCharBuffB) << std::endl;
+    std::cout << "written bytes: "
+        << uartWriter(&myUartBuffer, uartCharBuffB, strlen(uartCharBuffB))
+        << std::endl;
+    std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
+        << std::endl;
     /*
     Random test area
     */

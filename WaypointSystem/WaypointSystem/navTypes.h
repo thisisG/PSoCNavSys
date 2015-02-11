@@ -9,7 +9,7 @@ extern "C" {
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
-//#include "navfunctions.h"
+#include "config.h"
 
 #ifdef __cplusplus
 }
@@ -32,9 +32,6 @@ typedef int32_t signed32Degree;
 typedef uint32_t unsigned32Degree;
 
 typedef int8_t coordinateCode;
-
-#define GPS_STR_BFR_LEN 128
-#define SERIAL_STR_BFR_LEN 90
 
 /* STRUCT COORDINATE
     ADS that contain coordinate information.

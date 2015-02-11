@@ -7,14 +7,13 @@ extern "C" {
 #include <stdio.h>
 #include <stddef.h>
 #include <sys/types.h>
+#include "config.h"
 #include "navtypes.h"
 #include "navFunctions.h"
 #include "nmeafunctions.h"
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-
-#define UART_BUFFER_LENGTH (128)
 
 // Typedefs required so that VS2013 will not complain, included on a POSIX
 // system such as the PSoC

@@ -26,12 +26,11 @@ floatDegree nmeaLongitudeFromCoord(const struct Coordinate* thisCoord)
     return nmeaFloatFromLongDegree((thisCoord->dLongitude),
                                    (thisCoord->mLongitude));
 }
-
 floatDegree floatFromNmeaDegree(const floatDegree nmeaDeg)
-{
-    // Get the degrees using typecasts
-    floatDegree tempValue = (floatDegree)(signed32Degree)(nmeaDeg / 100);
-    // Extract minutes and add to tempValue as fractional degrees
+{ // Get the degrees using typecasts
+    floatDegree tempValue = (floatDegree)(signed32Degree)(
+        nmeaDeg
+        / 100); // Extract minutes and add to tempValue as fractional degrees
     tempValue = tempValue + ((nmeaDeg - (100 * tempValue)) / 60);
     return tempValue;
 }

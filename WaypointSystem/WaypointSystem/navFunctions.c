@@ -60,8 +60,9 @@ void updateNavState(NavState* navS)
 void printCoordData(Coordinate* coord)
 {
     printf("Coordinate data: \n");
-    printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude, coord->mLatitude,
-           coord->dLongitude, coord->mLongitude, coord->priority);
+    printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude,
+           coord->mLatitude, coord->dLongitude, coord->mLongitude,
+           coord->priority);
 }
 
 void printCurrentCoordAndHeading(NavState* navS)
@@ -81,10 +82,12 @@ floatDegree latitudeFromCoordinate(const struct Coordinate* thisCoord)
 
 floatDegree longitudeFromCoordinate(const Coordinate* thisCoord)
 {
-    return floatFromLongDegree((thisCoord->dLongitude), (thisCoord->mLongitude));
+    return floatFromLongDegree((thisCoord->dLongitude),
+                               (thisCoord->mLongitude));
 }
 
-floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA, const struct Coordinate* coordB)
+floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,
+                                   const struct Coordinate* coordB)
 {
     floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
     floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -105,7 +108,8 @@ floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
     return distanceSphereCosine(rLatA, rLonA, rLatB, rLonB);
 }
 
-floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA, const struct Coordinate* coordB)
+floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
+                                 const struct Coordinate* coordB)
 {
     floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
     floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -117,8 +121,9 @@ floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA, const struct C
 
 floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB)
 {
-    return dInitialHeading(latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
-                           latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
+    return dInitialHeading(
+        latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
+        latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
 }
 
 floatDegree dHeadingToCurrentWP(NavState* navS)

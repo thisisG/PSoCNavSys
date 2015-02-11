@@ -27,23 +27,20 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
     ssize_t byteCount = 0;
     // Disable intr
     size_t buffLength = outWriteCookie->bufferLength;
-    size_t headPlusOne = ((outWriteCookie->outputHead) + 1) % (buffLength - 1);
+    size_t startHead = outWriteCookie->outputHead;
+    size_t headPlusOne = (startHead + 1) % (buffLength - 1);
     // Check if size is larger than effective buffer length, return error (-1)
     // if it is.
     if (size > (buffLength - 1))
     {
+        // DEBUG
+        printf("size error\n");
         return -1;
     }
-    // Check if an overflow is expected, return error (-1) if it is.
-    else if (((headPlusOne + size) % (buffLength - 1))
-             >= outWriteCookie->outputTail)
-    {
-        return -1;
-    }
-    // If size is correct and no overflow is expected, fill the buffer.
+    // If size is correct fill the buffer.
     else
     {
-        while (byteCount < size)
+        while ((byteCount < size) && (headPlusOne != outWriteCookie->outputTail))
         {
             outWriteCookie->outputBuffer[(outWriteCookie->outputHead)]
                 = buffer[byteCount];
@@ -51,6 +48,13 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
             outWriteCookie->outputHead = headPlusOne;
             headPlusOne = (headPlusOne + 1) % (buffLength - 1);
         }
+    }
+    // Check if we wrote all the data, if not reset the head to the starting
+    // position and set byteCount to -1 to indicate an error while writing.
+    if (byteCount != size)
+    {
+        outWriteCookie->outputHead = startHead;
+        byteCount = -1;
     }
     // Enable intr
     return byteCount;
