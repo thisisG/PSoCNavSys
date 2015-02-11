@@ -1,14 +1,17 @@
 #include <Arduino.h>
+#include <HardwareSerial.h>
 
-HardwareSerial PCSerial;
-HardwareSerial PSoCSerial;
+HardwareSerial *PCSerial;
+HardwareSerial *PSoCSerial;
 
-static const boolean echo = false;
+static const boolean echo = true;
 
 void setup()
 {
-    PCSerial.begin(9600);
-    PSoCSerial.begin(9600);
+    PCSerial = &Serial;
+    PCSerial->begin(9600);
+    PSoCSerial = &Serial1;
+    PSoCSerial->begin(9600);
 }
 
 void loop()
@@ -19,21 +22,21 @@ void loop()
 
     if (echo)
     {
-        if (PCSerial.available() > 0)
+        if (PCSerial->available() > 0)
         {
-            charFromPC = PCSerial.read();
-            PSoCSerial.print(charFromPC);
+            charFromPC = PCSerial->read();
+            PSoCSerial->print(charFromPC);
         }
-        if (PSoCSerial.available() > 0)
+        if (PSoCSerial->available() > 0)
         {
-            charFromPSoC = PSoCSerial.read();
-            PCSerial.print(charFromPSoC);
+            charFromPSoC = PSoCSerial->read();
+            PCSerial->print(charFromPSoC);
         }
     }
     else if (counter <= 2)
     {
-        PCSerial.println("a");
-        PSoCSerial.println("b");
+        PCSerial->print('a');
+        PSoCSerial->print('b');
         delay(200);
         counter++;
     }
