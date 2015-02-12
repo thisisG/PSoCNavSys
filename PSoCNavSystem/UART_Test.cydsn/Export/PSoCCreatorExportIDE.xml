@@ -48,6 +48,7 @@
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navtypes.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\config.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Generated_Source\PSoC5">

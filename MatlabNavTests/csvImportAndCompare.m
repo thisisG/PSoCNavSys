@@ -53,7 +53,7 @@ plot(errorDistanceB, 'r', 'LineWidth', 2)
 figure
 subplot(2,1,1)
 plot(wgsDistanceC, errorDistanceC, 'r', 'LineWidth', 2)
-xlabel('wsg84Distance [m]')
+xlabel('wsg84Distance [m]') 
 ylabel('error [m]')
 title('Error in distance calculations by varying longitude from 0 to 45 degrees');
 subplot(2,1,2)

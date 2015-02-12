@@ -14,8 +14,7 @@
 #include "serialcom.h"
 
 /* Global variables and pointers */
-UartBuffer myUartBuffer;
-cookie_io_functions_t uartIOFunctions;
+
 
 int main()
 {
@@ -29,10 +28,16 @@ int main()
     LCD_Position(0u, 0u);
     LCD_PrintString("UART Test!");
     
-    // UART Setup
-    UART_GPS_Start();
+    // Navsystem setup
+    struct NavState myNavState;
+    zeroNavState(&myNavState);
     
+    // UART Setup
+    UartBuffer myUartBuffer;
     initUartBuffer(&myUartBuffer);
+    
+    UART_GPS_Start(&myUartBuffer);
+    cookie_io_functions_t uartIOFunctions;
     uartIOFunctions.close = uartCleaner;
     uartIOFunctions.read = uartReader;
     uartIOFunctions.seek = uartSeeker;

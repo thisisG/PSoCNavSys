@@ -9,14 +9,14 @@ extern "C" {
 #include <sys/types.h>
 #include "config.h"
 #include "navtypes.h"
-#include "navFunctions.h"
+#include "navfunctions.h"
 #include "nmeafunctions.h"
 #ifdef __cplusplus
 }
 #endif // __cplusplus
 
-// Typedefs required so that VS2013 will not complain, included on a POSIX
-// system such as the PSoC
+// Typedefs required so that VS2013 will not complain, these should be included
+// on a POSIX system such as the PSoC
 #ifdef _WIN32
 typedef int ssize_t;
 typedef int64_t off64_t;

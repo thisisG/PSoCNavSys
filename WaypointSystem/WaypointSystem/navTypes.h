@@ -15,11 +15,12 @@ extern "C" {
 }
 #endif // __cplusplus
 
-// Change this type to double if additional precision is required, note that the PSoC does not have
-// an FPU hence a double will take even longer to calculate than a float. Best to restrict it to
-// floats unless we need the extra precision of a double. Another alternative would be to use a
-// fixed point library to do these calculations, but while this will increase the speed of the
-// calculation it will also reduce the precision.
+// Change this type to double if additional precision is required, note that the
+// PSoC does not have an FPU hence a double will take even longer to calculate
+// than a float. Best to restrict it to floats unless we need the extra
+// precision of a double. Another alternative would be to use a fixed point
+// library to do these calculations, but while this will increase the speed of
+// the calculation it will also reduce the precision.
 typedef float floatDegree;
 
 typedef int8_t signed8Degree;
@@ -34,7 +35,7 @@ typedef uint32_t unsigned32Degree;
 typedef int8_t coordinateCode;
 
 /* STRUCT COORDINATE
-    ADS that contain coordinate information.
+ADS that contain coordinate information.
 */
 typedef struct Coordinate
 {
@@ -62,10 +63,11 @@ typedef struct SerialBuffer
 {
     int serialBufferLength;
     char serialStringBuffer[SERIAL_STR_BFR_LEN];
-}SerialBuffer;
+} SerialBuffer;
 
 /* STRUCT SYSTEMTIME
-ADS that contain time information, note that this is the same structure as RTC_TIME_DATE used in
+ADS that contain time information, note that this is the same structure as
+RTC_TIME_DATE used in
 PSoC Creator for time interactions.
 */
 typedef struct SystemTime
@@ -81,16 +83,17 @@ typedef struct SystemTime
 } SystemTime;
 
 /* STRUCT NAVSTATE
-ADS that contain the navigation status of the system. For a single platform there should normally
-only be one instance of this ADS which contains the navigation state, variables and buffers needed
-for the system to function.
+ADS that contain the navigation status of the system. For a single platform
+there should normally only be one instance of this ADS which contains the
+navigation state, variables and buffers needed for the system to function.
 */
 typedef struct NavState
 {
     struct GpsBuffer gpsBuffer;
     struct SerialBuffer serialBuffer;
     struct Coordinate currentLocation;
-    struct Coordinate nextWaypoint; // This might be changed to a waypoint stack / queue later
+    struct Coordinate
+        nextWaypoint; // This might be changed to a waypoint stack / queue later
     struct SystemTime time;
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
