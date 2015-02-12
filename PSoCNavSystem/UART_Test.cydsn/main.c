@@ -13,13 +13,8 @@
 #include <stdio.h>
 #include "serialcom.h"
 
-/*
-** Setup here
-*/
-
-
+/* Global variables and pointers */
 UartBuffer myUartBuffer;
-
 cookie_io_functions_t uartIOFunctions;
 
 int main()
@@ -38,7 +33,6 @@ int main()
     UART_GPS_Start();
     
     initUartBuffer(&myUartBuffer);
-    
     uartIOFunctions.close = uartCleaner;
     uartIOFunctions.read = uartReader;
     uartIOFunctions.seek = uartSeeker;
@@ -61,6 +55,7 @@ int main()
                  LCD_Position(1,0);
             }
             LCD_PutChar(aChar);
+            UART_GPS_PutChar(aChar);
         }
         
     }
