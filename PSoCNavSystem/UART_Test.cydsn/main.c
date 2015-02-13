@@ -11,7 +11,10 @@
 */
 #include <project.h>
 #include <stdio.h>
+#include <stddef.h>
 #include "serialcom.h"
+#include "GPS_RX_ISR.h"
+#include "UART_GPS.h"
 
 /* Global variables and pointers */
 
@@ -20,8 +23,7 @@ int main()
 {
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
-    // Enable global interrupts
-    CyGlobalIntEnable;
+
     
     // LCD Setup
     LCD_Start();
@@ -36,23 +38,28 @@ int main()
     UartBuffer myUartBuffer;
     initUartBuffer(&myUartBuffer);
     
-    UART_GPS_Start(&myUartBuffer);
+    GPS_RX_ISR_SETBUFF(&myUartBuffer);
+    GPS_RX_ISR_Start();
     cookie_io_functions_t uartIOFunctions;
     uartIOFunctions.close = uartCleaner;
     uartIOFunctions.read = uartReader;
     uartIOFunctions.seek = uartSeeker;
     uartIOFunctions.write = uartWriter;
     
+        // Enable global interrupts
+    CyGlobalIntEnable;
+    
     size_t lcdLength = 16;
     int counter = 0;
     char aChar = '\0';
     char uStatus = '\0';
-
+    uint8 directToLCD = 1;
     
     for(;;)
     {
-        aChar = UART_GPS_GetChar();
-        if (aChar != '\0')
+        //CyDelay(1000);
+        aChar = myUartBuffer.inputBuffer[myUartBuffer.inputTail];
+        if ((directToLCD != 0) && (aChar != '\0'))
         {
             ++counter;
             if ((counter % lcdLength-1) == 0)

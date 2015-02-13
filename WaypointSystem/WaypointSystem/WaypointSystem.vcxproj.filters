@@ -27,9 +27,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="navfunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,6 +73,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="navmath.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="waypointsystem.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

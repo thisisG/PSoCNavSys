@@ -88,7 +88,7 @@
   <ItemGroup>
     <ClCompile Include="gpsemulator.cpp" />
     <ClCompile Include="gpsinterface.c" />
-    <ClCompile Include="main.c">
+    <ClCompile Include="waypointsystem.c">
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
     <ClCompile Include="navfunctions.c" />
