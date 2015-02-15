@@ -13,22 +13,26 @@
 #include <stdio.h>
 #include <stddef.h>
 #include "serialcom.h"
+#include "navisr.h"
 #include "GPS_RX_ISR.h"
 #include "UART_GPS.h"
 
 /* Global variables and pointers */
 
 
+
 int main()
 {
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
-
+    // Disable global interrupts
+    CyGlobalIntDisable;
     
     // LCD Setup
     LCD_Start();
     LCD_Position(0u, 0u);
     LCD_PrintString("UART Test!");
+    LCD_Position(1u, 0u);
     
     // Navsystem setup
     struct NavState myNavState;
@@ -38,15 +42,20 @@ int main()
     UartBuffer myUartBuffer;
     initUartBuffer(&myUartBuffer);
     
-    GPS_RX_ISR_SETBUFF(&myUartBuffer);
-    GPS_RX_ISR_Start();
+    // Set the address to the UART buffer in the ISR
+    GPS_RX_ISR_SET_UART_BUFFER(&myUartBuffer);
+    
+    // Set the address to the ISR UART RX handler and start the ISR handling
+    GPS_RX_ISR_StartEx(GPS_RX_IRS);
+    
+    // Set up cookie functions for custom IO stream
     cookie_io_functions_t uartIOFunctions;
     uartIOFunctions.close = uartCleaner;
     uartIOFunctions.read = uartReader;
     uartIOFunctions.seek = uartSeeker;
     uartIOFunctions.write = uartWriter;
     
-        // Enable global interrupts
+    // Enable global interrupts
     CyGlobalIntEnable;
     
     size_t lcdLength = 16;
@@ -64,7 +73,7 @@ int main()
             ++counter;
             if ((counter % lcdLength-1) == 0)
             {
-                 LCD_Position(1,0);
+                 LCD_Position(1u, 0u);
             }
             LCD_PutChar(aChar);
             UART_GPS_PutChar(aChar);

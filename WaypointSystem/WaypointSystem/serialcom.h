@@ -11,6 +11,11 @@ extern "C" {
 #include "navtypes.h"
 #include "navfunctions.h"
 #include "nmeafunctions.h"
+
+#ifdef __GNUC__
+#include "GPS_RX_ISR.h"
+#endif // __GNUC__
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus
