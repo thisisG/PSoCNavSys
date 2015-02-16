@@ -28,7 +28,7 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
     
     // Disable PSoC GPS RX IRS
     #ifdef __GNUC__
-    GPS_RX_ISR_Disable();
+    GPS_TX_ISR_Disable();
     #endif // __GNUC__
     
     size_t buffLength = outWriteCookie->bufferLength;
@@ -66,24 +66,41 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
     
     // Enable PSoC GPS RX IRS
     #ifdef __GNUC__
-    GPS_RX_ISR_Enable();
+    GPS_TX_ISR_Enable();
     #endif // __GNUC__
     
     return byteCount;
 }
 
+
+/*
+** THIS FUNCTION IS WORK IN PROGRESS, RESUME ASAP
+*/
 ssize_t uartReader(void* inCookie, char* buffer, size_t size)
 {
     UartBuffer* inReadCookie = (UartBuffer*)inCookie;
     ssize_t byteCount = 0;
-
+    
+    
     // Disable PSoC GPS RX IRS
     #ifdef __GNUC__
     GPS_RX_ISR_Disable();
     #endif // __GNUC__
     
+    size_t buffLength = inReadCookie->bufferLength;
+    size_t startHead = inReadCookie->inputHead;
+    size_t headPlusOne = (startHead + 1) % (buffLength - 1);
     size_t startTail = (inReadCookie->inputTail);
 
+    if (size > (buffLength - 1))
+    {
+        #ifdef _WIN32
+        // DEBUG
+        printf("size error\n");
+        #endif // _WIN32
+        return -1;
+    }
+    
     while (((inReadCookie->inputTail) != (inReadCookie->inputHead))
            && (byteCount < size))
     {

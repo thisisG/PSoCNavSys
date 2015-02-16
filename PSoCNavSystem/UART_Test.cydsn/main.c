@@ -12,6 +12,7 @@
 #include <project.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> // For read(), write()
 #include "serialcom.h"
 #include "navisr.h"
 #include "GPS_RX_ISR.h"
@@ -58,11 +59,11 @@ int main()
     // Set up cookie functions for custom IO stream
     cookie_io_functions_t uartIOFunctions;
     uartIOFunctions.close = NULL;
-    uartIOFunctions.read = uartReader;
+    uartIOFunctions.read = &uartReader;
     uartIOFunctions.seek = NULL;
-    uartIOFunctions.write = uartWriter;
+    uartIOFunctions.write = &uartWriter;
     
-    FILE ptrCookie = *(fopencookie(&myUartBuffer, "", uartIOFunctions));
+    FILE ptrCookie = *(fopencookie(&myUartBuffer, "w+", uartIOFunctions));
     
     /*
     ** ISR setup
@@ -84,9 +85,16 @@ int main()
     {
         if (rxStringReady == 1)
         {
-             fread(&(myNavState.gpsBuffer.gpsStringBuffer),
-                   1, myNavState.gpsBuffer.gpsBufferLength, 
-                   &ptrCookie);
+            uartReader(&myUartBuffer, (myNavState.gpsBuffer.gpsStringBuffer),
+                       myNavState.gpsBuffer.gpsBufferLength - 1);
+            /*
+            ** This is currently not working. Will try to fix at a later stage 
+            ** if time allows.
+            */
+            // fread(&(myNavState.gpsBuffer.gpsStringBuffer),
+            //       1, myNavState.gpsBuffer.gpsBufferLength, 
+            //       &ptrCookie);
+            
             rxStringReady = 0;
         }
         

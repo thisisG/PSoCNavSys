@@ -14,6 +14,7 @@ extern "C" {
 
 #ifdef __GNUC__
 #include "GPS_RX_ISR.h"
+#include "GPS_TX_ISR.h"
 #endif // __GNUC__
 
 #ifdef __cplusplus
