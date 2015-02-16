@@ -26,6 +26,7 @@ void loop()
         {
             charFromPC = PCSerial->read();
             PSoCSerial->print(charFromPC);
+            //PCSerial->print(charFromPC);
         }
         if (PSoCSerial->available() > 0)
         {

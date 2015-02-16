@@ -36,6 +36,8 @@
       <Folder BuildType="BUILD" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn">
         <Files Root="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn">
           <File BuildType="BUILD" Toolchain="">.\main.c</File>
+          <File BuildType="BUILD" Toolchain="">.\navisr.c</File>
+          <File BuildType="BUILD" Toolchain="">.\navisr.h</File>
         </Files>
       </Folder>
       <Folder BuildType="BUILD" Path="C:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem">
@@ -106,6 +108,12 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_LCDPort.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_RX_ISR.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_RX_ISR.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Export\ARM_GCC_Generic">
