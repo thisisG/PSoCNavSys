@@ -18,13 +18,21 @@ void zeroCoordinate(Coordinate* coord)
 void initGpsBuffer(GpsBuffer* gpsB)
 {
     gpsB->gpsBufferLength = GPS_STR_BFR_LEN;
-    gpsB->gpsStringBuffer[0] = 0;
+    int i;
+    for(i=0 ; i < (gpsB->gpsBufferLength) ; i++)
+    {
+        gpsB->gpsStringBuffer[i] = '\0';
+    }
 }
 
 void initSerialBuffer(SerialBuffer* serialB)
 {
     serialB->serialBufferLength = SERIAL_STR_BFR_LEN;
-    serialB->serialStringBuffer[0] = 0;
+    int i;
+    for(i=0 ; i < (serialB->serialBufferLength) ; i++)
+    {
+        serialB->serialStringBuffer[i] = '\0';
+    }
 }
 
 void zeroSystemTime(SystemTime* time)
