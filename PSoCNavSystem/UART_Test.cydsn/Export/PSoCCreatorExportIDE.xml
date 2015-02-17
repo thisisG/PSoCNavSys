@@ -43,7 +43,6 @@
       <Folder BuildType="BUILD" Path="C:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem">
         <Files Root="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn">
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navfunctions.c</File>
-          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navtypes.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navfunctions.h</File>

@@ -25,35 +25,37 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
 {
     UartBuffer* outWriteCookie = (UartBuffer*)outCookie;
     ssize_t byteCount = 0;
-    
-    // Disable PSoC GPS RX IRS
-    #ifdef __GNUC__
+
+// Disable PSoC GPS TX IRS
+#ifdef __GNUC__
     GPS_TX_ISR_Disable();
-    #endif // __GNUC__
-    
-    size_t buffLength = outWriteCookie->bufferLength;
+#endif // __GNUC__
+
+    size_t cookieBuffLength = outWriteCookie->bufferLength;
     size_t startHead = outWriteCookie->outputHead;
-    size_t headPlusOne = (startHead + 1) % (buffLength - 1);
+    size_t headPlusOne = (startHead + 1) % (cookieBuffLength - 1);
+
     // Check if size is larger than effective buffer length, return error (-1)
     // if it is.
-    if (size > (buffLength - 1))
+    if (size > (cookieBuffLength - 1))
     {
-        #ifdef _WIN32
+#ifdef _WIN32
         // DEBUG
         printf("size error\n");
-        #endif // _WIN32
+#endif // _WIN32
         return -1;
     }
     // If size is correct fill the buffer.
     else
     {
-        while ((byteCount < size) && (headPlusOne != outWriteCookie->outputTail))
+        while ((byteCount < size)
+               && (headPlusOne != outWriteCookie->outputTail))
         {
             outWriteCookie->outputBuffer[(outWriteCookie->outputHead)]
                 = buffer[byteCount];
             ++byteCount;
             outWriteCookie->outputHead = headPlusOne;
-            headPlusOne = (headPlusOne + 1) % (buffLength - 1);
+            headPlusOne = (headPlusOne + 1) % (cookieBuffLength - 1);
         }
     }
     // Check if we wrote all the data, if not reset the head to the starting
@@ -63,44 +65,41 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
         outWriteCookie->outputHead = startHead;
         byteCount = -1;
     }
-    
-    // Enable PSoC GPS RX IRS
-    #ifdef __GNUC__
+
+// Enable PSoC GPS TX IRS
+#ifdef __GNUC__
     GPS_TX_ISR_Enable();
-    #endif // __GNUC__
-    
+#endif // __GNUC__
+
     return byteCount;
 }
 
-
-/*
-** THIS FUNCTION IS WORK IN PROGRESS, RESUME ASAP
-*/
+// Function to read from the UART cookie to a string buffer used to parse the
+// data received over serial.
 ssize_t uartReader(void* inCookie, char* buffer, size_t size)
 {
     UartBuffer* inReadCookie = (UartBuffer*)inCookie;
-    ssize_t byteCount = 0;
-    
-    
-    // Disable PSoC GPS RX IRS
-    #ifdef __GNUC__
+
+// Disable PSoC GPS RX IRS
+#ifdef __GNUC__
     GPS_RX_ISR_Disable();
-    #endif // __GNUC__
-    
-    size_t buffLength = inReadCookie->bufferLength;
-    size_t startHead = inReadCookie->inputHead;
-    size_t headPlusOne = (startHead + 1) % (buffLength - 1);
+#endif // __GNUC__
+
+    size_t cookieBuffSize = inReadCookie->bufferLength;
+    size_t startHead = (inReadCookie->inputHead);
     size_t startTail = (inReadCookie->inputTail);
 
-    if (size > (buffLength - 1))
+    // Logic below is likely flawed. Reimplement.
+    /*
+    if (size > (buffSize - 1))
     {
-        #ifdef _WIN32
+#ifdef _WIN32
         // DEBUG
         printf("size error\n");
         #endif // _WIN32
         return -1;
     }
-    
+
     while (((inReadCookie->inputTail) != (inReadCookie->inputHead))
            && (byteCount < size))
     {
@@ -109,12 +108,48 @@ ssize_t uartReader(void* inCookie, char* buffer, size_t size)
         ++(inReadCookie->inputTail);
         ++byteCount;
     }
+    */
 
-    // Enable PSoC GPS RX IRS
-    #ifdef __GNUC__
+    // Want to read into the string buffer until end of line is detected.
+    char lastChar = '\0';
+    char readChar = '\0';
+    uint8 readingBuffer = 1;
+    size_t tailCookie = startTail;
+    ssize_t byteCount = 0;
+
+    while (readingBuffer == 1)
+    {
+        // Read a character from cookieBuffer using the tail and store it into
+        // the string buffer.
+        readChar = inReadCookie->inputBuffer[tailCookie];
+        buffer[byteCount] = readChar;
+        ++byteCount;
+        tailCookie = (tailCookie + 1)%(cookieBuffSize - 1);
+
+        // Check if we are at the end of line, if we are - add a null terminator
+        // for the string and stop reading of cookie into buffer.
+        if (((lastChar == '\r') && (readChar == '\n'))
+            || ((lastChar == '\n') && (readChar == '\r')))
+        {
+            ++byteCount;
+            buffer[byteCount] = '\0';
+            readingBuffer = 0;
+        }
+        // If we are not at the end of a line, store the read character value
+        // and allow the loop to continue.
+        else
+        {
+            lastChar = readChar;
+        }
+    }
+    // When done reading update the tail of the cookie.
+    inReadCookie->inputTail = tailCookie;
+
+// Enable PSoC GPS RX IRS
+#ifdef __GNUC__
     GPS_RX_ISR_Enable();
-    #endif // __GNUC__
-    
+#endif // __GNUC__
+
     return byteCount;
 }
 
