@@ -26,6 +26,7 @@ extern "C" {
 #ifdef _WIN32
 typedef int ssize_t;
 typedef int64_t off64_t;
+typedef uint8_t uint8;
 // START COPYRIGHT NOTICE UoC
 /*
 * Copyright (c) 1990 The Regents of the University of California.
@@ -67,6 +68,11 @@ typedef struct
 typedef _off64_t off64_t;
 #endif // __GNUC__
 
+/* STRUCT UARTBUFFER
+ADS that contains software FIFO buffers for sending (Tx) and receiving (Rx) over UART.
+Items due for sending is stored in outputBuffer[outputHead] character by character. The Tx interrupt is then enabled to be triggered by having an empty FIFO buffer and will continoue to trigger until outputTail == outputHead, at which point the ISR handler will disable the FIFO triggered Tx interrupt.
+Items received are stored in inputBuffer[inputHead] charactr by character, triggered by the UART Rx interrupt on byte received and is managed by the ISR handler. When a end of line '\r\n' or '\n\r' is detected it will raise a global flag which will allow a tring to be read.
+*/
 typedef struct UartBuffer
 {
     char outputBuffer[UART_BUFFER_LENGTH];

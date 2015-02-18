@@ -21,6 +21,8 @@ void initUartBuffer(UartBuffer* uartBuff)
     uartBuff->inputTail = 0;
 }
 
+// TODO Revisit uartWriter() and see if it causes the UART bug that causes long
+// strings to echo improperly.
 ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
 {
     UartBuffer* outWriteCookie = (UartBuffer*)outCookie;
@@ -74,8 +76,8 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
     return byteCount;
 }
 
-// Function to read from the UART cookie to a string buffer used to parse the
-// data received over serial.
+// TODO Revisit uartReader() and see if it causes the UART bug that causes long
+// strings to echo improperly.
 ssize_t uartReader(void* inCookie, char* buffer, size_t size)
 {
     UartBuffer* inReadCookie = (UartBuffer*)inCookie;
@@ -88,27 +90,6 @@ ssize_t uartReader(void* inCookie, char* buffer, size_t size)
     size_t cookieBuffSize = inReadCookie->bufferLength;
     size_t startHead = (inReadCookie->inputHead);
     size_t startTail = (inReadCookie->inputTail);
-
-    // Logic below is likely flawed. Reimplement.
-    /*
-    if (size > (buffSize - 1))
-    {
-#ifdef _WIN32
-        // DEBUG
-        printf("size error\n");
-        #endif // _WIN32
-        return -1;
-    }
-
-    while (((inReadCookie->inputTail) != (inReadCookie->inputHead))
-           && (byteCount < size))
-    {
-        buffer[byteCount]
-            = inReadCookie->inputBuffer[(inReadCookie->inputTail)];
-        ++(inReadCookie->inputTail);
-        ++byteCount;
-    }
-    */
 
     // Want to read into the string buffer until end of line is detected.
     char lastChar = '\0';

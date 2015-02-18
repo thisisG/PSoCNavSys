@@ -10,9 +10,9 @@
  * ========================================
 */
 #include <project.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h> // For read(), write()
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <unistd.h> // For read(), write()
 #include "serialcom.h"
 #include "navisr.h"
 #include "GPS_RX_ISR.h"
@@ -73,12 +73,13 @@ int main()
     /*
     ** ISR setup
     */
-    // Set the address to the ISR UART RX handler and start the ISR handling
+    // Attach the Rx ISR handler to the UART Rx interrupt.
+    // The Rx ISR is triggered on byte received in its initial state.
     GPS_RX_ISR_StartEx(gpsRxISR);
-    GPS_TX_ISR_StartEx(gpsTxISR);
     
-    // Disable all interrupt modes for now
-    UART_GPS_SetTxInterruptMode(0u);
+    // Attach the Tx ISR handler to the UART Tx interrupt.
+    // The Tx ISR is triggered by nothing in its initial state. The interrupts are switched on when needed (when a string is due for sending).
+    GPS_TX_ISR_StartEx(gpsTxISR);
     
     // Enable global interrupts
     CyGlobalIntEnable;

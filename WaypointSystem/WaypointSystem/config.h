@@ -1,5 +1,5 @@
-#ifndef NAV_SYSTEN_CONFIG_H
-#define NAV_SYSTEN_CONFIG_H
+#ifndef NAV_SYSTEM_CONFIG_H
+#define NAV_SYSTEM_CONFIG_H
 
 // Buffer length for UART FIFO buffer structure
 // serialcom.h/c
@@ -11,4 +11,4 @@
 #define GPS_STR_BFR_LEN (128)
 #define SERIAL_STR_BFR_LEN (128)
 
-#endif
+#endif // NAV_SYSTEM_CONFIG_H
