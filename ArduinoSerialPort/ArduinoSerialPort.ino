@@ -13,7 +13,7 @@ void setup()
     PSoCSerial = &Serial1;
     PSoCSerial->begin(9600);
     delay(1000);
-    PCSerial->println("Serial ready!");
+    //PCSerial->println("Serial ready!");
 }
 
 void loop()

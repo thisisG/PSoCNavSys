@@ -78,7 +78,8 @@ int main()
     GPS_RX_ISR_StartEx(gpsRxISR);
     
     // Attach the Tx ISR handler to the UART Tx interrupt.
-    // The Tx ISR is triggered by nothing in its initial state. The interrupts are switched on when needed (when a string is due for sending).
+    // The Tx ISR is triggered by nothing in its initial state. The interrupts 
+    // are switched on when needed (when a string is due for sending).
     GPS_TX_ISR_StartEx(gpsTxISR);
     
     // Enable global interrupts

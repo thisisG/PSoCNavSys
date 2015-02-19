@@ -113,7 +113,6 @@
     <ClCompile Include="..\WaypointSystem\gpsinterface.c" />
     <ClCompile Include="..\WaypointSystem\navfunctions.c" />
     <ClCompile Include="..\WaypointSystem\navmath.c" />
-    <ClCompile Include="..\WaypointSystem\navtypes.c" />
     <ClCompile Include="..\WaypointSystem\nmeafunctions.c" />
     <ClCompile Include="..\WaypointSystem\nmea\context.c" />
     <ClCompile Include="..\WaypointSystem\nmea\generate.c" />

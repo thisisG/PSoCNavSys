@@ -71,16 +71,17 @@ typedef _off64_t off64_t;
 /* STRUCT UARTBUFFER
 ADS that contains software FIFO buffers for sending (Tx) and receiving (Rx) over
 UART.
+
 Items due for sending is stored in outputBuffer[outputHead] character by
 character. The Tx interrupt is then enabled to be triggered by having an empty
 FIFO buffer and will continoue to trigger until outputTail == outputHead, at
 which point the ISR handler will disable the FIFO triggered Tx interrupt.
-Items received are stored in inputBuffer[inputHead] charactr by character,
+Items received are stored in inputBuffer[inputHead] character by character,
 triggered by the UART Rx interrupt on byte received and is managed by the ISR
 handler. When a end of line '\r\n' or '\n\r' is detected it will raise a global
-flag which will allow a tring to be read.
+flag which will allow a string to be read.
 */
-typedef volatile struct UartBuffer
+volatile struct UartBuffer
 {
     char outputBuffer[UART_BUFFER_LENGTH];
     char inputBuffer[UART_BUFFER_LENGTH];
@@ -89,7 +90,9 @@ typedef volatile struct UartBuffer
     size_t outputTail;
     size_t inputHead;
     size_t inputTail;
-} UartBuffer;
+};
+
+typedef struct UartBuffer UartBuffer;
 
 /* initUartBuffer();
 input:

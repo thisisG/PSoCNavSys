@@ -119,9 +119,6 @@
     <ClCompile Include="..\WaypointSystem\navmath.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\navtypes.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\WaypointSystem\nmeafunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>

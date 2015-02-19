@@ -33,6 +33,10 @@ int main()
     myFile.open("./../TestData/outcsvtestD.csv",
                 std::ios_base::out | std::ios_base::binary);
 
+    std::ofstream myNmeaFile;
+    myNmeaFile.open("./../TestData/nmeacsvtestD.csv",
+        std::ios_base::out | std::ios_base::binary);
+
     floatDegree lastLat = NAN;
     floatDegree lastLon = NAN;
     floatDegree thisLat = NAN;
@@ -58,12 +62,14 @@ int main()
             ++varCount;
             navDataToSerialBuffer(&myNavState);
             myFile << myNavState.serialBuffer.serialStringBuffer;
+            myNmeaFile << myNavState.gpsBuffer.gpsStringBuffer;
             lastLat = thisLat;
             lastLon = thisLon;
         }
     }
     std::cout << "varcount = " << varCount << std::endl;
     myFile.close();
+    myNmeaFile.close();
 
     return 0;
 }
