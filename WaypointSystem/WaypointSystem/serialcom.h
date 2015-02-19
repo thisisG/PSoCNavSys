@@ -44,7 +44,7 @@ typedef uint8_t uint8;
 * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 *
-*	@(#)stdio.h	5.3 (Berkeley) 3/15/86
+*   @(#)stdio.h 5.3 (Berkeley) 3/15/86
 */
 typedef ssize_t cookie_read_function_t(void* __cookie, char* __buf, size_t __n);
 typedef ssize_t cookie_write_function_t(void* __cookie, const char* __buf,
@@ -69,11 +69,18 @@ typedef _off64_t off64_t;
 #endif // __GNUC__
 
 /* STRUCT UARTBUFFER
-ADS that contains software FIFO buffers for sending (Tx) and receiving (Rx) over UART.
-Items due for sending is stored in outputBuffer[outputHead] character by character. The Tx interrupt is then enabled to be triggered by having an empty FIFO buffer and will continoue to trigger until outputTail == outputHead, at which point the ISR handler will disable the FIFO triggered Tx interrupt.
-Items received are stored in inputBuffer[inputHead] charactr by character, triggered by the UART Rx interrupt on byte received and is managed by the ISR handler. When a end of line '\r\n' or '\n\r' is detected it will raise a global flag which will allow a tring to be read.
+ADS that contains software FIFO buffers for sending (Tx) and receiving (Rx) over
+UART.
+Items due for sending is stored in outputBuffer[outputHead] character by
+character. The Tx interrupt is then enabled to be triggered by having an empty
+FIFO buffer and will continoue to trigger until outputTail == outputHead, at
+which point the ISR handler will disable the FIFO triggered Tx interrupt.
+Items received are stored in inputBuffer[inputHead] charactr by character,
+triggered by the UART Rx interrupt on byte received and is managed by the ISR
+handler. When a end of line '\r\n' or '\n\r' is detected it will raise a global
+flag which will allow a tring to be read.
 */
-typedef struct UartBuffer
+typedef volatile struct UartBuffer
 {
     char outputBuffer[UART_BUFFER_LENGTH];
     char inputBuffer[UART_BUFFER_LENGTH];
@@ -84,13 +91,70 @@ typedef struct UartBuffer
     size_t inputTail;
 } UartBuffer;
 
+/* initUartBuffer();
+input:
+    (ptr) UartBuffer uartBuff
+output:
+    NA
+remarks:
+    
+*/
 void initUartBuffer(UartBuffer* uartBuff);
 
-ssize_t uartWriter(void* outCookie, const char* buffer, size_t size);
-ssize_t uartReader(void* inCookie, char* buffer, size_t size);
-int uartSeeker(void* cookie, off_t* position, int whence);
-int uartCleaner(void* cookie);
+/* uartWriter();
+input:
+    (ptr) void outCookie
+    (ptr) const char buffer
+    (value) size_t size
+output:
+    NA
+remarks:
 
+*/
+ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size);
+
+/* uartReader();
+input:
+    (ptr) void inCookie
+    (ptr) char buffer
+    (value) size_t size
+output:
+    (value) ssize_t byteCount
+remarks:
+    
+*/
+ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size);
+
+/* uartSeeker();
+input:
+    (ptr) void cookie
+    (ptr) off_t position
+    (value) int whence
+output:
+    (value) ssize_t byteCount
+remarks:
+    
+*/
+int uartSeeker(volatile void* cookie, off_t* position, int whence);
+
+/* longitudeFromCoordinate();
+input:
+    (ptr) void cookie
+output:
+    (value) int // TODO add return value
+remarks:
+
+*/
+int uartCleaner(volatile void* cookie);
+
+/* navDataToSerialBuffer();
+input:
+    (ptr) NavState navS
+output:
+    NA
+remarks:
+    
+*/
 void navDataToSerialBuffer(NavState* navS);
 
 #endif // SERIALCOM_H

@@ -23,7 +23,7 @@ void initUartBuffer(UartBuffer* uartBuff)
 
 // TODO Revisit uartWriter() and see if it causes the UART bug that causes long
 // strings to echo improperly.
-ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
+ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size)
 {
     UartBuffer* outWriteCookie = (UartBuffer*)outCookie;
     ssize_t byteCount = 0;
@@ -78,7 +78,7 @@ ssize_t uartWriter(void* outCookie, const char* buffer, size_t size)
 
 // TODO Revisit uartReader() and see if it causes the UART bug that causes long
 // strings to echo improperly.
-ssize_t uartReader(void* inCookie, char* buffer, size_t size)
+ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size)
 {
     UartBuffer* inReadCookie = (UartBuffer*)inCookie;
 
@@ -105,7 +105,7 @@ ssize_t uartReader(void* inCookie, char* buffer, size_t size)
         readChar = inReadCookie->inputBuffer[tailCookie];
         buffer[byteCount] = readChar;
         ++byteCount;
-        tailCookie = (tailCookie + 1)%(cookieBuffSize - 1);
+        tailCookie = (tailCookie + 1) % (cookieBuffSize - 1);
 
         // Check if we are at the end of line, if we are - add a null terminator
         // for the string and stop reading of cookie into buffer.
@@ -134,7 +134,7 @@ ssize_t uartReader(void* inCookie, char* buffer, size_t size)
     return byteCount;
 }
 
-int uartSeeker(void* cookie, off_t* position, int whence)
+int uartSeeker(volatile void* cookie, off_t* position, int whence)
 {
     // This function SHOULD normally be unused as the buffer is a FIFO buffer
     // and should do cyclic read/write on the buffer. Return -1 as this is
@@ -142,7 +142,7 @@ int uartSeeker(void* cookie, off_t* position, int whence)
     return -1;
 }
 
-int uartCleaner(void* cookie)
+int uartCleaner(volatile void* cookie)
 {
     // Since we are using statically assigned memory there should be no need for
     // closing the file. Return -1 as this is interpreted as an error.
