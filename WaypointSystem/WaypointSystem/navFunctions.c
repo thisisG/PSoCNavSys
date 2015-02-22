@@ -19,7 +19,7 @@ void initGpsBuffer(GpsBuffer* gpsB)
 {
     gpsB->gpsBufferLength = GPS_STR_BFR_LEN;
     int i;
-    for(i=0 ; i < (gpsB->gpsBufferLength) ; i++)
+    for (i = 0; i < (gpsB->gpsBufferLength); i++)
     {
         gpsB->gpsStringBuffer[i] = '\0';
     }
@@ -29,7 +29,7 @@ void initSerialBuffer(SerialBuffer* serialB)
 {
     serialB->serialBufferLength = SERIAL_STR_BFR_LEN;
     int i;
-    for(i=0 ; i < (serialB->serialBufferLength) ; i++)
+    for (i = 0; i < (serialB->serialBufferLength); i++)
     {
         serialB->serialStringBuffer[i] = '\0';
     }

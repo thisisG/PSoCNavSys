@@ -144,20 +144,6 @@ int main()
             // data is now handled by the ISR
             txStringReady = 0;
         }
-        
-        aChar = myUartBuffer.inputBuffer[myUartBuffer.inputTail];
-        if ((directToLCD != 0) && (aChar != '\0'))
-        {
-            ++counter;
-            if ((counter % lcdLength-1) == 0)
-            {
-                 LCD_Position(1u, 0u);
-                counter = 0;
-            }
-            LCD_PutChar(aChar);
-            UART_GPS_PutChar(aChar);
-        }
-        
     }
 }
 

@@ -4,15 +4,17 @@
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
 // Standard library includes
 #ifdef _WIN32
 #include <stdio.h>
 #endif            // _WIN32
+
 #include <math.h> // Need atan2(), cos(), sin()
 #include <stdint.h>
+
 // Local includes
 #include "navtypes.h"
-//#include "navfunctions.h"
 
 #ifdef __cplusplus
 }

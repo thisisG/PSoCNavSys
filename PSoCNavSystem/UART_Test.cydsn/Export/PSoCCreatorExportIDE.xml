@@ -7,7 +7,7 @@
       <Tool Name="prebuild" Command="" Options="" />
       <Tool Name="assembler" Command="arm-none-eabi-as.exe" Options="-mcpu=cortex-m3 -mthumb -IC:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem -I. -I.\Generated_Source\PSoC5 -alh=${OutputDir}/${CompileFile}.lst -g -W" />
       <Tool Name="compiler" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -Wno-main -IC:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem -I. -I.\Generated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0" />
-      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mthumb -march=armv7-m -mfix-cortex-m3-ldrd -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T .\Generated_Source\PSoC5\cm3gcc.ld -g -specs=nano.specs &quot;-u _printf_float&quot; &quot;&quot; -Wl,--gc-sections" />
+      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mthumb -march=armv7-m -mfix-cortex-m3-ldrd -l m -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T .\Generated_Source\PSoC5\cm3gcc.ld -g -specs=nano.specs &quot;-u _printf_float&quot; &quot;&quot; -Wl,--gc-sections" />
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
     <Toolchain Name="ARM MDK Generic" Selected="False">
@@ -46,12 +46,14 @@
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\gpsinterface.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navmath.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navfunctions.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navtypes.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\config.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\gpsinterface.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navmath.h</File>
         </Files>
       </Folder>
       <Folder BuildType="BUILD" Path="C:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem\nmea">
