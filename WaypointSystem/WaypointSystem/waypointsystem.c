@@ -397,7 +397,7 @@ int main()
     {
         gpsEmu.getNextStringToNavState(&myNavState);
         std::cout << "String: \n" << myNavState.gpsBuffer.gpsStringBuffer;
-        gpsStringToNavState(&myNavState);
+        decodeGpsStringInNavState(&myNavState);
         printCurrentCoordAndHeading(&myNavState);
         std::cout << std::endl;
     }
@@ -410,7 +410,7 @@ int main()
     {
         gpsEmu.getNextStringToNavState(&myNavState);
         std::cout << "String: \n" << myNavState.gpsBuffer.gpsStringBuffer;
-        gpsStringToNavState(&myNavState);
+        decodeGpsStringInNavState(&myNavState);
         printCurrentCoordAndHeading(&myNavState);
         navDataToSerialBuffer(&myNavState);
         std::cout << "Created string:\n"
@@ -456,14 +456,14 @@ int main()
                  "overwriting parts of it" << std::endl;
     myUartBuffer.outputTail = myUartBuffer.outputHead;
     std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
-        << std::endl;
+              << std::endl;
     char uartCharBuffB[10] = "abcd";
     std::cout << "strlen(uartCharBuff): " << strlen(uartCharBuffB) << std::endl;
     std::cout << "written bytes: "
-        << uartWriter(&myUartBuffer, uartCharBuffB, strlen(uartCharBuffB))
-        << std::endl;
+              << uartWriter(&myUartBuffer, uartCharBuffB, strlen(uartCharBuffB))
+              << std::endl;
     std::cout << "myUartBuffer.outputBuffer: " << myUartBuffer.outputBuffer
-        << std::endl;
+              << std::endl;
     /*
     Random test area
     */

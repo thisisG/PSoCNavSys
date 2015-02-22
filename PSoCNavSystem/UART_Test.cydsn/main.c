@@ -18,12 +18,13 @@
 #include "GPS_RX_ISR.h"
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
+#include "gpsinterface.h"
 
 /* Global variables and pointers */
 
 // From navisr.h/c
-extern uint8 rxStringReady;
-extern uint8 txStringReady;
+extern volatile uint8 rxStringReady;
+extern volatile uint8 txStringReady;
 
 int main()
 {
@@ -95,32 +96,52 @@ int main()
     {
         if (rxStringReady == 1)
         {
+            // Load the GPS string into the GPS String buffer in NavState.
             uartReader(&myUartBuffer, &(myNavState.gpsBuffer.gpsStringBuffer)[0],
                        myNavState.gpsBuffer.gpsBufferLength - 1);
+            
+            // Clear the rxStringReady flag.
+            rxStringReady = 0;
+            
+            // For debugging update the LCD display with the received string.
+            LCD_PrintString(myNavState.gpsBuffer.gpsStringBuffer);
+            
+            // Load the information in the GPS string into NavState, this means
+            // updating the current location etc to the data in the GPS string.
+            decodeGpsStringInNavState(&myNavState);
+            
+            // Prepare serial string buffer in NavState with current navdata
+            navDataToSerialBuffer(&myNavState);
+            
+            // Raise a flag for sending the serial data 
+            txStringReady = 1;
+            
             /*
             ** The following is currently not working. Will try to fix at a 
             ** later stage if time allows.
-            */
+            
             // fread(&(myNavState.gpsBuffer.gpsStringBuffer),
             //       1, myNavState.gpsBuffer.gpsBufferLength, 
             //       &ptrCookie);
             
-            LCD_PrintString(myNavState.gpsBuffer.gpsStringBuffer);
-            
-            uartWriter(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, 
-                       strlen(myNavState.gpsBuffer.gpsStringBuffer));
-            
-            txStringReady = 1;
-            
-            rxStringReady = 0;
+
+            // uartWriter(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, 
+            //            strlen(myNavState.gpsBuffer.gpsStringBuffer));
+            */
             
         }
         
         if(txStringReady == 1)
         {
+            // Set the interrupt mode for the UART Tx to empty FIFO buffer
             uint8 txISRMode = UART_GPS_TX_STS_FIFO_EMPTY;
             UART_GPS_SetTxInterruptMode(txISRMode);
+            
+            // Trigger the ISR in software to start the sending
             GPS_TX_ISR_SetPending();
+            
+            // Lower the flag for having a tx string ready, the sending of the 
+            // data is now handled by the ISR
             txStringReady = 0;
         }
         

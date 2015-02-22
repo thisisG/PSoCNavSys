@@ -54,7 +54,6 @@ int main()
 
         if ((thisLat == lastLat) && (thisLon == lastLon))
         {
-
             newData = false;
         }
         else

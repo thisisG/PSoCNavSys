@@ -45,11 +45,40 @@
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navfunctions.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\gpsinterface.c</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navfunctions.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\navtypes.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmeafunctions.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\serialcom.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\config.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\gpsinterface.h</File>
+        </Files>
+      </Folder>
+      <Folder BuildType="BUILD" Path="C:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem\nmea">
+        <Files Root="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn">
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\context.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\generate.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\generator.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\gmath.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\info.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\parse.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\parser.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\sentence.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\time.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\tok.c</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\config.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\context.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\generate.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\generator.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\gmath.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\info.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\nmea.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\parse.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\parser.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\sentence.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\time.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\tok.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\WaypointSystem\WaypointSystem\nmea\units.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Generated_Source\PSoC5">

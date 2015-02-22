@@ -10,7 +10,7 @@ extern "C" {
 
 #endif // _WIN32
 
-void gpsStringToNavState(NavState* navS)
+void decodeGpsStringInNavState(NavState* navS)
 {
     // Need to pass the address to the second char value since the 0th is
     // occupied by '$'
