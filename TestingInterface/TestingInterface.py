@@ -8,10 +8,11 @@ import time
 
 class TestInterface:
     psoc_serial = serial.Serial()
-    output_csv_file_name = "outputdefault.csv"
-    input_csv_file_name = "inputdefault.csv"
+    input_csv_file_name = './../WaypointSystem/TestData/nmeacsvtestD.csv'
+    output_csv_file_name = './../WaypointSystem/TestData/psocnmeacsvtestD.csv'
     line_buffer = ""
     serialPort = 7
+    echo_to_console = False
 
     def __init__(self):
         """
@@ -57,25 +58,30 @@ class TestInterface:
         for row in input_csv:
 
             # Convert each row into a \r\n terminated byte string
-            print("Read row: ", row)
+            if self.echo_to_console:
+                print("Read row: ", row)
             self.line_buffer = (','.join(row))
             self.line_buffer += line_ending
             self.line_buffer = self.line_buffer.encode()
 
             # Send each generated string
-            print("Sending: ", self.line_buffer)
+            if self.echo_to_console:
+                print("Sending: ", self.line_buffer)
             self.psoc_serial.write(self.line_buffer)
 
             # Wait for echo of string
             self.line_buffer = self.psoc_serial.readline()
-            print("Received (byte): ", self.line_buffer)
+            if self.echo_to_console:
+                print("Received (byte): ", self.line_buffer)
 
             # Convert string to utf-8
             self.line_buffer = self.line_buffer.decode("utf-8")
-            print("Received (utf-8): ", self.line_buffer)
+            if self.echo_to_console:
+                print("Received (utf-8): ", self.line_buffer)
 
             # Write each converted string to output file in csv format
-            print(self.line_buffer)
+            if self.echo_to_console:
+                print(self.line_buffer)
             output_csv.write(self.line_buffer)
 
         # Close the files used

@@ -22,19 +22,30 @@ extern "C" {
 
 int main()
 {
+    std::string filename = "csvtestC";
+    std::string fileending = ".csv";
+    std::string directory = "./../TestData/";
+
+    std::string inputFile = directory + filename + fileending;
+    std::string outputFile = directory + "out" + filename + fileending;
+    std::string nmeaOutputFile = directory + "nmea" + filename + fileending;
+
+    std::cout << inputFile << std::endl;
+    std::cout << nmeaOutputFile << std::endl;
+
     NavState myNavState;
     zeroNavState(&myNavState);
 
     GpsEmulator myGpsEmulator;
-    myGpsEmulator.parseCsvToInfoVector("./../TestData/csvtestD.csv");
+    myGpsEmulator.parseCsvToInfoVector(inputFile);
     // myGpsEmulator.generatePseudoRandomData();
 
     std::ofstream myFile;
-    myFile.open("./../TestData/outcsvtestD.csv",
+    myFile.open(outputFile,
                 std::ios_base::out | std::ios_base::binary);
 
     std::ofstream myNmeaFile;
-    myNmeaFile.open("./../TestData/nmeacsvtestD.csv",
+    myNmeaFile.open(nmeaOutputFile,
         std::ios_base::out | std::ios_base::binary);
 
     floatDegree lastLat = NAN;

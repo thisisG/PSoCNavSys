@@ -104,8 +104,11 @@ int main()
             rxStringReady = 0;
             
             // For debugging update the LCD display with the received string.
-            LCD_PrintString(myNavState.gpsBuffer.gpsStringBuffer);
-            
+            if (directToLCD == 1)
+            {
+                LCD_PrintString(myNavState.gpsBuffer.gpsStringBuffer);
+            }
+
             // Load the information in the GPS string into NavState, this means
             // updating the current location etc to the data in the GPS string.
             decodeGpsStringInNavState(&myNavState);
