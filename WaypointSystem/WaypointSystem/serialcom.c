@@ -173,9 +173,8 @@ void navDataToSerialBuffer(NavState* navS)
 #endif // _WIN32
 
 #ifdef __GNUC__ // ARM specific implementation
-    snprintf(navS->serialBuffer.serialStringBuffer,
-             (navS->serialBuffer.serialBufferLength) - 1,
-             "hhmmss.ss,%4.4f,%5.4f,%3.3f,%3.3f,%8.1f,%4.4f,%4.4f\n",
+    sprintf(navS->serialBuffer.serialStringBuffer,
+             "hhmmss.ss,%4.8f,%5.8f,%3.3f,%3.3f,%.1f,%4.8f,%4.8f\r\n",
              currentLat, currentLon, currentHeading, headingToWp, distanceToWp,
              nextWpLat, nextWpLon);
 #endif // __GNUC__

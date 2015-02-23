@@ -113,6 +113,10 @@ int main()
             // Prepare serial string buffer in NavState with current navdata
             navDataToSerialBuffer(&myNavState);
             
+            // Write the serial buffer to the UART buffer
+            uartWriter(&myUartBuffer, myNavState.serialBuffer.serialStringBuffer, 
+                       strlen(myNavState.serialBuffer.serialStringBuffer));
+            
             // Raise a flag for sending the serial data 
             txStringReady = 1;
             

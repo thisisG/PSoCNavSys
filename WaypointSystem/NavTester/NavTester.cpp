@@ -47,7 +47,7 @@ int main()
     while (newData)
     {
         myGpsEmulator.getNextStringToNavState(&myNavState);
-        gpsStringToNavState(&myNavState);
+        decodeGpsStringInNavState(&myNavState);
 
         thisLat = latitudeFromCoordinate(&(myNavState.currentLocation));
         thisLon = longitudeFromCoordinate(&(myNavState.currentLocation));
