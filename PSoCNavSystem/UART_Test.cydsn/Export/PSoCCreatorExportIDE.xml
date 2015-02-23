@@ -138,12 +138,6 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\LCD_LCDPort.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_RX_ISR.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_RX_ISR.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Rx_ISR.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR.c</File>
-          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\Tx_ISR.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_TX_ISR.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_TX_ISR.h</File>
         </Files>
