@@ -8,8 +8,8 @@ import time
 
 class TestInterface:
     psoc_serial = serial.Serial()
-    input_csv_file_name = './../WaypointSystem/TestData/nmeacsvtestD.csv'
-    output_csv_file_name = './../WaypointSystem/TestData/psocnmeacsvtestD.csv'
+    input_csv_file_name = './../WaypointSystem/TestData/nmeacsvtestA.csv'
+    output_csv_file_name = './../WaypointSystem/TestData/psocnmeacsvtestA.csv'
     line_buffer = ""
     serialPort = 7
     echo_to_console = False

@@ -6,8 +6,8 @@
     <Toolchain Name="ARM GCC Generic" Selected="True">
       <Tool Name="prebuild" Command="" Options="" />
       <Tool Name="assembler" Command="arm-none-eabi-as.exe" Options="-mcpu=cortex-m3 -mthumb -IC:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem -I. -I.\Generated_Source\PSoC5 -alh=${OutputDir}/${CompileFile}.lst -g -W" />
-      <Tool Name="compiler" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -Wno-main -IC:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem -I. -I.\Generated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0" />
-      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mthumb -march=armv7-m -mfix-cortex-m3-ldrd -l m -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T .\Generated_Source\PSoC5\cm3gcc.ld -g -specs=nano.specs &quot;-u _printf_float&quot; &quot;&quot; -Wl,--gc-sections -u _printf_float" />
+      <Tool Name="compiler" Command="arm-none-eabi-gcc.exe" Options="-mcpu=cortex-m3 -mthumb -Wno-main -IC:\Users\Geir\Documents\GitHub\Thesis\WaypointSystem\WaypointSystem -I..\emFile_V322b\Code\Include\PSoC5\emf32nOS -I..\emFile_V322b\Code\Include\PSoC5 -I. -I.\Generated_Source\PSoC5 -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -Wall -ffunction-sections -O0" />
+      <Tool Name="linker" Command="arm-none-eabi-gcc.exe" Options="-mthumb -march=armv7-m -mfix-cortex-m3-ldrd -l m -l emf32nosnlfn -L ..\emFile_V322b\LinkLibrary\PSoC5\GCC -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T .\Generated_Source\PSoC5\cm3gcc.ld -g -specs=nano.specs &quot;-u _printf_float&quot; &quot;&quot; -Wl,--gc-sections -u _printf_float" />
       <Tool Name="postbuild" Command="" Options="" />
     </Toolchain>
     <Toolchain Name="ARM MDK Generic" Selected="False">
@@ -140,6 +140,29 @@
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_RX_ISR.h</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_TX_ISR.c</File>
           <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\GPS_TX_ISR.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_ConfigMMC_SPI.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_MMC_HW_SPI.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_INT.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_PVT.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_mosi0_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_mosi0.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_mosi0.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_Clock_1.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_Clock_1.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_miso0_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_miso0.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_miso0.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_sclk0_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_sclk0.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_sclk0.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_CS_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_CS.c</File>
+          <File BuildType="BUILD" Toolchain="">.\Generated_Source\PSoC5\SD_CARD_SPI0_CS.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Export\ARM_GCC_Generic">

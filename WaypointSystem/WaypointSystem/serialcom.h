@@ -81,7 +81,7 @@ triggered by the UART Rx interrupt on byte received and is managed by the ISR
 handler. When a end of line '\r\n' or '\n\r' is detected it will raise a global
 flag which will allow a string to be read.
 */
-volatile struct UartBuffer
+struct UartBuffer
 {
     char outputBuffer[UART_BUFFER_LENGTH];
     char inputBuffer[UART_BUFFER_LENGTH];
@@ -92,7 +92,7 @@ volatile struct UartBuffer
     size_t inputTail;
 };
 
-typedef struct UartBuffer UartBuffer;
+typedef volatile struct UartBuffer UartBuffer;
 
 /* initUartBuffer();
 input:

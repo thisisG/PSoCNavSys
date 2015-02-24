@@ -19,6 +19,7 @@
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
 #include "gpsinterface.h"
+#include <FS.h> // For file system for SD card
 
 /* Global variables and pointers */
 
@@ -54,22 +55,8 @@ int main()
     // Enable UART ISR
     UART_GPS_Start();
     
-    
-    /*
-    ** Setup for custom IO streams for use with the UART buffer
-    */
-    // For now disabled until a basic UART implementation can be made and tested
-    /*
-    // Set up cookie functions for custom IO stream
-    cookie_io_functions_t uartIOFunctions;
-    uartIOFunctions.close = NULL;
-    uartIOFunctions.read = &uartReader;
-    uartIOFunctions.seek = NULL;
-    uartIOFunctions.write = &uartWriter;
-    */
-    
-    // For now disabled until a basic UART implementation can be made and tested
-    // FILE ptrCookie = *(fopencookie(&myUartBuffer, "w+", uartIOFunctions));
+    // Initialize file system (I think)
+    FS_Init();
     
     /*
     ** ISR setup
@@ -92,8 +79,32 @@ int main()
     char uStatus = '\0';
     uint8 directToLCD = 0;
     
+    char sdVolName[10]; // Char buffer for SD card volume name
+    uint8 testedSDCard = 0;
+    
     for(;;)
     {
+        if (testedSDCard == 0)
+        {
+            LCD_Position(0u, 0u);
+            if(0 != FS_GetVolumeName(0u, &sdVolName[0], 9u))
+            {
+                /* Getting volume name succeeded so prompt it on the LCD */
+                LCD_PrintString("SD card name:");
+                LCD_Position(1u, 0u);
+                LCD_PrintString(sdVolName);
+            }
+            else
+            {
+                /* Operation Failed - indicate this */
+                LCD_PrintString("Failed to get");
+                LCD_Position(1u, 0u);
+                LCD_PrintString("SD card name");
+            }    
+            testedSDCard = 1;
+        }
+
+        
         if (rxStringReady == 1)
         {
             // Load the GPS string into the GPS String buffer in NavState.
