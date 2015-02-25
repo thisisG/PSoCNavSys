@@ -90,6 +90,7 @@ int main()
             if(0 != FS_GetVolumeName(0u, &sdVolName[0], 9u))
             {
                 /* Getting volume name succeeded so prompt it on the LCD */
+                LCD_Position(0u, 0u);
                 LCD_PrintString("SD card name:");
                 LCD_Position(1u, 0u);
                 LCD_PrintString(sdVolName);
@@ -102,6 +103,43 @@ int main()
                 LCD_PrintString("SD card name");
             }    
             testedSDCard = 1;
+            CyDelay(2000);
+        }
+        
+        if (testedSDCard == 1)
+        {
+            LCD_Position(0u, 0u);
+            LCD_PrintString("SD card format");
+            
+            if(0 == FS_FormatSD(sdVolName))
+            {
+                LCD_Position(1u, 0u);
+                LCD_PrintString("Succeeded");
+            }
+            else
+            {
+                LCD_Position(1u, 0u);
+                LCD_PrintString("Failed");
+            }
+            testedSDCard++;
+            CyDelay(2000);
+        }
+        if (testedSDCard == 2)
+        {
+            LCD_Position(0u, 0u);
+            if(0 == FS_MkDir("Dir"))
+            {
+                /* Display successful directory creation message */
+                LCD_PrintString("\"Dir\" created");
+            }
+            else
+            {
+                /* Display failure message */
+                LCD_PrintString("Failed to create");
+                LCD_Position(1u, 0u);
+                LCD_PrintString("directory");
+            }
+            testedSDCard++;
         }
 
         
