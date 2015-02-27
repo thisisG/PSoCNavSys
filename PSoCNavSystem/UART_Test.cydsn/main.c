@@ -55,8 +55,9 @@ int main()
     // Enable UART ISR
     UART_GPS_Start();
     
-    // Initialize file system (I think)
+    // Initialize file system
     FS_Init();
+
     
     /*
     ** ISR setup
@@ -79,10 +80,12 @@ int main()
     char uStatus = '\0';
     uint8 directToLCD = 0;
     
+    // File related variables
+    char logFileName[32] = "\\DIR\\stdlog.txt";
+    FS_FILE* ptrLogFile;
     char sdVolName[10]; // Char buffer for SD card volume name
+    char testString[20] = "Some text."; // Char string to write to file
     uint8 testedSDCard = 0;
-    
-    FS_FILE *ptrTestFile;
     
     for(;;)
     {
@@ -126,6 +129,7 @@ int main()
             testedSDCard++;
             CyDelay(2000);
         }
+        
         if (testedSDCard == 2)
         {
             LCD_Position(0u, 0u);
@@ -140,6 +144,48 @@ int main()
                 LCD_PrintString("Failed to create");
                 LCD_Position(1u, 0u);
                 LCD_PrintString("directory");
+            }
+            testedSDCard++;
+            CyDelay(2000);
+        }
+        
+        if (testedSDCard == 3)
+        {
+            ptrLogFile = FS_FOpen(logFileName, "a");
+            
+            // Check if file opened successfully
+            if (ptrLogFile != NULL)
+            {
+                LCD_Position(0u,0u);
+                LCD_PrintString("Opened file!");
+                LCD_Position(1, 0);
+                LCD_PrintString(logFileName);
+                CyDelay(2000);
+                
+                if (0 != FS_Write(ptrLogFile, testString, strlen(testString)))
+                {
+                    LCD_Position(0,0);
+                    LCD_PrintString("Wrote to file:");
+                    LCD_Position(1,0);
+                    LCD_PrintString(testString);
+                    CyDelay(2000);
+                }
+                else
+                {
+                    LCD_Position(0,0);
+                    LCD_PrintString("Unable to write");
+                    LCD_Position(1, 0);
+                    LCD_PrintString(logFileName);
+                    CyDelay(2000);
+                }
+            }
+            else
+            {
+                LCD_Position(0,0);
+                LCD_PrintString("Unable to open");
+                LCD_Position(1, 0);
+                LCD_PrintString(logFileName);
+                CyDelay(2000);
             }
             testedSDCard++;
         }
@@ -173,19 +219,6 @@ int main()
             
             // Raise a flag for sending the serial data 
             txStringReady = 1;
-            
-            /*
-            ** The following is currently not working. Will try to fix at a 
-            ** later stage if time allows.
-            
-            // fread(&(myNavState.gpsBuffer.gpsStringBuffer),
-            //       1, myNavState.gpsBuffer.gpsBufferLength, 
-            //       &ptrCookie);
-            
-
-            // uartWriter(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, 
-            //            strlen(myNavState.gpsBuffer.gpsStringBuffer));
-            */
             
         }
         
