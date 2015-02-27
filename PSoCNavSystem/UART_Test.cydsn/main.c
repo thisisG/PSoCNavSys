@@ -82,6 +82,8 @@ int main()
     char sdVolName[10]; // Char buffer for SD card volume name
     uint8 testedSDCard = 0;
     
+    FS_FILE *ptrTestFile;
+    
     for(;;)
     {
         if (testedSDCard == 0)
