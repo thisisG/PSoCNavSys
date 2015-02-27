@@ -20,6 +20,12 @@
     <Filter Include="Source Files\NMEA">
       <UniqueIdentifier>{f5c1e79e-9245-460a-815f-bf6ad27846ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\filesys">
+      <UniqueIdentifier>{0d80cdb4-3d01-4fa1-a222-295921782e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\filesys">
+      <UniqueIdentifier>{a6fdf981-4772-4ba2-91e9-f8ff2b2e23bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WaypointSystem.rc">
