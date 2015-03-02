@@ -5,6 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
+*.vmps.xml
+*.idea/dicti*/
 
 # PSoC Creator specific files and directories
 .DS_Store
@@ -228,3 +230,6 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+TestingInterface/.idea/dictionaries/Geir.xml
+PSoCNavSystem/UART_Test.cydsn/UART_Test.svd.old
+TestingInterface/__pycache__/TestingInterface.cpython-34.pyc

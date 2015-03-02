@@ -34,7 +34,7 @@ typedef uint32_t unsigned32Degree;
 
 typedef int8_t coordinateCode;
 
-/* STRUCT COORDINATE
+/* STRUCT Coordinate
 ADS that contain coordinate information.
 */
 typedef struct Coordinate
@@ -47,7 +47,7 @@ typedef struct Coordinate
     coordinateCode priority;
 } Coordinate;
 
-/* STRUCT GPSBUFFER
+/* STRUCT GpsBuffer
 ADS that contain a GPS string buffer and buffer size.
 */
 typedef struct GpsBuffer
@@ -56,7 +56,7 @@ typedef struct GpsBuffer
     char gpsStringBuffer[GPS_STR_BFR_LEN];
 } GpsBuffer;
 
-/* STRUCT SERIALBUFFER
+/* STRUCT SerialBuffer
 ADS that contain a serial string buffer and buffer size
 */
 typedef struct SerialBuffer
@@ -65,10 +65,9 @@ typedef struct SerialBuffer
     char serialStringBuffer[SERIAL_STR_BFR_LEN];
 } SerialBuffer;
 
-/* STRUCT SYSTEMTIME
+/* STRUCT SystemTime
 ADS that contain time information, note that this is the same structure as
-RTC_TIME_DATE used in
-PSoC Creator for time interactions.
+RTC_TIME_DATE used in PSoC Creator for time interactions.
 */
 typedef struct SystemTime
 {
@@ -82,7 +81,7 @@ typedef struct SystemTime
     uint16_t Year;
 } SystemTime;
 
-/* STRUCT NAVSTATE
+/* STRUCT NavState
 ADS that contain the navigation status of the system. For a single platform
 there should normally only be one instance of this ADS which contains the
 navigation state, variables and buffers needed for the system to function.
@@ -92,8 +91,8 @@ typedef struct NavState
     struct GpsBuffer gpsBuffer;
     struct SerialBuffer serialBuffer;
     struct Coordinate currentLocation;
-    struct Coordinate
-        nextWaypoint; // This might be changed to a waypoint stack / queue later
+    // This might be changed to a waypoint stack / queue later
+    struct Coordinate nextWaypoint; 
     struct SystemTime time;
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
