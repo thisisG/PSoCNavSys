@@ -73,6 +73,7 @@ typedef struct NavFileWaypointList
 {
 	Coordinate startCoordinate;
 	Coordinate endCoordinate;
+    uint32_t numberOfEntries;
 } NavFileWaypointList;
 
 #endif // NAVFILES_H

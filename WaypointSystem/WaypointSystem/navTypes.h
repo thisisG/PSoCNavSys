@@ -52,6 +52,7 @@ ADS that contain a GPS string buffer and buffer size.
 */
 typedef struct GpsBuffer
 {
+    uint8 newGPSString;
     int gpsBufferLength;
     char gpsStringBuffer[GPS_STR_BFR_LEN];
 } GpsBuffer;
@@ -81,6 +82,42 @@ typedef struct SystemTime
     uint16_t Year;
 } SystemTime;
 
+/* ENUM CurrentNavState
+Enumerated list that is used for the Finite State Machine making up the core
+navigation algorithm
+The first and last entries in the list are reserved to allow iteration and
+should be considered invalid values.
+*/
+typedef enum CurrentNavState
+{
+    firstCurrentNavState = 0,
+    closestWP,
+    toWP,
+    atWP,
+    nextWP,
+    atGoal,
+    closestExceptionWP,
+    toExceptionWP,
+    atExceptionWP,
+    nextExceptionWP,
+    atExceptionGoal,
+    lastCurrentNavState
+
+} CurrentNavState;
+
+/* STRUCT StateData
+ADS that contains the data needed to evaluate the current and next state of the
+system.
+*/
+typedef struct StateDataStructure
+{
+    enum CurrentNavState stateKeeper;
+    float maxWPDistance;
+    float arrivalWPDistance;
+    float exceptionMaxWPDistance;
+    float exceptionArrivalDistance;
+} StateDataStructure;
+
 /* STRUCT NavState
 ADS that contain the navigation status of the system. For a single platform
 there should normally only be one instance of this ADS which contains the
@@ -88,6 +125,7 @@ navigation state, variables and buffers needed for the system to function.
 */
 typedef struct NavState
 {
+    struct StateDataStructure stateData;
     struct GpsBuffer gpsBuffer;
     struct SerialBuffer serialBuffer;
     struct Coordinate currentLocation;

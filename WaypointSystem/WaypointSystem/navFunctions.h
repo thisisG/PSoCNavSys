@@ -44,6 +44,7 @@ extern "C" {
 #include <stdio.h>
 #endif // _WIN32
 
+#include "gpsinterface.h"
 #include "navtypes.h"
 #include "navmath.h"
 #ifdef __cplusplus
@@ -54,9 +55,59 @@ void zeroCoordinate(Coordinate* coord);
 void initGpsBuffer(GpsBuffer* gpsB);
 void initSerialBuffer(SerialBuffer* serialB);
 void zeroSystemTime(SystemTime* time);
+void initStateDataStructure(StateDataStructure* stateD);
 void zeroNavState(NavState* navS);
 
+/* updateNavState();
+input:
+(reference) NavState navS
+
+output:
+NA
+
+remarks:
+The main controlled for the Finite State Machine in charge of the system
+behavior depending on the current conditions of the system.
+The function will read and update the current position using GPS data when a new
+GPS string is available in the buffer.
+
+It will control the decision making regarding which waypoint to follow, decide
+upon when a waypoint has been arrived at and if and when there is a need to
+handle exceptions in the navigation system - mainly if the system have drifted
+out of position and need to follow an alternative set of waypoints in order to
+reach its goal.
+*/
 void updateNavState(NavState* navS);
+
+// TODO
+CurrentNavState closestWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState toWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState atWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState nextWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState atGoalHandler(NavState* navS);
+
+// TODO
+CurrentNavState closestExceptionWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState toExceptionWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState atExceptionWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState nextExceptionWPHandler(NavState* navS);
+
+// TODO
+CurrentNavState atExceptionGoalHandler(NavState* navS);
 
 #ifdef _WIN32
 void printCoordData(Coordinate* coord);
@@ -65,39 +116,45 @@ void printCurrentCoordAndHeading(NavState* navS);
 
 /* latitudeFromCoordinate();
 input:
-    (reference) Coordinate thisCoord
+(reference) Coordinate thisCoord
+
 output:
-    (value) floatDegree latitude
+(value) floatDegree latitude
+
 remarks:
-    Extracts the latitude from a Coordinate ADS and returns a fractional
-    floating value.
-    Note that the value stored in the ADS should be in degrees and NOT radians.
-    Care should be taken to ensure that this is upheld throughout the program.
+Extracts the latitude from a Coordinate ADS and returns a fractional
+floating value.
+Note that the value stored in the ADS should be in degrees and NOT radians.
+Care should be taken to ensure that this is upheld throughout the program.
 */
 floatDegree latitudeFromCoordinate(const Coordinate* thisCoord); // OK
 
 /* longitudeFromCoordinate();
 input:
-    (reference) Coordinate thisCoord
+(reference) Coordinate thisCoord
+
 output:
-    (value) floatDegree latitude
+(value) floatDegree latitude
+
 remarks:
-    Extracts the longitude from a Coordinate ADS and returns a fractional
+Extracts the longitude from a Coordinate ADS and returns a fractional
 floating value.
-    Note that the value stored in the ADS should be in degrees and NOT radians.
-    Care should be taken to ensure that this is upheld throughout the program.
+Note that the value stored in the ADS should be in degrees and NOT radians.
+Care should be taken to ensure that this is upheld throughout the program.
 */
 floatDegree longitudeFromCoordinate(const Coordinate* thisCoord); // OK
 
 /* distanceCirclePathAtoB();
 input:
-    (reference) Coordinate coordA
-    (reference) Coordinate coordB
+(reference) Coordinate coordA
+(reference) Coordinate coordB
+
 output:
-    (value) floatDegree distanceInM
+(value) floatDegree distanceInM
+
 remarks:
-    Returns the great circle distance between two coordinate points assuming an
-    average earth radius
+Returns the great circle distance between two coordinate points assuming an
+average earth radius
 */
 floatDegree distanceCirclePathAtoB(
     const struct Coordinate* coordA,
@@ -105,13 +162,15 @@ floatDegree distanceCirclePathAtoB(
 
 /* distanceSphereCosineAtoB();
 input:
-    (reference) Coordinate coordA
-    (reference) Coordinate coordB
+(reference) Coordinate coordA
+(reference) Coordinate coordB
+
 output:
-    (value) floatDegree distanceInKm
+(value) floatDegree distanceInKm
+
 remarks:
-    Returns the spherical cosine law distance between two coordinate points
-    assuming an average earth radius
+Returns the spherical cosine law distance between two coordinate points assuming
+an average earth radius
 */
 floatDegree distanceSphereCosineAtoB(
     const Coordinate* coordA,
@@ -119,13 +178,15 @@ floatDegree distanceSphereCosineAtoB(
 
 /* distanceEquiRectAtoB();
 input:
-    (reference) Coordinate coordA
-    (reference) Coordinate coordB
+(reference) Coordinate coordA
+(reference) Coordinate coordB
+
 output:
-    (value) floatDegree distanceInM
+(value) floatDegree distanceInM
+
 remarks:
-    Returns the equirectangular approximation of distance between two coordinate
-    points assuming an average earth radius.
+Returns the equirectangular approximation of distance between two coordinate
+points assuming an average earth radius.
 */
 
 floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,

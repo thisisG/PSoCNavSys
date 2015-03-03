@@ -1,0 +1,13 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "WaypointSystem\\WaypointSystem"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "PSoCNavSystem\\UART_Test.cydsn"
+		}
+	]
+}
