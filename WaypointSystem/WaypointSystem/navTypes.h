@@ -112,10 +112,12 @@ system.
 typedef struct StateDataStructure
 {
     enum CurrentNavState stateKeeper;
+    struct Coordinate WPGoal;
+    struct Coordinate eWPGoal;
     float maxWPDistance;
     float arrivalWPDistance;
     float exceptionMaxWPDistance;
-    float exceptionArrivalDistance;
+    float exceptionWPArrivalDistance;
 } StateDataStructure;
 
 /* STRUCT NavState
@@ -130,11 +132,12 @@ typedef struct NavState
     struct SerialBuffer serialBuffer;
     struct Coordinate currentLocation;
     // This might be changed to a waypoint stack / queue later
-    struct Coordinate nextWaypoint; 
+    struct Coordinate nextWaypoint;
     struct SystemTime time;
     floatDegree dCurrentHeading;
     floatDegree dOverallHeading;
     float currentSpeedKmh;
+    float distanceToCurrentWP;
 } NavState;
 
 #endif

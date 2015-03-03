@@ -11,4 +11,12 @@
 #define GPS_STR_BFR_LEN (128)
 #define SERIAL_STR_BFR_LEN (128)
 
+// Default value for WP distances for when they should be considered out of
+// range or within range for being considered arrived at. Units are metres.
+// navfunctions.h/c
+#define MAX_WP_DISTANCE (50000)
+#define ARRIVED_WP_DISTANCE (500)
+#define EXCEPTION_MAX_WP_DISTANCE (100000)
+#define EXCEPTION_ARRIVED_WP_DISTANCE (1000)
+
 #endif // NAV_SYSTEM_CONFIG_H
