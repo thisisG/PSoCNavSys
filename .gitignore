@@ -234,3 +234,4 @@ TestingInterface/.idea/dictionaries/Geir.xml
 PSoCNavSystem/UART_Test.cydsn/UART_Test.svd.old
 TestingInterface/__pycache__/TestingInterface.cpython-34.pyc
 *.sublime-workspace
+*.sublime-project
