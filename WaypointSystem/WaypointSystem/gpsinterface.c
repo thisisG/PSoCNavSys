@@ -16,8 +16,9 @@ void decodeGpsStringInNavState(NavState* navS)
     // occupied by '$'
     int pack = nmea_pack_type(&(navS->gpsBuffer.gpsStringBuffer)[1],
                               navS->gpsBuffer.gpsBufferLength);
-    // DEBUG
-    // printf("pack number: %d", pack);
+
+    // Check if the string is identified as a type we can decode and use and get
+    // the data if the string type is recognized.
     if (pack == GPRMC)
     {
         nmeaGPRMC gprmcBuffer;

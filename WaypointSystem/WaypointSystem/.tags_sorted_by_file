@@ -1,0 +1,640 @@
+ARRIVED_WP_DISTANCE	config.h	18;"	d
+EXCEPTION_ARRIVED_WP_DISTANCE	config.h	20;"	d
+EXCEPTION_MAX_WP_DISTANCE	config.h	19;"	d
+GPS_STR_BFR_LEN	config.h	11;"	d
+MAX_WP_DISTANCE	config.h	17;"	d
+NAV_SYSTEM_CONFIG_H	config.h	2;"	d
+SERIAL_STR_BFR_LEN	config.h	12;"	d
+UART_BUFFER_LENGTH	config.h	6;"	d
+COORDIMPORT_H	coordimport.h	2;"	d
+CoordImport	coordimport.h	/^class CoordImport {$/;"	c
+entriesCoordBuffer	coordimport.h	/^    int entriesCoordBuffer;$/;"	m	class:CoordImport
+entriesWpBuffer	coordimport.h	/^    int entriesWpBuffer;$/;"	m	class:CoordImport
+ptrCoordBuffer	coordimport.h	/^    struct Coordinate* ptrCoordBuffer;$/;"	m	class:CoordImport	typeref:struct:CoordImport::Coordinate
+ptrWpBuffer	coordimport.h	/^    struct Coordinate* ptrWpBuffer;$/;"	m	class:CoordImport	typeref:struct:CoordImport::Coordinate
+CSVReader	csv.h	/^        explicit CSVReader(Args...args) :in(std::forward<Args>(args)...){$/;"	f	class:io::CSVReader
+CSVReader	csv.h	/^    class CSVReader{$/;"	c	namespace:io
+CSV_H	csv.h	33;"	d
+LineReader	csv.h	/^        LineReader(const char*file_name, FILE*file) :$/;"	f	class:io::LineReader
+LineReader	csv.h	/^        LineReader(const std::string&file_name, FILE*file) :$/;"	f	class:io::LineReader
+LineReader	csv.h	/^        explicit LineReader(const char*file_name){$/;"	f	class:io::LineReader
+LineReader	csv.h	/^        explicit LineReader(const std::string&file_name){$/;"	f	class:io::LineReader
+LineReader	csv.h	/^    class LineReader{$/;"	c	namespace:io
+base	csv.h	/^        struct base : std::exception{$/;"	s	namespace:io::error
+block_len	csv.h	/^        static const int block_len = 1 << 24;$/;"	m	class:io::LineReader
+buffer	csv.h	/^        char*buffer;$/;"	m	class:io::LineReader
+bytes_read	csv.h	/^        std::future<int>bytes_read;$/;"	m	class:io::LineReader
+c99_snprintf	csv.h	/^inline int c99_snprintf(char* str, size_t size, const char* format, ...)$/;"	f
+c99_vsnprintf	csv.h	/^inline int c99_vsnprintf(char* str, size_t size, const char* format, va_list ap)$/;"	f
+can_not_open_file	csv.h	/^        struct can_not_open_file :$/;"	s	namespace:io::error
+chop_next_column	csv.h	/^        void chop_next_column($/;"	f	namespace:io::detail
+col_order	csv.h	/^        std::vector<int>col_order;$/;"	m	class:io::CSVReader
+column_content	csv.h	/^            char column_content[max_column_content_length + 1];$/;"	m	struct:io::error::with_column_content
+column_name	csv.h	/^            char column_name[max_column_name_length + 1];$/;"	m	struct:io::error::with_column_name
+column_names	csv.h	/^        std::string column_names[column_count];$/;"	m	class:io::CSVReader
+data_begin	csv.h	/^        int data_begin;$/;"	m	class:io::LineReader
+data_end	csv.h	/^        int data_end;$/;"	m	class:io::LineReader
+detail	csv.h	/^    namespace detail{$/;"	n	namespace:io
+double_quote_escape	csv.h	/^    struct double_quote_escape{$/;"	s	namespace:io
+duplicated_column_in_header	csv.h	/^        struct duplicated_column_in_header :$/;"	s	namespace:io::error
+empty_line_comment	csv.h	/^    struct empty_line_comment{$/;"	s	namespace:io
+errno_value	csv.h	/^            int errno_value;$/;"	m	struct:io::error::with_errno
+error	csv.h	/^    namespace error{$/;"	n	namespace:io
+error_message_buffer	csv.h	/^            mutable char error_message_buffer[256];$/;"	m	struct:io::error::base
+escaped_string_not_closed	csv.h	/^        struct escaped_string_not_closed :$/;"	s	namespace:io::error
+extra_column_in_header	csv.h	/^        struct extra_column_in_header :$/;"	s	namespace:io::error
+file	csv.h	/^        FILE*file;$/;"	m	class:io::LineReader
+file_line	csv.h	/^            int file_line;$/;"	m	struct:io::error::with_file_line
+file_line	csv.h	/^        unsigned file_line;$/;"	m	class:io::LineReader
+file_name	csv.h	/^            char file_name[max_file_name_length + 1];$/;"	m	struct:io::error::with_file_name
+file_name	csv.h	/^        char file_name[error::max_file_name_length + 1];$/;"	m	class:io::LineReader
+find_next_column_end	csv.h	/^        static const char*find_next_column_end(const char*col_begin){$/;"	f	struct:io::double_quote_escape
+find_next_column_end	csv.h	/^        static const char*find_next_column_end(const char*col_begin){$/;"	f	struct:io::no_quote_escape
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::can_not_open_file
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::duplicated_column_in_header
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::escaped_string_not_closed
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::extra_column_in_header
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::header_missing
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::integer_must_be_positive
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::integer_overflow
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::integer_underflow
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::invalid_single_character
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::line_length_limit_exceeded
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::missing_column_in_header
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::no_digit
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::too_few_columns
+format_error_message	csv.h	/^            void format_error_message()const{$/;"	f	struct:io::error::too_many_columns
+get_file_line	csv.h	/^        unsigned get_file_line()const{$/;"	f	class:io::CSVReader
+get_file_line	csv.h	/^        unsigned get_file_line()const{$/;"	f	class:io::LineReader
+get_truncated_file_name	csv.h	/^        const char*get_truncated_file_name()const{$/;"	f	class:io::CSVReader
+get_truncated_file_name	csv.h	/^        const char*get_truncated_file_name()const{$/;"	f	class:io::LineReader
+has_column	csv.h	/^        bool has_column(const std::string&name) const {$/;"	f	class:io::CSVReader
+header_missing	csv.h	/^        struct header_missing :$/;"	s	namespace:io::error
+ignore_column	csv.h	/^    typedef unsigned ignore_column;$/;"	t	namespace:io
+ignore_extra_column	csv.h	/^    static const ignore_column ignore_extra_column = 1;$/;"	m	namespace:io
+ignore_missing_column	csv.h	/^    static const ignore_column ignore_missing_column = 2;$/;"	m	namespace:io
+ignore_no_column	csv.h	/^    static const ignore_column ignore_no_column = 0;$/;"	m	namespace:io
+ignore_overflow	csv.h	/^    struct ignore_overflow{$/;"	s	namespace:io
+in	csv.h	/^        LineReader in;$/;"	m	class:io::CSVReader
+init	csv.h	/^        void init(){$/;"	f	class:io::LineReader
+integer_must_be_positive	csv.h	/^        struct integer_must_be_positive :$/;"	s	namespace:io::error
+integer_overflow	csv.h	/^        struct integer_overflow :$/;"	s	namespace:io::error
+integer_underflow	csv.h	/^        struct integer_underflow :$/;"	s	namespace:io::error
+invalid_single_character	csv.h	/^        struct invalid_single_character :$/;"	s	namespace:io::error
+io	csv.h	/^namespace io{$/;"	n
+is_comment	csv.h	/^        static bool is_comment(const char*line){$/;"	f	struct:io::empty_line_comment
+is_comment	csv.h	/^        static bool is_comment(const char*line){$/;"	f	struct:io::no_comment
+is_comment	csv.h	/^        static bool is_comment(const char*line){$/;"	f	struct:io::single_and_empty_line_comment
+is_comment	csv.h	/^        static bool is_comment(const char*line){$/;"	f	struct:io::single_line_comment
+is_comment_start_char	csv.h	/^        static bool is_comment_start_char(char c){$/;"	f	struct:io::single_line_comment
+is_comment_start_char	csv.h	/^        static bool is_comment_start_char(char c, char comment_start_char, OtherCommentStartChars...other_comment_start_chars){$/;"	f	struct:io::single_line_comment
+is_trim_char	csv.h	/^        static bool is_trim_char(char c){$/;"	f	struct:io::trim_chars
+is_trim_char	csv.h	/^        static bool is_trim_char(char c, char trim_char, OtherTrimChars...other_trim_chars){$/;"	f	struct:io::trim_chars
+line_length_limit_exceeded	csv.h	/^        struct line_length_limit_exceeded :$/;"	s	namespace:io::error
+max_column_content_length	csv.h	/^        const int max_column_content_length = 63;$/;"	m	namespace:io::error
+max_column_name_length	csv.h	/^        const int max_column_name_length = 63;$/;"	m	namespace:io::error
+max_file_name_length	csv.h	/^        const int max_file_name_length = 255;$/;"	m	namespace:io::error
+missing_column_in_header	csv.h	/^        struct missing_column_in_header :$/;"	s	namespace:io::error
+next_line	csv.h	/^        char*next_line(){$/;"	f	class:io::LineReader
+no_comment	csv.h	/^    struct no_comment{$/;"	s	namespace:io
+no_digit	csv.h	/^        struct no_digit :$/;"	s	namespace:io::error
+no_quote_escape	csv.h	/^    struct no_quote_escape{$/;"	s	namespace:io
+on_overflow	csv.h	/^        static void on_overflow(T&){$/;"	f	struct:io::throw_on_overflow
+on_overflow	csv.h	/^        static void on_overflow(T&){}$/;"	f	struct:io::ignore_overflow
+on_overflow	csv.h	/^        static void on_overflow(T&x){$/;"	f	struct:io::set_to_max_on_overflow
+on_underflow	csv.h	/^        static void on_underflow(T&){$/;"	f	struct:io::throw_on_overflow
+on_underflow	csv.h	/^        static void on_underflow(T&){}$/;"	f	struct:io::ignore_overflow
+on_underflow	csv.h	/^        static void on_underflow(T&x){$/;"	f	struct:io::set_to_max_on_overflow
+open_file	csv.h	/^        void open_file(const char*file_name){$/;"	f	class:io::LineReader
+parse	csv.h	/^        template<class overflow_policy> void parse(char*col, double&x) { parse_float(col, x); }$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy> void parse(char*col, float&x) { parse_float(col, x); }$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy> void parse(char*col, long double&x) { parse_float(col, x); }$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, signed char &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, signed int &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, signed long &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, signed long long &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, signed short &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, unsigned char &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, unsigned int &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, unsigned long &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, unsigned long long &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        template<class overflow_policy>void parse(char*col, unsigned short &x)$/;"	f	namespace:io::detail
+parse	csv.h	/^        void parse(char*col, T&x){$/;"	f	namespace:io::detail
+parse	csv.h	/^        void parse(char*col, char &x){$/;"	f	namespace:io::detail
+parse	csv.h	/^        void parse(char*col, char*&x){$/;"	f	namespace:io::detail
+parse	csv.h	/^        void parse(char*col, const char*&x){$/;"	f	namespace:io::detail
+parse	csv.h	/^        void parse(char*col, std::string&x){$/;"	f	namespace:io::detail
+parse_float	csv.h	/^        void parse_float(const char*col, T&x){$/;"	f	namespace:io::detail
+parse_header_line	csv.h	/^        void parse_header_line($/;"	f	namespace:io::detail
+parse_helper	csv.h	/^        void parse_helper(std::size_t r){}$/;"	f	class:io::CSVReader
+parse_helper	csv.h	/^        void parse_helper(std::size_t r, T&t, ColType&...cols){$/;"	f	class:io::CSVReader
+parse_line	csv.h	/^        void parse_line($/;"	f	namespace:io::detail
+parse_signed_integer	csv.h	/^        void parse_signed_integer(const char*col, T&x){$/;"	f	namespace:io::detail
+parse_unsigned_integer	csv.h	/^        void parse_unsigned_integer(const char*col, T&x){$/;"	f	namespace:io::detail
+read_header	csv.h	/^        void read_header(ignore_column ignore_policy, ColNames...cols){$/;"	f	class:io::CSVReader
+read_row	csv.h	/^        bool read_row(ColType& ...cols){$/;"	f	class:io::CSVReader
+row	csv.h	/^        char*(row[column_count]);$/;"	m	class:io::CSVReader
+set_column_content	csv.h	/^            void set_column_content(const char*column_content){$/;"	f	struct:io::error::with_column_content
+set_column_name	csv.h	/^            void set_column_name(const char*column_name){$/;"	f	struct:io::error::with_column_name
+set_column_names	csv.h	/^        void set_column_names(){}$/;"	f	class:io::CSVReader
+set_column_names	csv.h	/^        void set_column_names(std::string s, ColNames...cols){$/;"	f	class:io::CSVReader
+set_errno	csv.h	/^            void set_errno(int errno_value){$/;"	f	struct:io::error::with_errno
+set_file_line	csv.h	/^            void set_file_line(int file_line){$/;"	f	struct:io::error::with_file_line
+set_file_line	csv.h	/^        void set_file_line(unsigned file_line){$/;"	f	class:io::CSVReader
+set_file_line	csv.h	/^        void set_file_line(unsigned file_line){$/;"	f	class:io::LineReader
+set_file_name	csv.h	/^            void set_file_name(const char*file_name){$/;"	f	struct:io::error::with_file_name
+set_file_name	csv.h	/^        void set_file_name(const char*file_name){$/;"	f	class:io::CSVReader
+set_file_name	csv.h	/^        void set_file_name(const char*file_name){$/;"	f	class:io::LineReader
+set_file_name	csv.h	/^        void set_file_name(const std::string&file_name){$/;"	f	class:io::CSVReader
+set_file_name	csv.h	/^        void set_file_name(const std::string&file_name){$/;"	f	class:io::LineReader
+set_header	csv.h	/^        void set_header(ColNames...cols){$/;"	f	class:io::CSVReader
+set_to_max_on_overflow	csv.h	/^    struct set_to_max_on_overflow{$/;"	s	namespace:io
+single_and_empty_line_comment	csv.h	/^    struct single_and_empty_line_comment{$/;"	s	namespace:io
+single_line_comment	csv.h	/^    struct single_line_comment{$/;"	s	namespace:io
+snprintf	csv.h	51;"	d
+snprintf	csv.h	79;"	d
+throw_on_overflow	csv.h	/^    struct throw_on_overflow{$/;"	s	namespace:io
+too_few_columns	csv.h	/^        struct too_few_columns :$/;"	s	namespace:io::error
+too_many_columns	csv.h	/^        struct too_many_columns :$/;"	s	namespace:io::error
+trim	csv.h	/^        static void trim(char*&str_begin, char*&str_end){$/;"	f	struct:io::trim_chars
+trim_chars	csv.h	/^    struct trim_chars{$/;"	s	namespace:io
+unescape	csv.h	/^        static void unescape(char*&col_begin, char*&col_end){$/;"	f	struct:io::double_quote_escape
+unescape	csv.h	/^        static void unescape(char*&col_begin, char*&col_end){$/;"	f	struct:io::no_quote_escape
+what	csv.h	/^            const char*what()const throw(){$/;"	f	struct:io::error::base
+with_column_content	csv.h	/^            with_column_content(){$/;"	f	struct:io::error::with_column_content
+with_column_content	csv.h	/^        struct with_column_content{$/;"	s	namespace:io::error
+with_column_name	csv.h	/^            with_column_name(){$/;"	f	struct:io::error::with_column_name
+with_column_name	csv.h	/^        struct with_column_name{$/;"	s	namespace:io::error
+with_errno	csv.h	/^            with_errno(){$/;"	f	struct:io::error::with_errno
+with_errno	csv.h	/^        struct with_errno{$/;"	s	namespace:io::error
+with_file_line	csv.h	/^            with_file_line(){$/;"	f	struct:io::error::with_file_line
+with_file_line	csv.h	/^        struct with_file_line{$/;"	s	namespace:io::error
+with_file_name	csv.h	/^            with_file_name(){$/;"	f	struct:io::error::with_file_name
+with_file_name	csv.h	/^        struct with_file_name{$/;"	s	namespace:io::error
+~LineReader	csv.h	/^        ~LineReader(){$/;"	f	class:io::LineReader
+GpsEmulator	gpsemulator.cpp	/^GpsEmulator::GpsEmulator() {}$/;"	f	class:GpsEmulator
+cleanupRandomGenerators	gpsemulator.cpp	/^void GpsEmulator::cleanupRandomGenerators()$/;"	f	class:GpsEmulator
+csvDataToNmeaInfo	gpsemulator.cpp	/^void GpsEmulator::csvDataToNmeaInfo(const float dLat, const float dLong, const float dHeading,$/;"	f	class:GpsEmulator
+generateHeading	gpsemulator.cpp	/^double GpsEmulator::generateHeading()$/;"	f	class:GpsEmulator
+generatePseudoRandomData	gpsemulator.cpp	/^void GpsEmulator::generatePseudoRandomData()$/;"	f	class:GpsEmulator
+generateSpeed	gpsemulator.cpp	/^double GpsEmulator::generateSpeed()$/;"	f	class:GpsEmulator
+getNextStringToCharBuffer	gpsemulator.cpp	/^void GpsEmulator::getNextStringToCharBuffer(char* buffer, int bufferSize)$/;"	f	class:GpsEmulator
+getNextStringToNavState	gpsemulator.cpp	/^void GpsEmulator::getNextStringToNavState(NavState* navS)$/;"	f	class:GpsEmulator
+initRandomGenerators	gpsemulator.cpp	/^void GpsEmulator::initRandomGenerators()$/;"	f	class:GpsEmulator
+parseCsvToInfoVector	gpsemulator.cpp	/^void GpsEmulator::parseCsvToInfoVector(const std::string& csvFile)$/;"	f	class:GpsEmulator
+~GpsEmulator	gpsemulator.cpp	/^GpsEmulator::~GpsEmulator()$/;"	f	class:GpsEmulator
+GpsEmulator	gpsemulator.h	/^class GpsEmulator$/;"	c
+distHeading	gpsemulator.h	/^    std::uniform_real_distribution<double>* distHeading;$/;"	m	class:GpsEmulator
+distSpeed	gpsemulator.h	/^    std::uniform_real_distribution<double>* distSpeed;$/;"	m	class:GpsEmulator
+genHeading	gpsemulator.h	/^    std::default_random_engine* genHeading;$/;"	m	class:GpsEmulator
+genSpeed	gpsemulator.h	/^    std::default_random_engine* genSpeed;$/;"	m	class:GpsEmulator
+nmeaInfoVector	gpsemulator.h	/^    std::vector<nmeaINFO> nmeaInfoVector;$/;"	m	class:GpsEmulator
+nmeaVectorLength	gpsemulator.h	/^    int nmeaVectorLength = 0;$/;"	m	class:GpsEmulator
+decodeGpsStringInNavState	gpsinterface.c	/^void decodeGpsStringInNavState(NavState* navS)$/;"	f
+GPSINTERFACE_H	gpsinterface.h	2;"	d
+atExceptionGoalHandler	navFunctions.c	/^CurrentNavState atExceptionGoalHandler(NavState* navS)$/;"	f
+atExceptionWPHandler	navFunctions.c	/^CurrentNavState atExceptionWPHandler(NavState* navS)$/;"	f
+atGoalHandler	navFunctions.c	/^CurrentNavState atGoalHandler(NavState* navS) {}$/;"	f
+atWPHandler	navFunctions.c	/^CurrentNavState atWPHandler(NavState* navS)$/;"	f
+closestExceptionWPHandler	navFunctions.c	/^CurrentNavState closestExceptionWPHandler(NavState* navS) {}$/;"	f
+closestWPHandler	navFunctions.c	/^CurrentNavState closestWPHandler(NavState* navS) {}$/;"	f
+coordsEqual	navFunctions.c	/^uint8 coordsEqual(const struct Coordinate* coordA,$/;"	f
+dHeadingFromAtoB	navFunctions.c	/^floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB)$/;"	f
+dHeadingToCurrentWP	navFunctions.c	/^floatDegree dHeadingToCurrentWP(NavState* navS)$/;"	f
+distanceCirclePathAtoB	navFunctions.c	/^floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,$/;"	f
+distanceEquiRectAtoB	navFunctions.c	/^floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,$/;"	f
+distanceSphereCosineAtoB	navFunctions.c	/^floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,$/;"	f
+initGpsBuffer	navFunctions.c	/^void initGpsBuffer(GpsBuffer* gpsB)$/;"	f
+initSerialBuffer	navFunctions.c	/^void initSerialBuffer(SerialBuffer* serialB)$/;"	f
+initStateDataStructure	navFunctions.c	/^void initStateDataStructure(StateDataStructure* stateD)$/;"	f
+latitudeFromCoordinate	navFunctions.c	/^floatDegree latitudeFromCoordinate(const struct Coordinate* thisCoord)$/;"	f
+longitudeFromCoordinate	navFunctions.c	/^floatDegree longitudeFromCoordinate(const Coordinate* thisCoord)$/;"	f
+nextExceptionWPHandler	navFunctions.c	/^CurrentNavState nextExceptionWPHandler(NavState* navS) {}$/;"	f
+nextWPHandler	navFunctions.c	/^CurrentNavState nextWPHandler(NavState* navS) {}$/;"	f
+printCoordData	navFunctions.c	/^void printCoordData(Coordinate* coord)$/;"	f
+printCurrentCoordAndHeading	navFunctions.c	/^void printCurrentCoordAndHeading(NavState* navS)$/;"	f
+toExceptionWPHandler	navFunctions.c	/^CurrentNavState toExceptionWPHandler(NavState* navS)$/;"	f
+toWPHandler	navFunctions.c	/^CurrentNavState toWPHandler(NavState* navS)$/;"	f
+updateNavState	navFunctions.c	/^void updateNavState(NavState* navS)$/;"	f
+zeroCoordinate	navFunctions.c	/^void zeroCoordinate(Coordinate* coord)$/;"	f
+zeroNavState	navFunctions.c	/^void zeroNavState(NavState* navS)$/;"	f
+zeroSystemTime	navFunctions.c	/^void zeroSystemTime(SystemTime* time)$/;"	f
+NAVFUNCDEBUG	navFunctions.h	35;"	d
+NAVFUNCTIONS_H	navFunctions.h	33;"	d
+Coordinate	navTypes.h	/^typedef struct Coordinate$/;"	s
+Coordinate	navTypes.h	/^} Coordinate;$/;"	t	typeref:struct:Coordinate
+CurrentNavState	navTypes.h	/^typedef enum CurrentNavState$/;"	g
+CurrentNavState	navTypes.h	/^} CurrentNavState;$/;"	t	typeref:enum:CurrentNavState
+DayOfMonth	navTypes.h	/^    uint8_t DayOfMonth;$/;"	m	struct:SystemTime
+DayOfWeek	navTypes.h	/^    uint8_t DayOfWeek;$/;"	m	struct:SystemTime
+DayOfYear	navTypes.h	/^    uint16_t DayOfYear;$/;"	m	struct:SystemTime
+GpsBuffer	navTypes.h	/^typedef struct GpsBuffer$/;"	s
+GpsBuffer	navTypes.h	/^} GpsBuffer;$/;"	t	typeref:struct:GpsBuffer
+Hour	navTypes.h	/^    uint8_t Hour;$/;"	m	struct:SystemTime
+Min	navTypes.h	/^    uint8_t Min;$/;"	m	struct:SystemTime
+Month	navTypes.h	/^    uint8_t Month;$/;"	m	struct:SystemTime
+NAVTYPES_H	navTypes.h	2;"	d
+NavState	navTypes.h	/^typedef struct NavState$/;"	s
+NavState	navTypes.h	/^} NavState;$/;"	t	typeref:struct:NavState
+Sec	navTypes.h	/^    uint8_t Sec;$/;"	m	struct:SystemTime
+SerialBuffer	navTypes.h	/^typedef struct SerialBuffer$/;"	s
+SerialBuffer	navTypes.h	/^} SerialBuffer;$/;"	t	typeref:struct:SerialBuffer
+StateDataStructure	navTypes.h	/^typedef struct StateDataStructure$/;"	s
+StateDataStructure	navTypes.h	/^} StateDataStructure;$/;"	t	typeref:struct:StateDataStructure
+SystemTime	navTypes.h	/^typedef struct SystemTime$/;"	s
+SystemTime	navTypes.h	/^} SystemTime;$/;"	t	typeref:struct:SystemTime
+WPGoal	navTypes.h	/^    struct Coordinate WPGoal;$/;"	m	struct:StateDataStructure	typeref:struct:StateDataStructure::Coordinate
+Year	navTypes.h	/^    uint16_t Year;$/;"	m	struct:SystemTime
+arrivalWPDistance	navTypes.h	/^    float arrivalWPDistance;$/;"	m	struct:StateDataStructure
+atExceptionGoal	navTypes.h	/^    atExceptionGoal,$/;"	e	enum:CurrentNavState
+atExceptionWP	navTypes.h	/^    atExceptionWP,$/;"	e	enum:CurrentNavState
+atGoal	navTypes.h	/^    atGoal,$/;"	e	enum:CurrentNavState
+atWP	navTypes.h	/^    atWP,$/;"	e	enum:CurrentNavState
+closestExceptionWP	navTypes.h	/^    closestExceptionWP,$/;"	e	enum:CurrentNavState
+closestWP	navTypes.h	/^    closestWP,$/;"	e	enum:CurrentNavState
+coordinateCode	navTypes.h	/^typedef int8_t coordinateCode;$/;"	t
+currentLocation	navTypes.h	/^    struct Coordinate currentLocation;$/;"	m	struct:NavState	typeref:struct:NavState::Coordinate
+currentSpeedKmh	navTypes.h	/^    float currentSpeedKmh;$/;"	m	struct:NavState
+dCurrentHeading	navTypes.h	/^    floatDegree dCurrentHeading;$/;"	m	struct:NavState
+dLatitude	navTypes.h	/^    signed16Degree dLatitude;$/;"	m	struct:Coordinate
+dLongitude	navTypes.h	/^    signed16Degree dLongitude;$/;"	m	struct:Coordinate
+dOverallHeading	navTypes.h	/^    floatDegree dOverallHeading;$/;"	m	struct:NavState
+distanceToCurrentWP	navTypes.h	/^    float distanceToCurrentWP;$/;"	m	struct:NavState
+eWPGoal	navTypes.h	/^    struct Coordinate eWPGoal;$/;"	m	struct:StateDataStructure	typeref:struct:StateDataStructure::Coordinate
+exceptionMaxWPDistance	navTypes.h	/^    float exceptionMaxWPDistance;$/;"	m	struct:StateDataStructure
+exceptionWPArrivalDistance	navTypes.h	/^    float exceptionWPArrivalDistance;$/;"	m	struct:StateDataStructure
+firstCurrentNavState	navTypes.h	/^    firstCurrentNavState = 0,$/;"	e	enum:CurrentNavState
+floatDegree	navTypes.h	/^typedef float floatDegree;$/;"	t
+gpsBuffer	navTypes.h	/^    struct GpsBuffer gpsBuffer;$/;"	m	struct:NavState	typeref:struct:NavState::GpsBuffer
+gpsBufferLength	navTypes.h	/^    int gpsBufferLength;$/;"	m	struct:GpsBuffer
+gpsStringBuffer	navTypes.h	/^    char gpsStringBuffer[GPS_STR_BFR_LEN];$/;"	m	struct:GpsBuffer
+lastCurrentNavState	navTypes.h	/^    lastCurrentNavState$/;"	e	enum:CurrentNavState
+mLatitude	navTypes.h	/^    signed32Degree mLatitude;$/;"	m	struct:Coordinate
+mLongitude	navTypes.h	/^    signed32Degree mLongitude;$/;"	m	struct:Coordinate
+maxWPDistance	navTypes.h	/^    float maxWPDistance;$/;"	m	struct:StateDataStructure
+newGPSString	navTypes.h	/^    uint8 newGPSString;$/;"	m	struct:GpsBuffer
+nextExceptionWP	navTypes.h	/^    nextExceptionWP,$/;"	e	enum:CurrentNavState
+nextWP	navTypes.h	/^    nextWP,$/;"	e	enum:CurrentNavState
+nextWaypoint	navTypes.h	/^    struct Coordinate nextWaypoint;$/;"	m	struct:NavState	typeref:struct:NavState::Coordinate
+priority	navTypes.h	/^    coordinateCode priority;$/;"	m	struct:Coordinate
+serialBuffer	navTypes.h	/^    struct SerialBuffer serialBuffer;$/;"	m	struct:NavState	typeref:struct:NavState::SerialBuffer
+serialBufferLength	navTypes.h	/^    int serialBufferLength;$/;"	m	struct:SerialBuffer
+serialStringBuffer	navTypes.h	/^    char serialStringBuffer[SERIAL_STR_BFR_LEN];$/;"	m	struct:SerialBuffer
+signed16Degree	navTypes.h	/^typedef int16_t signed16Degree;$/;"	t
+signed32Degree	navTypes.h	/^typedef int32_t signed32Degree;$/;"	t
+signed8Degree	navTypes.h	/^typedef int8_t signed8Degree;$/;"	t
+stateData	navTypes.h	/^    struct StateDataStructure stateData;$/;"	m	struct:NavState	typeref:struct:NavState::StateDataStructure
+stateKeeper	navTypes.h	/^    enum CurrentNavState stateKeeper;$/;"	m	struct:StateDataStructure	typeref:enum:StateDataStructure::CurrentNavState
+time	navTypes.h	/^    struct SystemTime time;$/;"	m	struct:NavState	typeref:struct:NavState::SystemTime
+toExceptionWP	navTypes.h	/^    toExceptionWP,$/;"	e	enum:CurrentNavState
+toWP	navTypes.h	/^    toWP,$/;"	e	enum:CurrentNavState
+unsigned16Degree	navTypes.h	/^typedef uint16_t unsigned16Degree;$/;"	t
+unsigned32Degree	navTypes.h	/^typedef uint32_t unsigned32Degree;$/;"	t
+unsigned8Degree	navTypes.h	/^typedef uint8_t unsigned8Degree;$/;"	t
+dInitialHeading	navmath.c	/^floatDegree dInitialHeading(const floatDegree dLatA, const floatDegree dLonA,$/;"	f
+distanceCirclePath	navmath.c	/^floatDegree distanceCirclePath(const floatDegree rLatA, const floatDegree rLonA,$/;"	f
+distanceEquiRect	navmath.c	/^floatDegree distanceEquiRect(const floatDegree rLatA, const floatDegree rLonA,$/;"	f
+distanceSphereCosine	navmath.c	/^floatDegree distanceSphereCosine(const floatDegree rLatA, const floatDegree rLonA,$/;"	f
+floatFromLongDegree	navmath.c	/^floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degree minutes)$/;"	f
+rHaversine	navmath.c	/^floatDegree rHaversine(const floatDegree rAngle)$/;"	f
+rInverseHaversine	navmath.c	/^floatDegree rInverseHaversine(const floatDegree rAngle)$/;"	f
+toDegree	navmath.c	/^floatDegree toDegree(const floatDegree rAngle) { return (floatDegree)(((rAngle)*180) \/ M_PI); }$/;"	f
+toRadian	navmath.c	/^floatDegree toRadian(const floatDegree dAngle) { return (floatDegree)(((dAngle)*M_PI) \/ 180); }$/;"	f
+M_PI	navmath.h	25;"	d
+NAVMATH_H	navmath.h	2;"	d
+earthRadiusM	navmath.h	/^static const double earthRadiusM = 6371008.7714; \/\/ Average earth radius in metres$/;"	v
+NAVSYS_H	navsys.h	2;"	d
+NMEA_ASSERT	nmea\config.h	46;"	d
+NMEA_ASSERT	nmea\config.h	48;"	d
+NMEA_CE	nmea\config.h	23;"	d
+NMEA_CONVSTR_BUF	nmea\config.h	19;"	d
+NMEA_INLINE	nmea\config.h	38;"	d
+NMEA_INLINE	nmea\config.h	41;"	d
+NMEA_POSIX	nmea\config.h	37;"	d
+NMEA_POSIX	nmea\config.h	40;"	d
+NMEA_TIMEPARSE_BUF	nmea\config.h	20;"	d
+NMEA_UNI	nmea\config.h	29;"	d
+NMEA_VERSION	nmea\config.h	14;"	d
+NMEA_VERSION_MAJOR	nmea\config.h	15;"	d
+NMEA_VERSION_MINOR	nmea\config.h	16;"	d
+NMEA_VERSION_PATCH	nmea\config.h	17;"	d
+NMEA_WIN	nmea\config.h	27;"	d
+__NMEA_CONFIG_H__	nmea\config.h	12;"	d
+nmea_error	nmea\context.c	/^void nmea_error(const char *str, ...)$/;"	f
+nmea_property	nmea\context.c	/^nmeaPROPERTY * nmea_property()$/;"	f
+nmea_trace	nmea\context.c	/^void nmea_trace(const char *str, ...)$/;"	f
+nmea_trace_buff	nmea\context.c	/^void nmea_trace_buff(const char *buff, int buff_size)$/;"	f
+NMEA_DEF_PARSEBUFF	nmea\context.h	16;"	d
+NMEA_MIN_PARSEBUFF	nmea\context.h	17;"	d
+__NMEA_CONTEXT_H__	nmea\context.h	12;"	d
+_nmeaPROPERTY	nmea\context.h	/^typedef struct _nmeaPROPERTY$/;"	s
+error_func	nmea\context.h	/^    nmeaErrorFunc   error_func;$/;"	m	struct:_nmeaPROPERTY
+nmeaErrorFunc	nmea\context.h	/^typedef void (*nmeaErrorFunc)(const char *str, int str_size);$/;"	t
+nmeaPROPERTY	nmea\context.h	/^} nmeaPROPERTY;$/;"	t	typeref:struct:_nmeaPROPERTY
+nmeaTraceFunc	nmea\context.h	/^typedef void (*nmeaTraceFunc)(const char *str, int str_size);$/;"	t
+parse_buff_size	nmea\context.h	/^    int             parse_buff_size;$/;"	m	struct:_nmeaPROPERTY
+trace_func	nmea\context.h	/^    nmeaTraceFunc   trace_func;$/;"	m	struct:_nmeaPROPERTY
+nmea_gen_GPGGA	nmea\generate.c	/^int nmea_gen_GPGGA(char *buff, int buff_sz, nmeaGPGGA *pack)$/;"	f
+nmea_gen_GPGSA	nmea\generate.c	/^int nmea_gen_GPGSA(char *buff, int buff_sz, nmeaGPGSA *pack)$/;"	f
+nmea_gen_GPGSV	nmea\generate.c	/^int nmea_gen_GPGSV(char *buff, int buff_sz, nmeaGPGSV *pack)$/;"	f
+nmea_gen_GPRMC	nmea\generate.c	/^int nmea_gen_GPRMC(char *buff, int buff_sz, nmeaGPRMC *pack)$/;"	f
+nmea_gen_GPVTG	nmea\generate.c	/^int nmea_gen_GPVTG(char *buff, int buff_sz, nmeaGPVTG *pack)$/;"	f
+nmea_generate	nmea\generate.c	/^int nmea_generate($/;"	f
+nmea_gsv_npack	nmea\generate.c	/^int nmea_gsv_npack(int sat_count)$/;"	f
+nmea_info2GPGGA	nmea\generate.c	/^void nmea_info2GPGGA(const nmeaINFO *info, nmeaGPGGA *pack)$/;"	f
+nmea_info2GPGSA	nmea\generate.c	/^void nmea_info2GPGSA(const nmeaINFO *info, nmeaGPGSA *pack)$/;"	f
+nmea_info2GPGSV	nmea\generate.c	/^void nmea_info2GPGSV(const nmeaINFO *info, nmeaGPGSV *pack, int pack_idx)$/;"	f
+nmea_info2GPRMC	nmea\generate.c	/^void nmea_info2GPRMC(const nmeaINFO *info, nmeaGPRMC *pack)$/;"	f
+nmea_info2GPVTG	nmea\generate.c	/^void nmea_info2GPVTG(const nmeaINFO *info, nmeaGPVTG *pack)$/;"	f
+__NMEA_GENERATE_H__	nmea\generate.h	12;"	d
+__nmea_create_generator	nmea\generator.c	/^nmeaGENERATOR * __nmea_create_generator(int type, nmeaINFO *info)$/;"	f
+nmea_create_generator	nmea\generator.c	/^nmeaGENERATOR * nmea_create_generator(int type, nmeaINFO *info)$/;"	f
+nmea_destroy_generator	nmea\generator.c	/^void nmea_destroy_generator(nmeaGENERATOR *gen)$/;"	f
+nmea_gen_add	nmea\generator.c	/^void nmea_gen_add(nmeaGENERATOR *to, nmeaGENERATOR *gen)$/;"	f
+nmea_gen_destroy	nmea\generator.c	/^void nmea_gen_destroy(nmeaGENERATOR *gen)$/;"	f
+nmea_gen_init	nmea\generator.c	/^int nmea_gen_init(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_gen_loop	nmea\generator.c	/^int nmea_gen_loop(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_gen_reset	nmea\generator.c	/^int nmea_gen_reset(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_generate_from	nmea\generator.c	/^int nmea_generate_from($/;"	f
+nmea_igen_noise_init	nmea\generator.c	/^int nmea_igen_noise_init(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_noise_loop	nmea\generator.c	/^int nmea_igen_noise_loop(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_noise_reset	nmea\generator.c	/^int nmea_igen_noise_reset(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_pos_rmove_destroy	nmea\generator.c	/^int nmea_igen_pos_rmove_destroy(nmeaGENERATOR *gen)$/;"	f
+nmea_igen_pos_rmove_init	nmea\generator.c	/^int nmea_igen_pos_rmove_init(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_pos_rmove_loop	nmea\generator.c	/^int nmea_igen_pos_rmove_loop(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_rotate_init	nmea\generator.c	/^int nmea_igen_rotate_init(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_rotate_loop	nmea\generator.c	/^int nmea_igen_rotate_loop(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_rotate_reset	nmea\generator.c	/^int nmea_igen_rotate_reset(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_static_init	nmea\generator.c	/^int nmea_igen_static_init(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_static_loop	nmea\generator.c	/^int nmea_igen_static_loop(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_igen_static_reset	nmea\generator.c	/^int nmea_igen_static_reset(nmeaGENERATOR *gen, nmeaINFO *info)$/;"	f
+nmea_random	nmea\generator.c	/^double nmea_random(double min, double max)$/;"	f
+NMEA_GEN_LAST	nmea\generator.h	/^    NMEA_GEN_LAST$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_NOISE	nmea\generator.h	/^    NMEA_GEN_NOISE = 0,$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_POS_RANDMOVE	nmea\generator.h	/^    NMEA_GEN_POS_RANDMOVE,$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_ROTATE	nmea\generator.h	/^    NMEA_GEN_ROTATE,$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_SAT_ROTATE	nmea\generator.h	/^    NMEA_GEN_SAT_ROTATE,$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_SAT_STATIC	nmea\generator.h	/^    NMEA_GEN_SAT_STATIC,$/;"	e	enum:nmeaGENTYPE
+NMEA_GEN_STATIC	nmea\generator.h	/^    NMEA_GEN_STATIC,$/;"	e	enum:nmeaGENTYPE
+__NMEA_GENERATOR_H__	nmea\generator.h	12;"	d
+_nmeaGENERATOR	nmea\generator.h	/^typedef struct _nmeaGENERATOR$/;"	s
+destroy_call	nmea\generator.h	/^    nmeaNMEA_GEN_DESTROY destroy_call;$/;"	m	struct:_nmeaGENERATOR
+gen_data	nmea\generator.h	/^    void                *gen_data;$/;"	m	struct:_nmeaGENERATOR
+init_call	nmea\generator.h	/^    nmeaNMEA_GEN_INIT    init_call;$/;"	m	struct:_nmeaGENERATOR
+loop_call	nmea\generator.h	/^    nmeaNMEA_GEN_LOOP    loop_call;$/;"	m	struct:_nmeaGENERATOR
+next	nmea\generator.h	/^    struct _nmeaGENERATOR *next;$/;"	m	struct:_nmeaGENERATOR	typeref:struct:_nmeaGENERATOR::_nmeaGENERATOR
+nmeaGENERATOR	nmea\generator.h	/^} nmeaGENERATOR;$/;"	t	typeref:struct:_nmeaGENERATOR
+nmeaGENTYPE	nmea\generator.h	/^enum nmeaGENTYPE$/;"	g
+nmeaNMEA_GEN_DESTROY	nmea\generator.h	/^typedef int (*nmeaNMEA_GEN_DESTROY)(struct _nmeaGENERATOR *gen);$/;"	t
+nmeaNMEA_GEN_INIT	nmea\generator.h	/^typedef int (*nmeaNMEA_GEN_INIT)(struct _nmeaGENERATOR *gen, nmeaINFO *info);$/;"	t
+nmeaNMEA_GEN_LOOP	nmea\generator.h	/^typedef int (*nmeaNMEA_GEN_LOOP)(struct _nmeaGENERATOR *gen, nmeaINFO *info);$/;"	t
+nmeaNMEA_GEN_RESET	nmea\generator.h	/^typedef int (*nmeaNMEA_GEN_RESET)(struct _nmeaGENERATOR *gen, nmeaINFO *info);$/;"	t
+reset_call	nmea\generator.h	/^    nmeaNMEA_GEN_RESET   reset_call;$/;"	m	struct:_nmeaGENERATOR
+nmea_calc_pdop	nmea\gmath.c	/^double nmea_calc_pdop(double hdop, double vdop)$/;"	f
+nmea_degree2ndeg	nmea\gmath.c	/^double nmea_degree2ndeg(double val)$/;"	f
+nmea_degree2radian	nmea\gmath.c	/^double nmea_degree2radian(double val)$/;"	f
+nmea_distance	nmea\gmath.c	/^double nmea_distance($/;"	f
+nmea_distance_ellipsoid	nmea\gmath.c	/^double nmea_distance_ellipsoid($/;"	f
+nmea_dop2meters	nmea\gmath.c	/^double nmea_dop2meters(double dop)$/;"	f
+nmea_info2pos	nmea\gmath.c	/^void nmea_info2pos(const nmeaINFO *info, nmeaPOS *pos)$/;"	f
+nmea_meters2dop	nmea\gmath.c	/^double nmea_meters2dop(double meters)$/;"	f
+nmea_move_horz	nmea\gmath.c	/^int nmea_move_horz($/;"	f
+nmea_move_horz_ellipsoid	nmea\gmath.c	/^int nmea_move_horz_ellipsoid($/;"	f
+nmea_ndeg2degree	nmea\gmath.c	/^double nmea_ndeg2degree(double val)$/;"	f
+nmea_ndeg2radian	nmea\gmath.c	/^double nmea_ndeg2radian(double val)$/;"	f
+nmea_pos2info	nmea\gmath.c	/^void nmea_pos2info(const nmeaPOS *pos, nmeaINFO *info)$/;"	f
+nmea_radian2degree	nmea\gmath.c	/^double nmea_radian2degree(double val)$/;"	f
+nmea_radian2ndeg	nmea\gmath.c	/^double nmea_radian2ndeg(double val)$/;"	f
+NMEA_DOP_FACTOR	nmea\gmath.h	23;"	d
+NMEA_EARTHRADIUS_KM	nmea\gmath.h	18;"	d
+NMEA_EARTHRADIUS_M	nmea\gmath.h	19;"	d
+NMEA_EARTH_FLATTENING	nmea\gmath.h	22;"	d
+NMEA_EARTH_SEMIMAJORAXIS_KM	nmea\gmath.h	21;"	d
+NMEA_EARTH_SEMIMAJORAXIS_M	nmea\gmath.h	20;"	d
+NMEA_PI	nmea\gmath.h	16;"	d
+NMEA_PI180	nmea\gmath.h	17;"	d
+__NMEA_GMATH_H__	nmea\gmath.h	12;"	d
+nmea_zero_INFO	nmea\info.c	/^void nmea_zero_INFO(nmeaINFO *info)$/;"	f
+HDOP	nmea\info.h	/^    double  HDOP;       \/**< Horizontal Dilution Of Precision *\/$/;"	m	struct:_nmeaINFO
+NMEA_DEF_LAT	nmea\info.h	31;"	d
+NMEA_DEF_LON	nmea\info.h	32;"	d
+NMEA_FIX_2D	nmea\info.h	24;"	d
+NMEA_FIX_3D	nmea\info.h	25;"	d
+NMEA_FIX_BAD	nmea\info.h	23;"	d
+NMEA_MAXSAT	nmea\info.h	27;"	d
+NMEA_NSATPACKS	nmea\info.h	29;"	d
+NMEA_SATINPACK	nmea\info.h	28;"	d
+NMEA_SIG_BAD	nmea\info.h	18;"	d
+NMEA_SIG_HIGH	nmea\info.h	21;"	d
+NMEA_SIG_LOW	nmea\info.h	19;"	d
+NMEA_SIG_MID	nmea\info.h	20;"	d
+PDOP	nmea\info.h	/^    double  PDOP;       \/**< Position Dilution Of Precision *\/$/;"	m	struct:_nmeaINFO
+VDOP	nmea\info.h	/^    double  VDOP;       \/**< Vertical Dilution Of Precision *\/$/;"	m	struct:_nmeaINFO
+__NMEA_INFO_H__	nmea\info.h	14;"	d
+_nmeaINFO	nmea\info.h	/^typedef struct _nmeaINFO$/;"	s
+_nmeaPOS	nmea\info.h	/^typedef struct _nmeaPOS$/;"	s
+_nmeaSATELLITE	nmea\info.h	/^typedef struct _nmeaSATELLITE$/;"	s
+_nmeaSATINFO	nmea\info.h	/^typedef struct _nmeaSATINFO$/;"	s
+azimuth	nmea\info.h	/^    int     azimuth;    \/**< Azimuth, degrees from true north, 000 to 359 *\/$/;"	m	struct:_nmeaSATELLITE
+declination	nmea\info.h	/^    double  declination; \/**< Magnetic variation degrees (Easterly var. subtracts from true course) *\/$/;"	m	struct:_nmeaINFO
+direction	nmea\info.h	/^    double  direction;  \/**< Track angle in degrees True *\/$/;"	m	struct:_nmeaINFO
+elv	nmea\info.h	/^    double  elv;        \/**< Antenna altitude above\/below mean sea level (geoid) in meters *\/$/;"	m	struct:_nmeaINFO
+elv	nmea\info.h	/^    int     elv;        \/**< Elevation in degrees, 90 maximum *\/$/;"	m	struct:_nmeaSATELLITE
+fix	nmea\info.h	/^    int     fix;        \/**< Operating mode, used for navigation (1 = Fix not available; 2 = 2D; 3 = 3D) *\/$/;"	m	struct:_nmeaINFO
+id	nmea\info.h	/^    int     id;         \/**< Satellite PRN number *\/$/;"	m	struct:_nmeaSATELLITE
+in_use	nmea\info.h	/^    int     in_use;     \/**< Used in position fix *\/$/;"	m	struct:_nmeaSATELLITE
+inuse	nmea\info.h	/^    int     inuse;      \/**< Number of satellites in use (not those in view) *\/$/;"	m	struct:_nmeaSATINFO
+inview	nmea\info.h	/^    int     inview;     \/**< Total number of satellites in view *\/$/;"	m	struct:_nmeaSATINFO
+lat	nmea\info.h	/^    double  lat;        \/**< Latitude in NDEG - +\/-[degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaINFO
+lat	nmea\info.h	/^    double lat;         \/**< Latitude *\/$/;"	m	struct:_nmeaPOS
+lon	nmea\info.h	/^    double  lon;        \/**< Longitude in NDEG - +\/-[degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaINFO
+lon	nmea\info.h	/^    double lon;         \/**< Longitude *\/$/;"	m	struct:_nmeaPOS
+nmeaINFO	nmea\info.h	/^} nmeaINFO;$/;"	t	typeref:struct:_nmeaINFO
+nmeaPOS	nmea\info.h	/^} nmeaPOS;$/;"	t	typeref:struct:_nmeaPOS
+nmeaSATELLITE	nmea\info.h	/^} nmeaSATELLITE;$/;"	t	typeref:struct:_nmeaSATELLITE
+nmeaSATINFO	nmea\info.h	/^} nmeaSATINFO;$/;"	t	typeref:struct:_nmeaSATINFO
+sat	nmea\info.h	/^    nmeaSATELLITE sat[NMEA_MAXSAT]; \/**< Satellites information *\/$/;"	m	struct:_nmeaSATINFO
+satinfo	nmea\info.h	/^    nmeaSATINFO satinfo; \/**< Satellites information *\/$/;"	m	struct:_nmeaINFO
+sig	nmea\info.h	/^    int     sig;        \/**< GPS quality indicator (0 = Invalid; 1 = Fix; 2 = Differential, 3 = Sensitive) *\/$/;"	m	struct:_nmeaINFO
+sig	nmea\info.h	/^    int     sig;        \/**< Signal, 00-99 dB *\/$/;"	m	struct:_nmeaSATELLITE
+smask	nmea\info.h	/^    int     smask;      \/**< Mask specifying types of packages from which data have been obtained *\/$/;"	m	struct:_nmeaINFO
+speed	nmea\info.h	/^    double  speed;      \/**< Speed over the ground in kilometers\/hour *\/$/;"	m	struct:_nmeaINFO
+utc	nmea\info.h	/^    nmeaTIME utc;       \/**< UTC of position *\/$/;"	m	struct:_nmeaINFO
+__NMEA_H__	nmea\nmea.h	12;"	d
+_nmea_parse_time	nmea\parse.c	/^int _nmea_parse_time(const char *buff, int buff_sz, nmeaTIME *res)$/;"	f
+nmea_GPGGA2info	nmea\parse.c	/^void nmea_GPGGA2info(nmeaGPGGA *pack, nmeaINFO *info)$/;"	f
+nmea_GPGSA2info	nmea\parse.c	/^void nmea_GPGSA2info(nmeaGPGSA *pack, nmeaINFO *info)$/;"	f
+nmea_GPGSV2info	nmea\parse.c	/^void nmea_GPGSV2info(nmeaGPGSV *pack, nmeaINFO *info)$/;"	f
+nmea_GPRMC2info	nmea\parse.c	/^void nmea_GPRMC2info(nmeaGPRMC *pack, nmeaINFO *info)$/;"	f
+nmea_GPVTG2info	nmea\parse.c	/^void nmea_GPVTG2info(nmeaGPVTG *pack, nmeaINFO *info)$/;"	f
+nmea_find_tail	nmea\parse.c	/^int nmea_find_tail(const char *buff, int buff_sz, int *res_crc)$/;"	f
+nmea_pack_type	nmea\parse.c	/^int nmea_pack_type(const char *buff, int buff_sz)$/;"	f
+nmea_parse_GPGGA	nmea\parse.c	/^int nmea_parse_GPGGA(const char *buff, int buff_sz, nmeaGPGGA *pack)$/;"	f
+nmea_parse_GPGSA	nmea\parse.c	/^int nmea_parse_GPGSA(const char *buff, int buff_sz, nmeaGPGSA *pack)$/;"	f
+nmea_parse_GPGSV	nmea\parse.c	/^int nmea_parse_GPGSV(const char *buff, int buff_sz, nmeaGPGSV *pack)$/;"	f
+nmea_parse_GPRMC	nmea\parse.c	/^int nmea_parse_GPRMC(const char *buff, int buff_sz, nmeaGPRMC *pack)$/;"	f
+nmea_parse_GPVTG	nmea\parse.c	/^int nmea_parse_GPVTG(const char *buff, int buff_sz, nmeaGPVTG *pack)$/;"	f
+__NMEA_PARSE_H__	nmea\parse.h	12;"	d
+_nmeaParserNODE	nmea\parser.c	/^typedef struct _nmeaParserNODE$/;"	s	file:
+next_node	nmea\parser.c	/^    struct _nmeaParserNODE *next_node;$/;"	m	struct:_nmeaParserNODE	typeref:struct:_nmeaParserNODE::_nmeaParserNODE	file:
+nmeaParserNODE	nmea\parser.c	/^} nmeaParserNODE;$/;"	t	typeref:struct:_nmeaParserNODE	file:
+nmea_parse	nmea\parser.c	/^int nmea_parse(    $/;"	f
+nmea_parser_buff_clear	nmea\parser.c	/^int nmea_parser_buff_clear(nmeaPARSER *parser)$/;"	f
+nmea_parser_destroy	nmea\parser.c	/^void nmea_parser_destroy(nmeaPARSER *parser)$/;"	f
+nmea_parser_drop	nmea\parser.c	/^int nmea_parser_drop(nmeaPARSER *parser)$/;"	f
+nmea_parser_init	nmea\parser.c	/^int nmea_parser_init(nmeaPARSER *parser)$/;"	f
+nmea_parser_peek	nmea\parser.c	/^int nmea_parser_peek(nmeaPARSER *parser, void **pack_ptr)$/;"	f
+nmea_parser_pop	nmea\parser.c	/^int nmea_parser_pop(nmeaPARSER *parser, void **pack_ptr)$/;"	f
+nmea_parser_push	nmea\parser.c	/^int nmea_parser_push(nmeaPARSER *parser, const char *buff, int buff_sz)$/;"	f
+nmea_parser_queue_clear	nmea\parser.c	/^int nmea_parser_queue_clear(nmeaPARSER *parser)$/;"	f
+nmea_parser_real_push	nmea\parser.c	/^int nmea_parser_real_push(nmeaPARSER *parser, const char *buff, int buff_sz)$/;"	f
+nmea_parser_top	nmea\parser.c	/^int nmea_parser_top(nmeaPARSER *parser)$/;"	f
+pack	nmea\parser.c	/^    void *pack;$/;"	m	struct:_nmeaParserNODE	file:
+packType	nmea\parser.c	/^    int packType;$/;"	m	struct:_nmeaParserNODE	file:
+__NMEA_PARSER_H__	nmea\parser.h	12;"	d
+_nmeaPARSER	nmea\parser.h	/^typedef struct _nmeaPARSER$/;"	s
+buff_size	nmea\parser.h	/^    int buff_size;$/;"	m	struct:_nmeaPARSER
+buff_use	nmea\parser.h	/^    int buff_use;$/;"	m	struct:_nmeaPARSER
+buffer	nmea\parser.h	/^    unsigned char *buffer;$/;"	m	struct:_nmeaPARSER
+end_node	nmea\parser.h	/^    void *end_node;$/;"	m	struct:_nmeaPARSER
+nmeaPARSER	nmea\parser.h	/^} nmeaPARSER;$/;"	t	typeref:struct:_nmeaPARSER
+top_node	nmea\parser.h	/^    void *top_node;$/;"	m	struct:_nmeaPARSER
+nmea_zero_GPGGA	nmea\sentence.c	/^void nmea_zero_GPGGA(nmeaGPGGA *pack)$/;"	f
+nmea_zero_GPGSA	nmea\sentence.c	/^void nmea_zero_GPGSA(nmeaGPGSA *pack)$/;"	f
+nmea_zero_GPGSV	nmea\sentence.c	/^void nmea_zero_GPGSV(nmeaGPGSV *pack)$/;"	f
+nmea_zero_GPRMC	nmea\sentence.c	/^void nmea_zero_GPRMC(nmeaGPRMC *pack)$/;"	f
+nmea_zero_GPVTG	nmea\sentence.c	/^void nmea_zero_GPVTG(nmeaGPVTG *pack)$/;"	f
+GPGGA	nmea\sentence.h	/^    GPGGA   = 0x0001,   \/**< GGA - Essential fix data which provide 3D location and accuracy data. *\/$/;"	e	enum:nmeaPACKTYPE
+GPGSA	nmea\sentence.h	/^    GPGSA   = 0x0002,   \/**< GSA - GPS receiver operating mode, SVs used for navigation, and DOP values. *\/$/;"	e	enum:nmeaPACKTYPE
+GPGSV	nmea\sentence.h	/^    GPGSV   = 0x0004,   \/**< GSV - Number of SVs in view, PRN numbers, elevation, azimuth & SNR values. *\/$/;"	e	enum:nmeaPACKTYPE
+GPNON	nmea\sentence.h	/^    GPNON   = 0x0000,   \/**< Unknown packet type. *\/$/;"	e	enum:nmeaPACKTYPE
+GPRMC	nmea\sentence.h	/^    GPRMC   = 0x0008,   \/**< RMC - Recommended Minimum Specific GPS\/TRANSIT Data. *\/$/;"	e	enum:nmeaPACKTYPE
+GPVTG	nmea\sentence.h	/^    GPVTG   = 0x0010    \/**< VTG - Actual track made good and speed over ground. *\/$/;"	e	enum:nmeaPACKTYPE
+HDOP	nmea\sentence.h	/^    double  HDOP;       \/**< Horizontal dilution of precision *\/$/;"	m	struct:_nmeaGPGGA
+HDOP	nmea\sentence.h	/^    double  HDOP;       \/**< Horizontal dilution of precision *\/$/;"	m	struct:_nmeaGPGSA
+PDOP	nmea\sentence.h	/^    double  PDOP;       \/**< Dilution of precision *\/$/;"	m	struct:_nmeaGPGSA
+VDOP	nmea\sentence.h	/^    double  VDOP;       \/**< Vertical dilution of precision *\/$/;"	m	struct:_nmeaGPGSA
+__NMEA_SENTENCE_H__	nmea\sentence.h	14;"	d
+_nmeaGPGGA	nmea\sentence.h	/^typedef struct _nmeaGPGGA$/;"	s
+_nmeaGPGSA	nmea\sentence.h	/^typedef struct _nmeaGPGSA$/;"	s
+_nmeaGPGSV	nmea\sentence.h	/^typedef struct _nmeaGPGSV$/;"	s
+_nmeaGPRMC	nmea\sentence.h	/^typedef struct _nmeaGPRMC$/;"	s
+_nmeaGPVTG	nmea\sentence.h	/^typedef struct _nmeaGPVTG$/;"	s
+dec	nmea\sentence.h	/^    double  dec;        \/**< Magnetic track made good *\/$/;"	m	struct:_nmeaGPVTG
+dec_m	nmea\sentence.h	/^    char    dec_m;      \/**< Fixed text 'M' *\/$/;"	m	struct:_nmeaGPVTG
+declin_ew	nmea\sentence.h	/^    char    declin_ew;  \/**< [E]ast or [W]est *\/$/;"	m	struct:_nmeaGPRMC
+declination	nmea\sentence.h	/^    double  declination; \/**< Magnetic variation degrees (Easterly var. subtracts from true course) *\/$/;"	m	struct:_nmeaGPRMC
+dgps_age	nmea\sentence.h	/^    double  dgps_age;   \/**< Time in seconds since last DGPS update *\/$/;"	m	struct:_nmeaGPGGA
+dgps_sid	nmea\sentence.h	/^    int     dgps_sid;   \/**< DGPS station ID number *\/$/;"	m	struct:_nmeaGPGGA
+diff	nmea\sentence.h	/^    double  diff;       \/**< Geoidal separation (Diff. between WGS-84 earth ellipsoid and mean sea level. '-' = geoid is below WGS-84 ellipsoid) *\/$/;"	m	struct:_nmeaGPGGA
+diff_units	nmea\sentence.h	/^    char    diff_units; \/**< [M]eters (Units of geoidal separation) *\/$/;"	m	struct:_nmeaGPGGA
+dir	nmea\sentence.h	/^    double  dir;        \/**< True track made good (degrees) *\/$/;"	m	struct:_nmeaGPVTG
+dir_t	nmea\sentence.h	/^    char    dir_t;      \/**< Fixed text 'T' indicates that track made good is relative to true north *\/$/;"	m	struct:_nmeaGPVTG
+direction	nmea\sentence.h	/^    double  direction;  \/**< Track angle in degrees True *\/$/;"	m	struct:_nmeaGPRMC
+elv	nmea\sentence.h	/^    double  elv;        \/**< Antenna altitude above\/below mean sea level (geoid) *\/$/;"	m	struct:_nmeaGPGGA
+elv_units	nmea\sentence.h	/^    char    elv_units;  \/**< [M]eters (Antenna height unit) *\/$/;"	m	struct:_nmeaGPGGA
+ew	nmea\sentence.h	/^    char    ew;         \/**< [E]ast or [W]est *\/$/;"	m	struct:_nmeaGPGGA
+ew	nmea\sentence.h	/^    char    ew;         \/**< [E]ast or [W]est *\/$/;"	m	struct:_nmeaGPRMC
+fix_mode	nmea\sentence.h	/^    char    fix_mode;   \/**< Mode (M = Manual, forced to operate in 2D or 3D; A = Automatic, 3D\/2D) *\/$/;"	m	struct:_nmeaGPGSA
+fix_type	nmea\sentence.h	/^    int     fix_type;   \/**< Type, used for navigation (1 = Fix not available; 2 = 2D; 3 = 3D) *\/$/;"	m	struct:_nmeaGPGSA
+lat	nmea\sentence.h	/^	double  lat;        \/**< Latitude in NDEG - [degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaGPGGA
+lat	nmea\sentence.h	/^	double  lat;        \/**< Latitude in NDEG - [degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaGPRMC
+lon	nmea\sentence.h	/^	double  lon;        \/**< Longitude in NDEG - [degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaGPGGA
+lon	nmea\sentence.h	/^	double  lon;        \/**< Longitude in NDEG - [degree][min].[sec\/60] *\/$/;"	m	struct:_nmeaGPRMC
+mode	nmea\sentence.h	/^    char    mode;       \/**< Mode indicator of fix type (A = autonomous, D = differential, E = estimated, N = not valid, S = simulator) *\/$/;"	m	struct:_nmeaGPRMC
+nmeaGPGGA	nmea\sentence.h	/^} nmeaGPGGA;$/;"	t	typeref:struct:_nmeaGPGGA
+nmeaGPGSA	nmea\sentence.h	/^} nmeaGPGSA;$/;"	t	typeref:struct:_nmeaGPGSA
+nmeaGPGSV	nmea\sentence.h	/^} nmeaGPGSV;$/;"	t	typeref:struct:_nmeaGPGSV
+nmeaGPRMC	nmea\sentence.h	/^} nmeaGPRMC;$/;"	t	typeref:struct:_nmeaGPRMC
+nmeaGPVTG	nmea\sentence.h	/^} nmeaGPVTG;$/;"	t	typeref:struct:_nmeaGPVTG
+nmeaPACKTYPE	nmea\sentence.h	/^enum nmeaPACKTYPE$/;"	g
+ns	nmea\sentence.h	/^    char    ns;         \/**< [N]orth or [S]outh *\/$/;"	m	struct:_nmeaGPGGA
+ns	nmea\sentence.h	/^    char    ns;         \/**< [N]orth or [S]outh *\/$/;"	m	struct:_nmeaGPRMC
+pack_count	nmea\sentence.h	/^    int     pack_count; \/**< Total number of messages of this type in this cycle *\/$/;"	m	struct:_nmeaGPGSV
+pack_index	nmea\sentence.h	/^    int     pack_index; \/**< Message number *\/$/;"	m	struct:_nmeaGPGSV
+sat_count	nmea\sentence.h	/^    int     sat_count;  \/**< Total number of satellites in view *\/$/;"	m	struct:_nmeaGPGSV
+sat_data	nmea\sentence.h	/^    nmeaSATELLITE sat_data[NMEA_SATINPACK];$/;"	m	struct:_nmeaGPGSV
+sat_prn	nmea\sentence.h	/^    int     sat_prn[NMEA_MAXSAT]; \/**< PRNs of satellites used in position fix (null for unused fields) *\/$/;"	m	struct:_nmeaGPGSA
+satinuse	nmea\sentence.h	/^	int     satinuse;   \/**< Number of satellites in use (not those in view) *\/$/;"	m	struct:_nmeaGPGGA
+sig	nmea\sentence.h	/^    int     sig;        \/**< GPS quality indicator (0 = Invalid; 1 = Fix; 2 = Differential, 3 = Sensitive) *\/$/;"	m	struct:_nmeaGPGGA
+speed	nmea\sentence.h	/^    double  speed;      \/**< Speed over the ground in knots *\/$/;"	m	struct:_nmeaGPRMC
+spk	nmea\sentence.h	/^    double  spk;        \/**< Ground speed, kilometers per hour *\/$/;"	m	struct:_nmeaGPVTG
+spk_k	nmea\sentence.h	/^    char    spk_k;      \/**< Fixed text 'K' indicates that speed over ground is in kilometers\/hour *\/$/;"	m	struct:_nmeaGPVTG
+spn	nmea\sentence.h	/^    double  spn;        \/**< Ground speed, knots *\/$/;"	m	struct:_nmeaGPVTG
+spn_n	nmea\sentence.h	/^    char    spn_n;      \/**< Fixed text 'N' indicates that speed over ground is in knots *\/$/;"	m	struct:_nmeaGPVTG
+status	nmea\sentence.h	/^    char    status;     \/**< Status (A = active or V = void) *\/$/;"	m	struct:_nmeaGPRMC
+utc	nmea\sentence.h	/^    nmeaTIME utc;       \/**< UTC of position (just time) *\/$/;"	m	struct:_nmeaGPGGA
+utc	nmea\sentence.h	/^    nmeaTIME utc;       \/**< UTC of position *\/$/;"	m	struct:_nmeaGPRMC
+nmea_time_now	nmea\time.c	/^void nmea_time_now(nmeaTIME *stm)$/;"	f
+__NMEA_TIME_H__	nmea\time.h	14;"	d
+_nmeaTIME	nmea\time.h	/^typedef struct _nmeaTIME$/;"	s
+day	nmea\time.h	/^    int     day;        \/**< Day of the month - [1,31] *\/$/;"	m	struct:_nmeaTIME
+hour	nmea\time.h	/^    int     hour;       \/**< Hours since midnight - [0,23] *\/$/;"	m	struct:_nmeaTIME
+hsec	nmea\time.h	/^    int     hsec;       \/**< Hundredth part of second - [0,99] *\/$/;"	m	struct:_nmeaTIME
+min	nmea\time.h	/^    int     min;        \/**< Minutes after the hour - [0,59] *\/$/;"	m	struct:_nmeaTIME
+mon	nmea\time.h	/^    int     mon;        \/**< Months since January - [0,11] *\/$/;"	m	struct:_nmeaTIME
+nmeaTIME	nmea\time.h	/^} nmeaTIME;$/;"	t	typeref:struct:_nmeaTIME
+sec	nmea\time.h	/^    int     sec;        \/**< Seconds after the minute - [0,59] *\/$/;"	m	struct:_nmeaTIME
+year	nmea\time.h	/^    int     year;       \/**< Years since 1900 *\/$/;"	m	struct:_nmeaTIME
+NMEA_TOKS_COMPARE	nmea\tok.c	22;"	d	file:
+NMEA_TOKS_PERCENT	nmea\tok.c	23;"	d	file:
+NMEA_TOKS_TYPE	nmea\tok.c	25;"	d	file:
+NMEA_TOKS_WIDTH	nmea\tok.c	24;"	d	file:
+nmea_atof	nmea\tok.c	/^double nmea_atof(const char *str, int str_sz)$/;"	f
+nmea_atoi	nmea\tok.c	/^int nmea_atoi(const char *str, int str_sz, int radix)$/;"	f
+nmea_calc_crc	nmea\tok.c	/^int nmea_calc_crc(const char *buff, int buff_sz)$/;"	f
+nmea_printf	nmea\tok.c	/^int nmea_printf(char *buff, int buff_sz, const char *format, ...)$/;"	f
+nmea_scanf	nmea\tok.c	/^int nmea_scanf(const char *buff, int buff_sz, const char *format, ...)$/;"	f
+__NMEA_TOK_H__	nmea\tok.h	12;"	d
+NMEA_TUD_KNOTS	nmea\units.h	21;"	d
+NMEA_TUD_MILES	nmea\units.h	22;"	d
+NMEA_TUD_YARDS	nmea\units.h	20;"	d
+NMEA_TUS_MS	nmea\units.h	28;"	d
+__NMEA_UNITS_H__	nmea\units.h	12;"	d
+floatFromNmeaDegree	nmeafunctions.c	/^floatDegree floatFromNmeaDegree(const floatDegree nmeaDeg)$/;"	f
+longDegreeFromNmeaFloat	nmeafunctions.c	/^void longDegreeFromNmeaFloat(const floatDegree nmeaDeg,$/;"	f
+longLatitudeFromNmeaInfo	nmeafunctions.c	/^void longLatitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,$/;"	f
+longLongitudeFromNmeaInfo	nmeafunctions.c	/^void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,$/;"	f
+nmeaFloatFromLongDegree	nmeafunctions.c	/^floatDegree nmeaFloatFromLongDegree(const signed16Degree degree,$/;"	f
+nmeaInfoToCoord	nmeafunctions.c	/^void nmeaInfoToCoord(nmeaINFO* nmeaInfo, Coordinate* coord)$/;"	f
+nmeaLatitudeFromCoord	nmeafunctions.c	/^floatDegree nmeaLatitudeFromCoord(const struct Coordinate* thisCoord)$/;"	f
+nmeaLongitudeFromCoord	nmeafunctions.c	/^floatDegree nmeaLongitudeFromCoord(const struct Coordinate* thisCoord)$/;"	f
+NMEAFUNCTIONS_H	nmeafunctions.h	2;"	d
+initUartBuffer	serialcom.c	/^void initUartBuffer(UartBuffer* uartBuff)$/;"	f
+navDataToSerialBuffer	serialcom.c	/^void navDataToSerialBuffer(NavState* navS)$/;"	f
+uartCleaner	serialcom.c	/^int uartCleaner(volatile void* cookie)$/;"	f
+uartReader	serialcom.c	/^ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size)$/;"	f
+uartSeeker	serialcom.c	/^int uartSeeker(volatile void* cookie, off_t* position, int whence)$/;"	f
+uartWriter	serialcom.c	/^ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size)$/;"	f
+SERIALCOM_H	serialcom.h	2;"	d
+UartBuffer	serialcom.h	/^struct UartBuffer$/;"	s
+UartBuffer	serialcom.h	/^typedef volatile struct UartBuffer UartBuffer;$/;"	t	typeref:struct:UartBuffer
+bufferLength	serialcom.h	/^    size_t bufferLength;$/;"	m	struct:UartBuffer
+close	serialcom.h	/^    cookie_close_function_t* close;$/;"	m	struct:__anon1
+cookie_close_function_t	serialcom.h	/^typedef int cookie_close_function_t(void* __cookie);$/;"	t
+cookie_io_functions_t	serialcom.h	/^} cookie_io_functions_t;$/;"	t	typeref:struct:__anon1
+cookie_read_function_t	serialcom.h	/^typedef ssize_t cookie_read_function_t(void* __cookie, char* __buf, size_t __n);$/;"	t
+cookie_seek_function_t	serialcom.h	/^typedef int cookie_seek_function_t(void* __cookie, off_t* __off, int __whence);$/;"	t
+cookie_write_function_t	serialcom.h	/^typedef ssize_t cookie_write_function_t(void* __cookie, const char* __buf,$/;"	t
+inputBuffer	serialcom.h	/^    char inputBuffer[UART_BUFFER_LENGTH];$/;"	m	struct:UartBuffer
+inputHead	serialcom.h	/^    size_t inputHead;$/;"	m	struct:UartBuffer
+inputTail	serialcom.h	/^    size_t inputTail;$/;"	m	struct:UartBuffer
+off64_t	serialcom.h	/^typedef _off64_t off64_t;$/;"	t
+off64_t	serialcom.h	/^typedef int64_t off64_t;$/;"	t
+outputBuffer	serialcom.h	/^    char outputBuffer[UART_BUFFER_LENGTH];$/;"	m	struct:UartBuffer
+outputHead	serialcom.h	/^    size_t outputHead;$/;"	m	struct:UartBuffer
+outputTail	serialcom.h	/^    size_t outputTail;$/;"	m	struct:UartBuffer
+read	serialcom.h	/^    cookie_read_function_t* read;$/;"	m	struct:__anon1
+seek	serialcom.h	/^    cookie_seek_function_t* seek;$/;"	m	struct:__anon1
+ssize_t	serialcom.h	/^typedef int ssize_t;$/;"	t
+uint8	serialcom.h	/^typedef uint8_t uint8;$/;"	t
+write	serialcom.h	/^    cookie_write_function_t* write;$/;"	m	struct:__anon1
+coordToNmeaInfo	waypointsystem.c	/^void coordToNmeaInfo(Coordinate& i_coord, nmeaINFO& o_nmeaInfo)$/;"	f
+csvDataToCoord	waypointsystem.c	/^void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)$/;"	f
+main	waypointsystem.c	/^int main()$/;"	f
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
