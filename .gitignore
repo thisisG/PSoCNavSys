@@ -228,3 +228,9 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+ArduinoSerialPort/Visual Micro/Compile.vmps.xml
+ArduinoSerialPort/Visual Micro/Configuration.Debug.vmps.xml
+PSoCNavSystem/UART_Test.cydsn/UART_Test.svd.old
+TestingInterface/.idea/dictionaries/Geir.xml
+TestingInterface/__pycache__/TestingInterface.cpython-34.pyc
+ArduinoSerialPort/Visual Micro/Upload.vmps.xml
