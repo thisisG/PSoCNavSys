@@ -26,6 +26,12 @@ extern "C" {
 }
 #endif // __cplusplus
 
+// Global variables allowing ISRs to access data in found in other scopes.
+volatile UartBuffer* ptrUartBuff = NULL;
+volatile uint8 rxStringReady = 0;
+volatile uint8 txStringReady = 0;
+
+// TODO
 void gpsISRSetUartBuffer(volatile struct UartBuffer* mainBuffer);
 
 /* gpsRxISR();

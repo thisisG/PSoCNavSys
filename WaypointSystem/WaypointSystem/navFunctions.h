@@ -1,7 +1,7 @@
 /*
 Source code written by Geir Istad for the completion of a MEng thesis at the
 University of Aberdeen
-Code here is written by the author unless otherwise indicated.
+The code is written by the author unless otherwise indicated.
 
 Format for longitude/latitude is as follows:
 
