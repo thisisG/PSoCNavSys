@@ -43,21 +43,31 @@ result.
 */
 floatDegree floatFromLongDegree(const signed16Degree degree, const signed32Degree minutes); // OK
 
+// TODO
 floatDegree toDegree(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
+
+// TODO
 floatDegree toRadian(const floatDegree dAngle); // TO TEST WITH BORDERLINE VALUES
 
+// TODO
 floatDegree rHaversine(const floatDegree rAngle);        // TO TEST WITH BORDERLINE VALUES
+
+// TODO
 floatDegree rInverseHaversine(const floatDegree rAngle); // TO TEST WITH BORDERLINE VALUES
 
+// TODO
 floatDegree distanceCirclePath(const floatDegree rLatA, const floatDegree rLonA,
                                const floatDegree rLatB, const floatDegree rLonB);
 
+// TODO
 floatDegree distanceSphereCosine(const floatDegree rLatA, const floatDegree rLonA,
                                  const floatDegree rLatB, const floatDegree rLonB);
 
+// TODO
 floatDegree distanceEquiRect(const floatDegree rLatA, const floatDegree rLonA,
                              const floatDegree rLatB, const floatDegree rLonB);
 
+// TODO
 floatDegree dInitialHeading(const floatDegree dLatA, const floatDegree dLonA,
                             const floatDegree dLatB, const floatDegree dLonB);
 

@@ -19,9 +19,7 @@ extern "C" {
 }
 #endif // __cplusplus
 
-volatile UartBuffer* ptrUartBuff = NULL;
-volatile uint8 rxStringReady = 0;
-volatile uint8 txStringReady = 0;
+
 
 void gpsISRSetUartBuffer(volatile struct UartBuffer* mainBuffer)
 {

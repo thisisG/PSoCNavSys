@@ -14,22 +14,32 @@ extern "C" {
 }
 #endif
 
+// TODO
 floatDegree nmeaFloatFromLongDegree(const signed16Degree degree,
                                     const signed32Degree minutes);
+
+// TODO
 floatDegree nmeaLatitudeFromCoord(const struct Coordinate* thisCoord);
+
+// TODO
 floatDegree nmeaLongitudeFromCoord(const struct Coordinate* thisCoord);
 
+// TODO
 floatDegree floatFromNmeaDegree(const floatDegree nmeaDeg);
 
+// TODO
 void longDegreeFromNmeaFloat(const floatDegree nmeaDeg,
                              signed16Degree* ptrDegree,
                              signed32Degree* ptrMinutes);
 
+// TODO
 void longLatitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,
                               signed32Degree* ptrMinutes);
 
+// TODO
 void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,
                                signed32Degree* ptrMinutes);
 
+// TODO
 void nmeaInfoToCoord(nmeaINFO* nmeaInfo, Coordinate* coord);
 #endif
