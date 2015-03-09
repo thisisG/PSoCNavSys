@@ -1,7 +1,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "gpsinterface.h"
+#include "./gpsinterface.h"
 #ifdef __cplusplus
 }
 #endif

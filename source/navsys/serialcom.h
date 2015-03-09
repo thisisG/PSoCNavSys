@@ -7,10 +7,10 @@ extern "C" {
 #include <stdio.h>
 #include <stddef.h>
 #include <sys/types.h>
-#include "config.h"
-#include "navtypes.h"
-#include "navfunctions.h"
-#include "nmeafunctions.h"
+#include "./config.h"
+#include "./navtypes.h"
+#include "./navfunctions.h"
+#include "./nmeafunctions.h"
 
 #ifdef __GNUC__
 #include "GPS_RX_ISR.h"
@@ -100,7 +100,7 @@ input:
 output:
     NA
 remarks:
-    
+
 */
 void initUartBuffer(UartBuffer* uartBuff);
 
@@ -124,7 +124,7 @@ input:
 output:
     (value) ssize_t byteCount
 remarks:
-    
+
 */
 ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size);
 
@@ -136,7 +136,7 @@ input:
 output:
     (value) ssize_t byteCount
 remarks:
-    
+
 */
 int uartSeeker(volatile void* cookie, off_t* position, int whence);
 
@@ -156,7 +156,7 @@ input:
 output:
     NA
 remarks:
-    
+
 */
 void navDataToSerialBuffer(NavState* navS);
 

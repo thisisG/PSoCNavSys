@@ -10,9 +10,9 @@
 extern "C" {
 #endif // __cplusplus
 
-#include "nmea\nmea.h"
-#include "navtypes.h"
-#include "navfunctions.h"
+#include "./../nmea/nmea.h"
+#include "./navtypes.h"
+#include "./navfunctions.h"
 
 #ifdef __cplusplus
 }

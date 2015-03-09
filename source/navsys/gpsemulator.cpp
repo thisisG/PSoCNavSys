@@ -1,4 +1,4 @@
-#include "gpsemulator.h"
+#include "./gpsemulator.h"
 
 GpsEmulator::GpsEmulator() {}
 

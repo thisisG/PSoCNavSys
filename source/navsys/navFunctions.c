@@ -1,7 +1,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "navfunctions.h"
+#include "./navfunctions.h"
 #ifdef __cplusplus
 }
 #endif

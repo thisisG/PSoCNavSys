@@ -12,13 +12,13 @@
 
 #ifndef NAVISR_H
 #define NAVISR_H
-    
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-#include "navtypes.h"
-#include "serialcom.h"
+#include "./navtypes.h"
+#include "./serialcom.h"
 #include "UART_GPS.h"
 #include "GPS_TX_ISR.h"
 
@@ -42,7 +42,7 @@ output:
 remarks:
     Generated an ISR used on a received byte over UART from a GPS devices
     attached using the CY_ISR_PROTO() and CY_ISR() macros.
-    Takes one (or more if several new bytes) out of the Rx receive buffer and 
+    Takes one (or more if several new bytes) out of the Rx receive buffer and
     store these in the inputBuffer in an instance of a UartBuffer data
     structure.
 */
@@ -58,11 +58,11 @@ remarks:
     device using the CY_ISR_PROTO() and CY_ISR() macros.
     When there is a string or part of a string waiting for transfer in an
     instance of a UartBuffer the ISR will fill the UART Tx buffer until the
-    whole string is sent. 
+    whole string is sent.
     It will then disable the Tx interrupt until a new is to be sent over UART.
 */
 CY_ISR_PROTO(gpsTxISR);
-    
+
 #endif
 
 /* [] END OF FILE */

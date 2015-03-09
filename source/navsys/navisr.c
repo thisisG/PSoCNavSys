@@ -13,7 +13,7 @@
 extern "C" {
 #endif // __cplusplus
 
-#include "navisr.h"
+#include "./navisr.h"
 
 #ifdef __cplusplus
 }

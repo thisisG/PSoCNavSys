@@ -9,7 +9,7 @@ extern "C" {
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
-#include "config.h"
+#include "./config.h"
 
 #ifdef __cplusplus
 }
@@ -52,7 +52,7 @@ ADS that contain a GPS string buffer and buffer size.
 */
 typedef struct GpsBuffer
 {
-    uint8 newGPSString;
+    uint8_t newGPSString;
     int gpsBufferLength;
     char gpsStringBuffer[GPS_STR_BFR_LEN];
 } GpsBuffer;
@@ -102,7 +102,6 @@ typedef enum CurrentNavState
     nextExceptionWP,
     atExceptionGoal,
     lastCurrentNavState
-
 } CurrentNavState;
 
 /* STRUCT StateData
@@ -114,6 +113,7 @@ typedef struct StateDataStructure
     enum CurrentNavState stateKeeper;
     struct Coordinate WPGoal;
     struct Coordinate eWPGoal;
+    struct Coordinate nextWP;
     float maxWPDistance;
     float arrivalWPDistance;
     float exceptionMaxWPDistance;

@@ -44,10 +44,10 @@ extern "C" {
 #include <stdio.h>
 #endif // _WIN32
 
-#include "gpsinterface.h"
-#include "navtypes.h"
-#include "navmath.h"
-#include "config.h"
+#include "./gpsinterface.h"
+#include "./navtypes.h"
+#include "./navmath.h"
+#include "./config.h"
 #ifdef __cplusplus
 }
 #endif
@@ -111,7 +111,7 @@ CurrentNavState nextExceptionWPHandler(NavState* navS);
 CurrentNavState atExceptionGoalHandler(NavState* navS);
 
 // TODO
-uint8 coordsEqual(const struct Coordinate* coordA,
+uint8_t coordsEqual(const struct Coordinate* coordA,
                    const struct Coordinate* coordB);
 
 #ifdef _WIN32

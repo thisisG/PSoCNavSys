@@ -13,10 +13,12 @@
 extern "C" {
 #endif // __cplusplus
 
-#include "navfiles.h"
+#include "./navfiles.h"
 
 #ifdef __cplusplus
 }
 #endif // __cplusplus
+
+
 
 /* [] END OF FILE */

@@ -4,13 +4,13 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "navtypes.h"
+#include "./navtypes.h"
 #ifdef __cplusplus
 }
 #endif
 
 #include <iostream>
-#include "csv.h"
+#include "./../csv.h"
 
 class CoordImport {
 public:
