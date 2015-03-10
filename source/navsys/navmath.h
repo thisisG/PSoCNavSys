@@ -14,7 +14,7 @@ extern "C" {
 #include <stdint.h>
 
 // Local includes
-#include "./navtypes.h"
+#include "navtypes.h"
 
 #ifdef __cplusplus
 }

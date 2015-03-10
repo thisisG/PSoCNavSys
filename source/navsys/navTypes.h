@@ -9,7 +9,7 @@ extern "C" {
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
-#include "./config.h"
+#include "navconfig.h"
 
 #ifdef __cplusplus
 }

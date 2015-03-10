@@ -7,10 +7,10 @@ extern "C" {
 #include <stdio.h>
 #include <stddef.h>
 #include <sys/types.h>
-#include "./config.h"
-#include "./navtypes.h"
-#include "./navfunctions.h"
-#include "./nmeafunctions.h"
+#include "navconfig.h"
+#include "navtypes.h"
+#include "navfunctions.h"
+#include "nmeafunctions.h"
 
 #ifdef __GNUC__
 #include "GPS_RX_ISR.h"
@@ -92,7 +92,11 @@ struct UartBuffer
     size_t inputTail;
 };
 
-typedef volatile struct UartBuffer UartBuffer;
+// VS2013 does not like the below definition, so will only use it for the PSoC
+#ifdef __GNUC__
+    typedef volatile struct UartBuffer UartBuffer;
+#endif // __GNUC__
+
 
 /* initUartBuffer();
 input:

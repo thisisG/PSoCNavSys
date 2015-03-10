@@ -17,7 +17,7 @@ extern "C" {
 #endif // __cplusplus
 
 // Depends on Coordinate and NavState structures when writing to files
-#include "./navtypes.h"
+#include "navtypes.h"
 // Depends on having access to the file system functions and definitions
 #include "FS.h"
 #include <sys/types.h>

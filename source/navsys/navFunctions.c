@@ -1,7 +1,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "./navfunctions.h"
+#include "navfunctions.h"
 #ifdef __cplusplus
 }
 #endif
@@ -142,7 +142,7 @@ void updateNavState(NavState* navS)
 }
 
 // TODO
-CurrentNavState closestWPHandler(NavState* navS) {}
+CurrentNavState closestWPHandler(NavState* navS) { return closestWP; }
 
 CurrentNavState toWPHandler(NavState* navS)
 {
@@ -187,13 +187,20 @@ CurrentNavState atWPHandler(NavState* navS)
 }
 
 // TODO
-CurrentNavState nextWPHandler(NavState* navS) {}
+CurrentNavState nextWPHandler(NavState* navS) {
+    return closestWP;
+}
 
 // TODO
-CurrentNavState atGoalHandler(NavState* navS) {}
+CurrentNavState atGoalHandler(NavState* navS) {
+    return closestWP;
+}
 
 // TODO
-CurrentNavState closestExceptionWPHandler(NavState* navS) {}
+CurrentNavState closestExceptionWPHandler(NavState* navS)
+{
+    return closestWP;
+}
 
 CurrentNavState toExceptionWPHandler(NavState* navS)
 {
@@ -206,7 +213,7 @@ CurrentNavState toExceptionWPHandler(NavState* navS)
         returnState = closestWP;
     }
     else if ((navS->distanceToCurrentWP)
-             < (navS - stateData.exceptionWPArrivalDistance))
+             < (navS->stateData.exceptionWPArrivalDistance))
     {
         returnState = atExceptionWP;
     }
@@ -238,7 +245,7 @@ CurrentNavState atExceptionWPHandler(NavState* navS)
 }
 
 // TODO
-CurrentNavState nextExceptionWPHandler(NavState* navS) {}
+CurrentNavState nextExceptionWPHandler(NavState* navS) { return closestWP; }
 
 CurrentNavState atExceptionGoalHandler(NavState* navS)
 {
@@ -248,12 +255,12 @@ CurrentNavState atExceptionGoalHandler(NavState* navS)
     return returnState;
 }
 
-uint8 coordsEqual(const struct Coordinate* coordA,
+uint8_t coordsEqual(const struct Coordinate* coordA,
                   const struct Coordinate* coordB)
 {
     // Set the default return value to 1 which means that the two coordinates
     // are equal.
-    uint8 returnValue = 1;
+    uint8_t returnValue = 1;
 
     // Evaluate each parameter. The use of else if() allows premature
     // termination in case an inequality is found.

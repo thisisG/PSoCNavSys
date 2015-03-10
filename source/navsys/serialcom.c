@@ -1,7 +1,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "./serialcom.h"
+#include "serialcom.h"
 #ifdef __cplusplus
 }
 #endif

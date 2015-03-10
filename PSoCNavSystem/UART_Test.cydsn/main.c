@@ -10,22 +10,20 @@
  * ========================================
 */
 #include <project.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <unistd.h> // For read(), write()
-#include "serialcom.h"
-#include "navisr.h"
+#include "navsys/navtypes.h"
+#include "navsys/navfunctions.h"
+#include "navsys/navisr.h"
 #include "GPS_RX_ISR.h"
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
-#include "gpsinterface.h"
 #include <FS.h> // For file system for SD card
 
 /* Global variables and pointers */
 
 // From navisr.h/c
-extern volatile uint8 rxStringReady;
-extern volatile uint8 txStringReady;
+volatile UartBuffer* ptrUartBuff = NULL;
+volatile uint8 rxStringReady = 0;
+volatile uint8 txStringReady = 0;
 
 int main()
 {

@@ -1,7 +1,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "./nmeafunctions.h"
+#include "nmeafunctions.h"
 #ifdef __cplusplus
 }
 #endif

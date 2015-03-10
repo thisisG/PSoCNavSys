@@ -13,7 +13,7 @@
 extern "C" {
 #endif // __cplusplus
 
-#include "./navfiles.h"
+#include "navfiles.h"
 
 #ifdef __cplusplus
 }

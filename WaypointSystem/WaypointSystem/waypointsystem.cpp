@@ -1,4 +1,3 @@
-#include "config.h"
 
 #include <iostream>
 #include <iomanip>
@@ -8,20 +7,21 @@ extern "C" {
 #endif
 #include <stdio.h>
 
-#include "navfunctions.h"
-#include "navtypes.h"
-#include "./nmea/nmea.h"
-#include "nmeafunctions.h"
-#include "gpsinterface.h"
-#include "serialcom.h"
-#include "navmath.h"
+#include "nmea/nmea.h"
+#include "nmea/config.h"
+#include "navsys/navtypes.h"
+#include "navsys/navfunctions.h"
+#include "navsys/nmeafunctions.h"
+#include "navsys/gpsinterface.h"
+#include "navsys/serialcom.h"
+#include "navsys/navmath.h"
 
 #ifdef __cplusplus
 }
 #endif
 
-#include "csv.h"
-#include "gpsemulator.h"
+#include "csv/csv.h"
+#include "navmanager/gpsemulator.h"
 
 void csvDataToCoord(const float csvLat, const float csvLon, Coordinate& coord)
 {

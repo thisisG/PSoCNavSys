@@ -43,6 +43,9 @@
     <LinkIncremental>true</LinkIncremental>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <IncludePath>../../source/;$(IncludePath)</IncludePath>
+    <SourcePath>../../source/;$(VC_SourcePath);</SourcePath>
+    <LibraryWPath>./Debug/;$(WindowsSDK_MetadataPath);</LibraryWPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -57,6 +60,8 @@
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsCpp</CompileAs>
       <EnablePREfast>false</EnablePREfast>
+      <AdditionalIncludeDirectories>../../source/;</AdditionalIncludeDirectories>
+      <AssemblerOutput>All</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -86,50 +91,50 @@
     <ResourceCompile Include="WaypointSystem.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gpsemulator.cpp" />
-    <ClCompile Include="gpsinterface.c" />
-    <ClCompile Include="waypointsystem.c">
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp" />
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c" />
+    <ClCompile Include="..\..\source\navsys\navfunctions.c" />
+    <ClCompile Include="..\..\source\navsys\navmath.c" />
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c" />
+    <ClCompile Include="..\..\source\navsys\serialcom.c" />
+    <ClCompile Include="..\..\source\nmea\context.c" />
+    <ClCompile Include="..\..\source\nmea\generate.c" />
+    <ClCompile Include="..\..\source\nmea\generator.c" />
+    <ClCompile Include="..\..\source\nmea\gmath.c" />
+    <ClCompile Include="..\..\source\nmea\info.c" />
+    <ClCompile Include="..\..\source\nmea\parse.c" />
+    <ClCompile Include="..\..\source\nmea\parser.c" />
+    <ClCompile Include="..\..\source\nmea\sentence.c" />
+    <ClCompile Include="..\..\source\nmea\nmeatime.c" />
+    <ClCompile Include="..\..\source\nmea\tok.c" />
+    <ClCompile Include="waypointsystem.cpp">
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
     </ClCompile>
-    <ClCompile Include="navfunctions.c" />
-    <ClCompile Include="navmath.c" />
-    <ClCompile Include="nmeafunctions.c" />
-    <ClCompile Include="nmea\context.c" />
-    <ClCompile Include="nmea\generate.c" />
-    <ClCompile Include="nmea\generator.c" />
-    <ClCompile Include="nmea\gmath.c" />
-    <ClCompile Include="nmea\info.c" />
-    <ClCompile Include="nmea\parse.c" />
-    <ClCompile Include="nmea\parser.c" />
-    <ClCompile Include="nmea\sentence.c" />
-    <ClCompile Include="nmea\time.c" />
-    <ClCompile Include="nmea\tok.c" />
-    <ClCompile Include="serialcom.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="config.h" />
-    <ClInclude Include="csv.h" />
-    <ClInclude Include="gpsemulator.h" />
-    <ClInclude Include="gpsinterface.h" />
-    <ClInclude Include="navfunctions.h" />
-    <ClInclude Include="navmath.h" />
-    <ClInclude Include="navsys.h" />
-    <ClInclude Include="navtypes.h" />
-    <ClInclude Include="nmeafunctions.h" />
-    <ClInclude Include="nmea\config.h" />
-    <ClInclude Include="nmea\context.h" />
-    <ClInclude Include="nmea\generate.h" />
-    <ClInclude Include="nmea\generator.h" />
-    <ClInclude Include="nmea\gmath.h" />
-    <ClInclude Include="nmea\info.h" />
-    <ClInclude Include="nmea\nmea.h" />
-    <ClInclude Include="nmea\parse.h" />
-    <ClInclude Include="nmea\parser.h" />
-    <ClInclude Include="nmea\sentence.h" />
-    <ClInclude Include="nmea\time.h" />
-    <ClInclude Include="nmea\tok.h" />
-    <ClInclude Include="nmea\units.h" />
-    <ClInclude Include="serialcom.h" />
+    <ClInclude Include="..\..\source\csv\csv.h" />
+    <ClInclude Include="..\..\source\navmanager\coordimport.h" />
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
+    <ClInclude Include="..\..\source\navsys\navfunctions.h" />
+    <ClInclude Include="..\..\source\navsys\navmath.h" />
+    <ClInclude Include="..\..\source\navsys\navsys.h" />
+    <ClInclude Include="..\..\source\navsys\navtypes.h" />
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h" />
+    <ClInclude Include="..\..\source\navsys\serialcom.h" />
+    <ClInclude Include="..\..\source\nmea\config.h" />
+    <ClInclude Include="..\..\source\nmea\context.h" />
+    <ClInclude Include="..\..\source\nmea\generate.h" />
+    <ClInclude Include="..\..\source\nmea\generator.h" />
+    <ClInclude Include="..\..\source\nmea\gmath.h" />
+    <ClInclude Include="..\..\source\nmea\info.h" />
+    <ClInclude Include="..\..\source\nmea\nmea.h" />
+    <ClInclude Include="..\..\source\nmea\parse.h" />
+    <ClInclude Include="..\..\source\nmea\parser.h" />
+    <ClInclude Include="..\..\source\nmea\sentence.h" />
+    <ClInclude Include="..\..\source\nmea\nmeatime.h" />
+    <ClInclude Include="..\..\source\nmea\tok.h" />
+    <ClInclude Include="..\..\source\nmea\units.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

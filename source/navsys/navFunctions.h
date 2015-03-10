@@ -37,17 +37,17 @@ remarks:
 // Local includes
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif // __cplusplus
 #include <stdint.h>
 
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
 
-#include "./gpsinterface.h"
-#include "./navtypes.h"
-#include "./navmath.h"
-#include "./config.h"
+#include "gpsinterface.h"
+#include "navtypes.h"
+#include "navmath.h"
+#include "navconfig.h"
 #ifdef __cplusplus
 }
 #endif

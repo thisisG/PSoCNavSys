@@ -14,7 +14,7 @@
 extern "C" {
 #endif // __cplusplus
 
-#include "./wphandler.h"
+#include "wphandler.h"
 
 #ifdef __cplusplus
 }
@@ -113,7 +113,7 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
     // We assume that we start at the origin and we need to find the offset for
     // wpNumber of waypoints we want to seek to.
     // The total offset is then calculated from the offset stored in
-    // wpHandler->offsetFirstWPBlock plus 
+    // wpHandler->offsetFirstWPBlock plus
     // wpNumber*(sizeof(NavFileHeader) + sizeof(Coordinate))
     size_t startOffset = wpHandler->offsetFirstWPBlock;
 

@@ -4,15 +4,15 @@
 #include <vector>
 #include <math.h>
 #include <random>
-#include "csv.h"
+#include "./../csv/csv.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
 #include "./../nmea/nmea.h"
-#include "./navtypes.h"
-#include "./navfunctions.h"
+#include "./../navsys/navtypes.h"
+#include "./../navsys/navfunctions.h"
 
 #ifdef __cplusplus
 }
