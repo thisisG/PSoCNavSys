@@ -13,94 +13,30 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\navmanager">
-      <UniqueIdentifier>{cd5ac7ca-f5da-4343-b059-4d96647de4ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\csv">
-      <UniqueIdentifier>{509a3b3c-e4bd-4c27-8737-5c39ad678beb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\navsys">
-      <UniqueIdentifier>{52de2377-e0a4-45d2-9095-828f4fba7788}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\NMEA">
-      <UniqueIdentifier>{f5c1e79e-9245-460a-815f-bf6ad27846ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\csv">
-      <UniqueIdentifier>{30e2608e-400c-42c7-b1e1-c58ef235e43f}</UniqueIdentifier>
+      <UniqueIdentifier>{5ab0357b-cce4-432c-a642-726812ff7c7c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\navmanager">
-      <UniqueIdentifier>{945a9aa6-7b4e-4e91-a3e8-b06ab8815fd3}</UniqueIdentifier>
+      <UniqueIdentifier>{b6698c9e-7e92-4b3c-b848-9fab50f1cd3e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\navsys">
-      <UniqueIdentifier>{b6066d21-aad7-4e8d-8cde-24103ba5d27e}</UniqueIdentifier>
+      <UniqueIdentifier>{1255d116-3b11-48f1-abd6-c1742a300ada}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\NMEA">
-      <UniqueIdentifier>{a1a3f06e-99f2-467b-a87e-3aab74aff63a}</UniqueIdentifier>
+      <UniqueIdentifier>{49e9f057-9454-4c76-a66e-99e8cf3815bd}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="WaypointSystem.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\source\nmea\context.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\generate.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\generator.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\gmath.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\info.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\parse.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\parser.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\sentence.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\tok.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="waypointsystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\nmea\nmeatime.c">
-      <Filter>Source Files\NMEA</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navsys\nmeafunctions.c">
-      <Filter>Source Files\navsys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navsys\navmath.c">
-      <Filter>Source Files\navsys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp">
-      <Filter>Source Files\navmanager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navsys\gpsinterface.c">
-      <Filter>Source Files\navsys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navsys\navfunctions.c">
-      <Filter>Source Files\navsys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\navsys\serialcom.c">
-      <Filter>Source Files\navsys</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="csvtest.csv">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="ClassDiagram.cd" />
+    <Filter Include="Source Files\csv">
+      <UniqueIdentifier>{f8cc4dc1-49a9-4619-a8f3-e9df1d853032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navmanager">
+      <UniqueIdentifier>{af5643b2-6572-402b-aa15-060d223c8a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navsys">
+      <UniqueIdentifier>{9ebd4219-9d12-4a95-a9ce-d53ddb44c71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\NMEA">
+      <UniqueIdentifier>{071cfbad-bb57-45be-afd1-0270918dd015}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\source\csv\csv.h">
@@ -172,5 +108,55 @@
     <ClInclude Include="..\..\source\nmea\units.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp">
+      <Filter>Source Files\navmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navfunctions.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navmath.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\serialcom.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\context.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\generate.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\generator.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\gmath.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\info.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\parse.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\parser.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\sentence.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\nmeatime.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\tok.c">
+      <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
