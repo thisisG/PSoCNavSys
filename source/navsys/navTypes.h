@@ -43,7 +43,6 @@ typedef struct Coordinate
     signed32Degree mLongitude;
     signed16Degree dLatitude;
     signed32Degree mLatitude;
-
     coordinateCode priority;
 } Coordinate;
 
