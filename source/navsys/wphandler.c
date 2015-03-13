@@ -24,14 +24,22 @@ uint8_t wpHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
     uint8_t statusFileOpen = 0;
 
-    // Close any currently open file assigned to the pointer
+// Close any currently open file assigned to the pointer
+#ifdef __GNUC__
     FS_FClose(wpHandler->fileManager.ptrWPList);
+#else // File operations for windows
+    fclose(wpHandler->fileManager.ptrWPList);
+#endif // __GNUC__
 
     // Set the file pointer to zero
     wpHandler->fileManager.ptrWPList = 0;
 
-    // Open the designated file for reading
+// Open the designated file for reading
+#ifdef __GNUC__
     wpHandler->fileManager.ptrWPList = FS_FOpen(wpFileName, "rb");
+#else  // File operations for windows
+    wpHandler->fileManager.ptrWPList = fopen(wpFileName, "rb");
+#endif // __GNUC__
 
     if (wpHandler->fileManager.ptrWPList != 0)
     {
@@ -39,15 +47,25 @@ uint8_t wpHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
         statusFileOpen = 1;
 
         // Read the file header and update the offsetFirstWPBlock
-        NavFileHeader fileHeader;
+        NavFileHeader fileHeader = { 0, 0, 0 };
+#ifdef __GNUC__
         FS_Read(wpHandler->fileManager.ptrWPList, &fileHeader,
                 sizeof(fileHeader));
+#else // File operations for windows
+
+#endif // __GNUC__
+
         wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
 
         // Read the WP List header and update the offsetFirstWPBlock
-        NavFileWPListHeader WPListHeader;
+        NavFileWPListHeader WPListHeader = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+#ifdef __GNUC__
         FS_Read(wpHandler->fileManager.ptrWPList, &WPListHeader,
                 fileHeader.headerBlockSize);
+#else // File operations for windows
+
+#endif // __GNUC__
+
         wpHandler->offsetFirstWPBlock += fileHeader.headerBlockSize;
 
         // Set the wpGoal in the wpHandler
@@ -86,13 +104,22 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
         // The file should already be in a position for reading the first WP
         // Read the data block header
         NavDataBlockHeader dataHeader;
+#ifdef __GNUC__
         FS_Read(wpHandler->fileManager.ptrWPList, &dataHeader,
                 sizeof(dataHeader));
+#else  // File operations for windows
+        fread(&dataHeader, sizeof(dataHeader), 1,
+              wpHandler->fileManager.ptrWPList);
+#endif // __GNUC__
 
         // Read the coordinate
         Coordinate coord;
+#ifdef __GNUC__
         FS_Read(wpHandler->fileManager.ptrWPList, &coord,
                 dataHeader.dataBlockSize);
+#else  // File operations for windows
+        fread(&coord, sizeof(coord), 1, wpHandler->fileManager.ptrWPList);
+#endif // __GNUC__
 
         (*nextWP) = coord;
         WPCount++;
@@ -117,11 +144,16 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
     // wpNumber*(sizeof(NavFileHeader) + sizeof(Coordinate))
     size_t startOffset = wpHandler->offsetFirstWPBlock;
 
-    size_t wpDataOffset = wpNumber*(sizeof(NavDataBlockHeader) + sizeof(Coordinate));
+    size_t wpDataOffset = wpNumber
+        * (sizeof(NavDataBlockHeader) + sizeof(Coordinate));
 
     size_t totalOffset = startOffset + wpDataOffset;
 
+#ifdef __GNUC__
     FS_FSeek(wpHandler->fileManager.ptrWPList, FS_SEEK_SET, totalOffset);
+#else  // File operations for windows
+    fseek(wpHandler->fileManager.ptrWPList, totalOffset, SEEK_SET);
+#endif // __GNUC__
 }
 
 /* [] END OF FILE */

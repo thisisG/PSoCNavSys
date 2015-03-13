@@ -19,8 +19,14 @@ extern "C" {
 
 // Depends on Coordinate and NavState structures when writing to files
 #include "navtypes.h"
+
 // Depends on having access to the file system functions and definitions
+#ifdef __GNUC__
 #include "FS.h"
+#else // File operations for windows
+#include <stdio.h>
+#endif // __GNUC__
+
 // Depends on file types
 #include "navfiles.h"
 #include <sys/types.h>
@@ -28,6 +34,12 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif // __cplusplus
+
+// If we are not on the PSoC system we want to make a typedef for FS_FILE such
+// that the handler code works with other platforms
+#ifndef __GNUC__
+typedef FILE FS_FILE;
+#endif // __GNUC__
 
 /* STRUCT NavWPFileManager
 ADS that contain the filenames and pointers used for managing waypoints via

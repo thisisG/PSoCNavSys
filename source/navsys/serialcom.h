@@ -94,9 +94,10 @@ struct UartBuffer
 
 // VS2013 does not like the below definition, so will only use it for the PSoC
 #ifdef __GNUC__
-    typedef volatile struct UartBuffer UartBuffer;
+typedef volatile struct UartBuffer UartBuffer;
+#else // And make another one for VS2013
+typedef struct UartBuffer UartBuffer;
 #endif // __GNUC__
-
 
 /* initUartBuffer();
 input:

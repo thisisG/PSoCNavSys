@@ -10,51 +10,8 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\source\csv\csv.h" />
-    <ClInclude Include="..\..\source\navmanager\coordimport.h" />
-    <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
-    <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
-    <ClInclude Include="..\..\source\navsys\navfunctions.h" />
-    <ClInclude Include="..\..\source\navsys\navmath.h" />
-    <ClInclude Include="..\..\source\navsys\navsys.h" />
-    <ClInclude Include="..\..\source\navsys\navtypes.h" />
-    <ClInclude Include="..\..\source\navsys\nmeafunctions.h" />
-    <ClInclude Include="..\..\source\navsys\serialcom.h" />
-    <ClInclude Include="..\..\source\nmea\config.h" />
-    <ClInclude Include="..\..\source\nmea\context.h" />
-    <ClInclude Include="..\..\source\nmea\generate.h" />
-    <ClInclude Include="..\..\source\nmea\generator.h" />
-    <ClInclude Include="..\..\source\nmea\gmath.h" />
-    <ClInclude Include="..\..\source\nmea\info.h" />
-    <ClInclude Include="..\..\source\nmea\nmea.h" />
-    <ClInclude Include="..\..\source\nmea\nmeatime.h" />
-    <ClInclude Include="..\..\source\nmea\parse.h" />
-    <ClInclude Include="..\..\source\nmea\parser.h" />
-    <ClInclude Include="..\..\source\nmea\sentence.h" />
-    <ClInclude Include="..\..\source\nmea\tok.h" />
-    <ClInclude Include="..\..\source\nmea\units.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp" />
-    <ClCompile Include="..\..\source\navsys\gpsinterface.c" />
-    <ClCompile Include="..\..\source\navsys\navfunctions.c" />
-    <ClCompile Include="..\..\source\navsys\navmath.c" />
-    <ClCompile Include="..\..\source\navsys\nmeafunctions.c" />
-    <ClCompile Include="..\..\source\navsys\serialcom.c" />
-    <ClCompile Include="..\..\source\nmea\context.c" />
-    <ClCompile Include="..\..\source\nmea\generate.c" />
-    <ClCompile Include="..\..\source\nmea\generator.c" />
-    <ClCompile Include="..\..\source\nmea\gmath.c" />
-    <ClCompile Include="..\..\source\nmea\info.c" />
-    <ClCompile Include="..\..\source\nmea\nmeatime.c" />
-    <ClCompile Include="..\..\source\nmea\parse.c" />
-    <ClCompile Include="..\..\source\nmea\parser.c" />
-    <ClCompile Include="..\..\source\nmea\sentence.c" />
-    <ClCompile Include="..\..\source\nmea\tok.c" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2E26EC3D-86DF-49EF-8639-35E2C4BEECD5}</ProjectGuid>
+    <ProjectGuid>{FE5F6A35-6F0C-4B64-8EF1-7DD98E5BBFC0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>WaypointCreator</RootNamespace>
   </PropertyGroup>
@@ -90,13 +47,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../../source/;</AdditionalIncludeDirectories>
-      <CompileAs>CompileAsC</CompileAs>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -106,12 +63,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,6 +77,63 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\csv\csv.h" />
+    <ClInclude Include="..\..\source\navmanager\coordimport.h" />
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
+    <ClInclude Include="..\..\source\navsys\navfiles.h" />
+    <ClInclude Include="..\..\source\navsys\navfunctions.h" />
+    <ClInclude Include="..\..\source\navsys\navmath.h" />
+    <ClInclude Include="..\..\source\navsys\navsys.h" />
+    <ClInclude Include="..\..\source\navsys\navtypes.h" />
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h" />
+    <ClInclude Include="..\..\source\navsys\serialcom.h" />
+    <ClInclude Include="..\..\source\navsys\wphandler.h" />
+    <ClInclude Include="..\..\source\nmea\config.h" />
+    <ClInclude Include="..\..\source\nmea\context.h" />
+    <ClInclude Include="..\..\source\nmea\generate.h" />
+    <ClInclude Include="..\..\source\nmea\generator.h" />
+    <ClInclude Include="..\..\source\nmea\gmath.h" />
+    <ClInclude Include="..\..\source\nmea\info.h" />
+    <ClInclude Include="..\..\source\nmea\nmea.h" />
+    <ClInclude Include="..\..\source\nmea\nmeatime.h" />
+    <ClInclude Include="..\..\source\nmea\parse.h" />
+    <ClInclude Include="..\..\source\nmea\parser.h" />
+    <ClInclude Include="..\..\source\nmea\sentence.h" />
+    <ClInclude Include="..\..\source\nmea\tok.h" />
+    <ClInclude Include="..\..\source\nmea\units.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp" />
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c" />
+    <ClCompile Include="..\..\source\navsys\navfiles.c" />
+    <ClCompile Include="..\..\source\navsys\navfunctions.c" />
+    <ClCompile Include="..\..\source\navsys\navmath.c" />
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c" />
+    <ClCompile Include="..\..\source\navsys\serialcom.c" />
+    <ClCompile Include="..\..\source\navsys\wphandler.c" />
+    <ClCompile Include="..\..\source\nmea\context.c" />
+    <ClCompile Include="..\..\source\nmea\generate.c" />
+    <ClCompile Include="..\..\source\nmea\generator.c" />
+    <ClCompile Include="..\..\source\nmea\gmath.c" />
+    <ClCompile Include="..\..\source\nmea\info.c" />
+    <ClCompile Include="..\..\source\nmea\nmeatime.c" />
+    <ClCompile Include="..\..\source\nmea\parse.c" />
+    <ClCompile Include="..\..\source\nmea\parser.c" />
+    <ClCompile Include="..\..\source\nmea\sentence.c" />
+    <ClCompile Include="..\..\source\nmea\tok.c" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="WaypointCreator.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

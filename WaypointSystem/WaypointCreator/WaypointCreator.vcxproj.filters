@@ -14,31 +14,40 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\csv">
-      <UniqueIdentifier>{5ab0357b-cce4-432c-a642-726812ff7c7c}</UniqueIdentifier>
+      <UniqueIdentifier>{f75d4a47-0fba-44b9-a962-1f9d4f45736c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\navmanager">
-      <UniqueIdentifier>{b6698c9e-7e92-4b3c-b848-9fab50f1cd3e}</UniqueIdentifier>
+      <UniqueIdentifier>{67220a0a-fcf9-4158-a3b6-2df7a7b5fa5a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\navsys">
-      <UniqueIdentifier>{1255d116-3b11-48f1-abd6-c1742a300ada}</UniqueIdentifier>
+      <UniqueIdentifier>{003f8f44-9e2c-4685-a98e-fd9428fb64cd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\NMEA">
-      <UniqueIdentifier>{49e9f057-9454-4c76-a66e-99e8cf3815bd}</UniqueIdentifier>
+      <UniqueIdentifier>{d337b2ea-c3e3-4640-93a8-b23c278deff3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\csv">
-      <UniqueIdentifier>{f8cc4dc1-49a9-4619-a8f3-e9df1d853032}</UniqueIdentifier>
+      <UniqueIdentifier>{8b3cf99a-73e9-4356-b593-f61b84343404}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\navmanager">
-      <UniqueIdentifier>{af5643b2-6572-402b-aa15-060d223c8a53}</UniqueIdentifier>
+      <UniqueIdentifier>{899c118d-7322-45f4-913d-cff8e2b0aa52}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\navsys">
-      <UniqueIdentifier>{9ebd4219-9d12-4a95-a9ce-d53ddb44c71a}</UniqueIdentifier>
+      <UniqueIdentifier>{f3970744-8a8c-4cbe-9c67-fa8ee4ee3105}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\NMEA">
-      <UniqueIdentifier>{071cfbad-bb57-45be-afd1-0270918dd015}</UniqueIdentifier>
+      <UniqueIdentifier>{073dee7a-4a58-44e8-8942-1a673cb17094}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\csv\csv.h">
       <Filter>Header Files\csv</Filter>
     </ClInclude>
@@ -90,6 +99,9 @@
     <ClInclude Include="..\..\source\nmea\nmea.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\nmea\nmeatime.h">
+      <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\source\nmea\parse.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
@@ -99,17 +111,26 @@
     <ClInclude Include="..\..\source\nmea\sentence.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\nmea\nmeatime.h">
-      <Filter>Header Files\NMEA</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\nmea\tok.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\nmea\units.h">
       <Filter>Header Files\NMEA</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\navsys\wphandler.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfiles.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WaypointCreator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp">
       <Filter>Source Files\navmanager</Filter>
     </ClCompile>
@@ -157,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="..\..\source\nmea\tok.c">
       <Filter>Source Files\NMEA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\wphandler.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navfiles.c">
+      <Filter>Source Files\navsys</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

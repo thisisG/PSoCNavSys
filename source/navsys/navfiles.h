@@ -18,8 +18,6 @@ extern "C" {
 
 // Depends on Coordinate and NavState structures when writing to files
 #include "navtypes.h"
-// Depends on having access to the file system functions and definitions
-#include "FS.h"
 #include <sys/types.h>
 
 #ifdef __cplusplus
@@ -31,6 +29,8 @@ Numbered list describing the type of files the system is aware of and know how
 to perform operations with.
 The numbers are chosen apparently at random, and care should be taken to choose
 a new number when adding new types.
+The INVALID_MAX_FILE_TYPE is defined to force the enum to be the size of 4 B 
+since the PSoC will otherwise make the enum of length 1 B.
 */
 typedef enum NavFileType
 {
@@ -38,6 +38,7 @@ typedef enum NavFileType
     WAYPOINT_LIST_FILE = 3245,
     EXCEPTION_WAYPOINT_LIST_FILE = 5723,
     WAYPOINT_CONFIG_FILE = 6573,
+    INVALID_MAX_FILE_TYPE = 2147483647
 } NavFileType;
 
 /* ENUM NavVersion
@@ -48,6 +49,7 @@ typedef enum NavVersion
 {
     INVALID_FILE_VERSION = 0,
     FILE_VERSION_1,
+    INVALID_MAX_VERSION = 2147483647
 } NavVersion;
 
 /* STRUCT NavFileHeader

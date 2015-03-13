@@ -11,7 +11,7 @@
 //#include "./navmath.h"
 //#include "./navtypes.h"
 //#include "./nmeafunctions.h"
-//#include "./serialcom.h"
+#include "./serialcom.h"
 
 
 #endif // NAVSYS_H

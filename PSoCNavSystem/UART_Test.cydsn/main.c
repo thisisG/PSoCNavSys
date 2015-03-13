@@ -13,6 +13,7 @@
 #include "navsys/navtypes.h"
 #include "navsys/navfunctions.h"
 #include "navsys/navisr.h"
+#include "navsys/navfiles.h"
 #include "GPS_RX_ISR.h"
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
@@ -40,9 +41,9 @@ int main()
     struct NavState myNavState;
     zeroNavState(&myNavState);
     
-    /*
+    /********************************************
     ** UART setup
-    */
+    ********************************************/
     // Create UART buffer structure and initialize it
     UartBuffer myUartBuffer;
     initUartBuffer(&myUartBuffer);
@@ -57,9 +58,9 @@ int main()
     FS_Init();
 
     
-    /*
+    /********************************************
     ** ISR setup
-    */
+    ********************************************/
     // Attach the Rx ISR handler to the UART Rx interrupt.
     // The Rx ISR is triggered on byte received in its initial state.
     GPS_RX_ISR_StartEx(gpsRxISR);
@@ -79,20 +80,23 @@ int main()
     uint8 directToLCD = 0;
     
     // File related variables
-    char logFileName[32] = "\\DIR\\stdlog.txt";
-    FS_FILE* ptrLogFile;
-    char sdVolName[10]; // Char buffer for SD card volume name
-    char testString[20] = "Some text."; // Char string to write to file
-    uint8 testedSDCard = 0;
     
     for(;;)
     {
+        // General SD card test sequence
+        /* 
+        static char logFileName[32] = "\\DIR\\stdlog.txt";
+        static FS_FILE* ptrLogFile;
+        static char sdVolName[10]; // Char buffer for SD card volume name
+        static char testString[20] = "Some text."; // Char string to write to file
+        static uint8 testedSDCard = 0;
+        
         if (testedSDCard == 0)
         {
             LCD_Position(0u, 0u);
             if(0 != FS_GetVolumeName(0u, &sdVolName[0], 9u))
             {
-                /* Getting volume name succeeded so prompt it on the LCD */
+                // Getting volume name succeeded so prompt it on the LCD
                 LCD_Position(0u, 0u);
                 LCD_PrintString("SD card name:");
                 LCD_Position(1u, 0u);
@@ -100,7 +104,7 @@ int main()
             }
             else
             {
-                /* Operation Failed - indicate this */
+                // Operation Failed - indicate this
                 LCD_PrintString("Failed to get");
                 LCD_Position(1u, 0u);
                 LCD_PrintString("SD card name");
@@ -133,12 +137,12 @@ int main()
             LCD_Position(0u, 0u);
             if(0 == FS_MkDir("Dir"))
             {
-                /* Display successful directory creation message */
+                // Display successful directory creation message
                 LCD_PrintString("\"Dir\" created");
             }
             else
             {
-                /* Display failure message */
+                // Display failure message
                 LCD_PrintString("Failed to create");
                 LCD_Position(1u, 0u);
                 LCD_PrintString("directory");
@@ -187,8 +191,78 @@ int main()
             }
             testedSDCard++;
         }
-
+        */
         
+        // File open and read SD card test sequence
+        static char wpListFileName[20] = "wplist1.wp";
+        static char tempString[20];
+        static FS_FILE* ptrWpListFile = NULL;
+        static uint8 wpListTestStage = 0;
+        static Coordinate wpTestCoord;
+        zeroCoordinate(&wpTestCoord);
+        static NavFileHeader fileHeader;
+        static NavFileWPListHeader WPListHeader;
+        
+
+        if (wpListTestStage == 0)
+        {
+            LCD_Position(0,0);
+            ptrWpListFile = FS_FOpen(wpListFileName, "rb");
+            
+            if (ptrWpListFile)
+            {
+                LCD_PrintString("File open OK");
+                LCD_Position(1,0);
+                LCD_PrintString(wpListFileName);
+            }
+            else
+            {
+                LCD_PrintString("File open not OK");
+
+            }
+            
+            LCD_Position(1,0);
+            LCD_PrintString(wpListFileName);
+            wpListTestStage++;
+            CyDelay(2000);
+        }
+        
+        if (wpListTestStage == 1)
+        {
+            LCD_ClearDisplay();
+            LCD_Position(0,0);
+            
+            FS_Read(ptrWpListFile, &fileHeader, sizeof(fileHeader));
+            
+            LCD_PrintString("Ftyp ");
+            LCD_PrintInt32(fileHeader.fileType);
+            LCD_Position(1,0);
+            LCD_PrintString("fv ");
+
+            
+            sprintf(tempString, "%d", fileHeader.fileVersion);
+            LCD_PrintString(tempString);
+            
+            LCD_PrintString(" hsZ ");
+            sprintf(tempString, "%d", fileHeader.headerBlockSize);
+            LCD_PrintString(tempString);
+            
+            wpListTestStage++;
+            CyDelay(2000);
+        }
+        if (wpListTestStage == 2)
+        {
+            LCD_ClearDisplay();
+            LCD_Position(0,0);
+            LCD_PrintString("sizeof(fileHeader)");
+            LCD_Position(1,0);
+            sprintf(tempString, "%d", sizeof(fileHeader.fileVersion));
+            LCD_PrintString(tempString);
+            wpListTestStage++;
+            CyDelay(2000);
+        }
+        
+     
         if (rxStringReady == 1)
         {
             // Load the GPS string into the GPS String buffer in NavState.
