@@ -23,6 +23,7 @@ extern "C" {
 // Depends on having access to the file system functions and definitions as well
 // as file types
 #include "navfiles.h"
+#include "navfunctions.h"
 #include <sys/types.h>
 
 #ifdef __cplusplus
@@ -56,16 +57,16 @@ typedef struct NavWPHandler
     size_t maxWPCount;
 } NavWPHandler;
 
-// TODO
+// TODO Description WPHandlerOpen()
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName);
 
-// TODO
+// TODO Description WPHandlerGetGoal()
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);
 
-// TODO
+// TODO Description WPHandlerNextWP()
 size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 
-// TODO
+// TODO Description WPHandlerSeekWP()
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
 
 #endif // WPHANDLER_H

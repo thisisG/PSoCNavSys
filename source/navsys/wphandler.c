@@ -40,23 +40,17 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 
         // Read the file header and update the offsetFirstWPBlock
         NavFileHeader fileHeader = { 0, 0, 0 };
-#ifdef __GNUC__
-        FS_Read(wpHandler->fileManager.ptrWPList, &fileHeader,
-                sizeof(fileHeader));
-#else // File operations for windows
 
-#endif // __GNUC__
+        NAV_fread(wpHandler->fileManager.ptrWPList, &fileHeader, 1,
+                  sizeof(fileHeader));
 
         wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
 
         // Read the WP List header and update the offsetFirstWPBlock
         NavFileWPListHeader WPListHeader = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-#ifdef __GNUC__
-        FS_Read(wpHandler->fileManager.ptrWPList, &WPListHeader,
-                fileHeader.headerBlockSize);
-#else // File operations for windows
 
-#endif // __GNUC__
+        NAV_fread(wpHandler->fileManager.ptrWPList, &WPListHeader, 1,
+                  fileHeader.headerBlockSize);
 
         wpHandler->offsetFirstWPBlock += fileHeader.headerBlockSize;
 
@@ -93,25 +87,18 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
     // Check if there are more wps left in the list
     if ((WPCount + 1) <= WPMaxCount)
     {
-        // The file should already be in a position for reading the first WP
+        // The file should already be in a position for reading the next WP
         // Read the data block header
         NavDataBlockHeader dataHeader;
-#ifdef __GNUC__
-        FS_Read(wpHandler->fileManager.ptrWPList, &dataHeader,
-                sizeof(dataHeader));
-#else  // File operations for windows
-        fread(&dataHeader, sizeof(dataHeader), 1,
+
+        NAV_fread(&dataHeader, sizeof(dataHeader), 1,
               wpHandler->fileManager.ptrWPList);
-#endif // __GNUC__
 
         // Read the coordinate
         Coordinate coord;
-#ifdef __GNUC__
-        FS_Read(wpHandler->fileManager.ptrWPList, &coord,
-                dataHeader.dataBlockSize);
-#else  // File operations for windows
-        fread(&coord, sizeof(coord), 1, wpHandler->fileManager.ptrWPList);
-#endif // __GNUC__
+        zeroCoordinate(&coord);
+
+        NAV_fread(&coord, sizeof(coord), 1, wpHandler->fileManager.ptrWPList);
 
         (*nextWP) = coord;
         WPCount++;
@@ -133,7 +120,7 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
     // wpNumber of waypoints we want to seek to.
     // The total offset is then calculated from the offset stored in
     // wpHandler->offsetFirstWPBlock plus
-    // wpNumber*(sizeof(NavFileHeader) + sizeof(Coordinate))
+    // wpNumber*(sizeof(NavDataBlockHeader) + sizeof(Coordinate))
     size_t startOffset = wpHandler->offsetFirstWPBlock;
 
     size_t wpDataOffset = wpNumber
@@ -141,11 +128,7 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
 
     size_t totalOffset = startOffset + wpDataOffset;
 
-#ifdef __GNUC__
-    FS_FSeek(wpHandler->fileManager.ptrWPList, FS_SEEK_SET, totalOffset);
-#else  // File operations for windows
-    fseek(wpHandler->fileManager.ptrWPList, totalOffset, SEEK_SET);
-#endif // __GNUC__
+    NAV_fseek(wpHandler->fileManager.ptrWPList, totalOffset, NAV_SEEK_SET);
 }
 
 /* [] END OF FILE */

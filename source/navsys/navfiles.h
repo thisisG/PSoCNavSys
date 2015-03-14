@@ -37,17 +37,20 @@ typedef FILE NAV_FILE;
 #define NAV_SEEK_CUR 1
 #define NAV_SEEK_END 2
 
-// TODO
+// TODO Description NAV_fopen()
 NAV_FILE* NAV_fopen(const char* filename, const char* mode);
 
-// TODO 
+// TODO Description NAV_fclose()
 int NAV_fclose(NAV_FILE* ptrNavFile);
 
-// TODO
+// TODO Description NAV_fseek()
 int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin);
 
-// TODO
-size_t NAV_fwrite(const void * ptr, size_t size, size_t count, NAV_FILE* ptrNavFile);
+// TODO Description NAV_fwrite()
+size_t NAV_fwrite(const void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile);
+
+// TODO Description NAV_fread()
+uint32_t NAV_fread(void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile);
 
 /* ENUM NavFileType
 Numbered list describing the type of files the system is aware of and know how

@@ -52,12 +52,22 @@ int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 }
 
 // TODO Test
-size_t NAV_fwrite(const void * ptr, size_t size, size_t count, NAV_FILE* ptrNavFile)
+size_t NAV_fwrite(const void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
-    return FS_FWrite(ptr, size, count, ptrNavFile);
+    return FS_FWrite(ptrData, size, count, ptrNavFile);
 #else
-    return fwrite(ptr, size, count, ptrNavFile);
+    return fwrite(ptrData, size, count, ptrNavFile);
+#endif // __GNUC__
+}
+
+// TODO 
+uint32_t NAV_fread(void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile)
+{
+#ifdef __GNUC__
+    return FS_Fread(prtData, size, count, ptrNavFile);
+#else
+    return fread(ptrData, size, count, ptrNavFile);
 #endif // __GNUC__
 }
 
