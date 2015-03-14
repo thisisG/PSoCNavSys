@@ -19,12 +19,12 @@ extern "C" {
 #endif
 #include "navmanager\gpsemulator.h"
 
-FILE* somefile;
+NAV_FILE* somefile;
 char filename[20] = "wplist1.wp";
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    somefile = fopen(filename, "wb");
+    somefile = NAV_fopen(filename, "wb");
 
     size_t totalSize = 0;
 

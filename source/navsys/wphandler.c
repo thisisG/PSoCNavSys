@@ -20,26 +20,18 @@ extern "C" {
 }
 #endif // __cplusplus
 
-uint8_t wpHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
+uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
     uint8_t statusFileOpen = 0;
 
-// Close any currently open file assigned to the pointer
-#ifdef __GNUC__
-    FS_FClose(wpHandler->fileManager.ptrWPList);
-#else // File operations for windows
-    fclose(wpHandler->fileManager.ptrWPList);
-#endif // __GNUC__
+    // Close any currently open file assigned to the pointer
+    NAV_fclose(wpHandler->fileManager.ptrWPList);
+
 
     // Set the file pointer to zero
     wpHandler->fileManager.ptrWPList = 0;
 
-// Open the designated file for reading
-#ifdef __GNUC__
-    wpHandler->fileManager.ptrWPList = FS_FOpen(wpFileName, "rb");
-#else  // File operations for windows
-    wpHandler->fileManager.ptrWPList = fopen(wpFileName, "rb");
-#endif // __GNUC__
+    wpHandler->fileManager.ptrWPList = NAV_fopen(wpFileName, "rb");
 
     if (wpHandler->fileManager.ptrWPList != 0)
     {

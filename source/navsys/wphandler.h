@@ -20,26 +20,14 @@ extern "C" {
 // Depends on Coordinate and NavState structures when writing to files
 #include "navtypes.h"
 
-// Depends on having access to the file system functions and definitions
-#ifdef __GNUC__
-#include "FS.h"
-#else // File operations for windows
-#include <stdio.h>
-#endif // __GNUC__
-
-// Depends on file types
+// Depends on having access to the file system functions and definitions as well
+// as file types
 #include "navfiles.h"
 #include <sys/types.h>
 
 #ifdef __cplusplus
 }
 #endif // __cplusplus
-
-// If we are not on the PSoC system we want to make a typedef for FS_FILE such
-// that the handler code works with other platforms
-#ifndef __GNUC__
-typedef FILE FS_FILE;
-#endif // __GNUC__
 
 /* STRUCT NavWPFileManager
 ADS that contain the filenames and pointers used for managing waypoints via
@@ -50,8 +38,8 @@ typedef struct NavWPFileManager
     char cfgFileName[20];
     char wpListFileName[20];
     char eWPListFileName[20];
-    FS_FILE* ptrCfgFile;
-    FS_FILE* ptrWPList;
+    NAV_FILE* ptrCfgFile;
+    NAV_FILE* ptrWPList;
     size_t numberOfExceptionEntries;
     size_t currentExceptionEntry;
 } NavWPFileManager;
@@ -69,7 +57,7 @@ typedef struct NavWPHandler
 } NavWPHandler;
 
 // TODO
-uint8_t wpHandlerOpen(NavWPHandler* wpHandler, char* wpFileName);
+uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName);
 
 // TODO
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);

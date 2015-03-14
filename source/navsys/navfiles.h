@@ -16,13 +16,38 @@
 extern "C" {
 #endif // __cplusplus
 
-// Depends on Coordinate and NavState structures when writing to files
+// Depends on Coordinate and NavState structures when writing to files.
 #include "navtypes.h"
 #include <sys/types.h>
 
 #ifdef __cplusplus
 }
 #endif // __cplusplus
+
+// Create typedefs for file pointers in order to create interfaces for
+// FS_FOpen()/fopen(), FS_Read()/fread(), FS_FSeek()/fseek() etc.
+#ifdef __GNUC__
+typedef FS_FILE NAV_FILE;
+#else
+typedef FILE NAV_FILE;
+#endif // __GNUC__
+
+// Define seek parameters for use with NAV_fseek() function calls.
+#define NAV_SEEK_SET 0
+#define NAV_SEEK_CUR 1
+#define NAV_SEEK_END 2
+
+// TODO
+NAV_FILE* NAV_fopen(const char* filename, const char* mode);
+
+// TODO 
+int NAV_fclose(NAV_FILE* ptrNavFile);
+
+// TODO
+int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin);
+
+// TODO
+size_t NAV_fwrite(const void * ptr, size_t size, size_t count, NAV_FILE* ptrNavFile);
 
 /* ENUM NavFileType
 Numbered list describing the type of files the system is aware of and know how
