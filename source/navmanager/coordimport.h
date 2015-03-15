@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifndef COORDIMPORT_H
 #define COORDIMPORT_H
 
@@ -12,20 +21,21 @@ extern "C" {
 #include <iostream>
 #include "./../csv/csv.h"
 
-class CoordImport {
-public:
-    CoordImport();
-    ~CoordImport();
-    void setCsvFile();
-    void importCsvToBuffer();
-    void putNextCoordinateToNavState(struct Navstate* myNavState);
-    void putNextWpToNavState(struct NavState* myNavState);
+class CoordImport
+{
+  public:
+  CoordImport();
+  ~CoordImport();
+  void setCsvFile();
+  void importCsvToBuffer();
+  void putNextCoordinateToNavState(struct Navstate* myNavState);
+  void putNextWpToNavState(struct NavState* myNavState);
 
-private:
-    int entriesCoordBuffer;
-    int entriesWpBuffer;
-    struct Coordinate* ptrCoordBuffer;
-    struct Coordinate* ptrWpBuffer;
+  private:
+  int entriesCoordBuffer;
+  int entriesWpBuffer;
+  struct Coordinate* ptrCoordBuffer;
+  struct Coordinate* ptrWpBuffer;
 };
 
 #endif

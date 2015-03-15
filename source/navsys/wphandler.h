@@ -1,13 +1,10 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
 */
 
 #ifndef WPHANDLER_H
@@ -36,13 +33,13 @@ files.
 */
 typedef struct NavWPFileManager
 {
-    char cfgFileName[20];
-    char wpListFileName[20];
-    char eWPListFileName[20];
-    NAV_FILE* ptrCfgFile;
-    NAV_FILE* ptrWPList;
-    size_t numberOfExceptionEntries;
-    size_t currentExceptionEntry;
+  char cfgFileName[20];
+  char wpListFileName[20];
+  char eWPListFileName[20];
+  NAV_FILE* ptrCfgFile;
+  NAV_FILE* ptrWPList;
+  size_t numberOfExceptionEntries;
+  size_t currentExceptionEntry;
 } NavWPFileManager;
 
 /* STRUCT NavWPHandler
@@ -50,11 +47,11 @@ ADS that contain data regarding the management of waypoints.
 */
 typedef struct NavWPHandler
 {
-    struct NavWPFileManager fileManager;
-    struct Coordinate wpGoal;
-    size_t offsetFirstWPBlock;
-    size_t currentWPCount;
-    size_t maxWPCount;
+  struct NavWPFileManager fileManager;
+  struct Coordinate wpGoal;
+  size_t offsetFirstWPBlock;
+  size_t currentWPCount;
+  size_t maxWPCount;
 } NavWPHandler;
 
 // TODO Description WPHandlerOpen()

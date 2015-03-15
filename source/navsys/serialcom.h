@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifndef SERIALCOM_H
 #define SERIALCOM_H
 
@@ -54,12 +63,12 @@ typedef int cookie_close_function_t(void* __cookie);
 
 typedef struct
 {
-    /* These four struct member names are dictated by Linux; hopefully,
-    they don't conflict with any macros.  */
-    cookie_read_function_t* read;
-    cookie_write_function_t* write;
-    cookie_seek_function_t* seek;
-    cookie_close_function_t* close;
+  // These four struct member names are dictated by Linux; hopefully, they don't
+  // conflict with any macros.
+  cookie_read_function_t* read;
+  cookie_write_function_t* write;
+  cookie_seek_function_t* seek;
+  cookie_close_function_t* close;
 } cookie_io_functions_t;
 // END COPYRIGHT NOTICE UoC
 #endif // _WIN32
@@ -83,19 +92,19 @@ flag which will allow a string to be read.
 */
 struct UartBuffer
 {
-    char outputBuffer[UART_BUFFER_LENGTH];
-    char inputBuffer[UART_BUFFER_LENGTH];
-    size_t bufferLength;
-    size_t outputHead;
-    size_t outputTail;
-    size_t inputHead;
-    size_t inputTail;
+  char outputBuffer[UART_BUFFER_LENGTH];
+  char inputBuffer[UART_BUFFER_LENGTH];
+  size_t bufferLength;
+  size_t outputHead;
+  size_t outputTail;
+  size_t inputHead;
+  size_t inputTail;
 };
 
 // VS2013 does not like the below definition, so will only use it for the PSoC
 #ifdef __GNUC__
 typedef volatile struct UartBuffer UartBuffer;
-#else // And make another one for VS2013
+#else  // And make another one for VS2013
 typedef struct UartBuffer UartBuffer;
 #endif // __GNUC__
 

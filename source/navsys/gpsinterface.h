@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifndef GPSINTERFACE_H
 #define GPSINTERFACE_H
 
@@ -15,10 +24,10 @@ extern "C" {
 #endif // __cplusplus
 
 #ifdef _WIN32 // Windows specific implementations
-#endif // _WIN32
+#endif        // _WIN32
 
 #ifdef __GNUC__ // ARM specific implementation
-#endif // __GNUC__
+#endif          // __GNUC__
 
 void decodeGpsStringInNavState(NavState* navS);
 

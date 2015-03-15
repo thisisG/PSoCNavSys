@@ -1,13 +1,10 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
 */
 
 #ifndef NAVISR_H

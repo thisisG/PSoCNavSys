@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifndef NAVTYPES_H
 #define NAVTYPES_H
 
@@ -39,11 +48,11 @@ ADS that contain coordinate information.
 */
 typedef struct Coordinate
 {
-    signed16Degree dLongitude;
-    signed32Degree mLongitude;
-    signed16Degree dLatitude;
-    signed32Degree mLatitude;
-    coordinateCode priority;
+  signed16Degree dLongitude;
+  signed32Degree mLongitude;
+  signed16Degree dLatitude;
+  signed32Degree mLatitude;
+  coordinateCode priority;
 } Coordinate;
 
 /* STRUCT GpsBuffer
@@ -51,9 +60,9 @@ ADS that contain a GPS string buffer and buffer size.
 */
 typedef struct GpsBuffer
 {
-    uint8_t newGPSString;
-    int gpsBufferLength;
-    char gpsStringBuffer[GPS_STR_BFR_LEN];
+  uint8_t newGPSString;
+  int gpsBufferLength;
+  char gpsStringBuffer[GPS_STR_BFR_LEN];
 } GpsBuffer;
 
 /* STRUCT SerialBuffer
@@ -61,8 +70,8 @@ ADS that contain a serial string buffer and buffer size
 */
 typedef struct SerialBuffer
 {
-    int serialBufferLength;
-    char serialStringBuffer[SERIAL_STR_BFR_LEN];
+  int serialBufferLength;
+  char serialStringBuffer[SERIAL_STR_BFR_LEN];
 } SerialBuffer;
 
 /* STRUCT SystemTime
@@ -71,14 +80,14 @@ RTC_TIME_DATE used in PSoC Creator for time interactions.
 */
 typedef struct SystemTime
 {
-    uint8_t Sec;
-    uint8_t Min;
-    uint8_t Hour;
-    uint8_t DayOfWeek;
-    uint8_t DayOfMonth;
-    uint16_t DayOfYear;
-    uint8_t Month;
-    uint16_t Year;
+  uint8_t Sec;
+  uint8_t Min;
+  uint8_t Hour;
+  uint8_t DayOfWeek;
+  uint8_t DayOfMonth;
+  uint16_t DayOfYear;
+  uint8_t Month;
+  uint16_t Year;
 } SystemTime;
 
 /* ENUM CurrentNavState
@@ -89,18 +98,18 @@ should be considered invalid values.
 */
 typedef enum CurrentNavState
 {
-    firstCurrentNavState = 0,
-    closestWP,
-    toWP,
-    atWP,
-    nextWP,
-    atGoal,
-    closestExceptionWP,
-    toExceptionWP,
-    atExceptionWP,
-    nextExceptionWP,
-    atExceptionGoal,
-    lastCurrentNavState
+  firstCurrentNavState = 0,
+  closestWP,
+  toWP,
+  atWP,
+  nextWP,
+  atGoal,
+  closestExceptionWP,
+  toExceptionWP,
+  atExceptionWP,
+  nextExceptionWP,
+  atExceptionGoal,
+  lastCurrentNavState
 } CurrentNavState;
 
 /* STRUCT StateData
@@ -109,14 +118,14 @@ system.
 */
 typedef struct StateDataStructure
 {
-    enum CurrentNavState stateKeeper;
-    struct Coordinate WPGoal;
-    struct Coordinate eWPGoal;
-    struct Coordinate nextWP;
-    float maxWPDistance;
-    float arrivalWPDistance;
-    float exceptionMaxWPDistance;
-    float exceptionWPArrivalDistance;
+  enum CurrentNavState stateKeeper;
+  struct Coordinate WPGoal;
+  struct Coordinate eWPGoal;
+  struct Coordinate nextWP;
+  float maxWPDistance;
+  float arrivalWPDistance;
+  float exceptionMaxWPDistance;
+  float exceptionWPArrivalDistance;
 } StateDataStructure;
 
 /* STRUCT NavState
@@ -126,17 +135,17 @@ navigation state, variables and buffers needed for the system to function.
 */
 typedef struct NavState
 {
-    struct StateDataStructure stateData;
-    struct GpsBuffer gpsBuffer;
-    struct SerialBuffer serialBuffer;
-    struct Coordinate currentLocation;
-    // This might be changed to a waypoint stack / queue later
-    struct Coordinate nextWaypoint;
-    struct SystemTime time;
-    floatDegree dCurrentHeading;
-    floatDegree dOverallHeading;
-    float currentSpeedKmh;
-    float distanceToCurrentWP;
+  struct StateDataStructure stateData;
+  struct GpsBuffer gpsBuffer;
+  struct SerialBuffer serialBuffer;
+  struct Coordinate currentLocation;
+  // This might be changed to a waypoint stack / queue later
+  struct Coordinate nextWaypoint;
+  struct SystemTime time;
+  floatDegree dCurrentHeading;
+  floatDegree dOverallHeading;
+  float currentSpeedKmh;
+  float distanceToCurrentWP;
 } NavState;
 
 #endif

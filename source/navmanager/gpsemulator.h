@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #pragma once
 
 #include <iostream>
@@ -20,26 +29,26 @@ extern "C" {
 
 class GpsEmulator
 {
-public:
-    GpsEmulator();
-    ~GpsEmulator();
-    void parseCsvToInfoVector(const std::string& csvFile);
-    void generatePseudoRandomData();
-    void getNextStringToCharBuffer(char* buffer, int bufferSize);
-    void getNextStringToNavState(NavState* navS);
+  public:
+  GpsEmulator();
+  ~GpsEmulator();
+  void parseCsvToInfoVector(const std::string& csvFile);
+  void generatePseudoRandomData();
+  void getNextStringToCharBuffer(char* buffer, int bufferSize);
+  void getNextStringToNavState(NavState* navS);
 
-private:
-    int nmeaVectorLength = 0;
-    std::vector<nmeaINFO> nmeaInfoVector;
-    std::default_random_engine* genSpeed;
-    std::uniform_real_distribution<double>* distSpeed;
-    std::default_random_engine* genHeading;
-    std::uniform_real_distribution<double>* distHeading;
+  private:
+  int nmeaVectorLength = 0;
+  std::vector<nmeaINFO> nmeaInfoVector;
+  std::default_random_engine* genSpeed;
+  std::uniform_real_distribution<double>* distSpeed;
+  std::default_random_engine* genHeading;
+  std::uniform_real_distribution<double>* distHeading;
 
-    void csvDataToNmeaInfo(const float dLat, const float dLong, const float dHeading,
-                           nmeaINFO* nmeaBuffer);
-    void initRandomGenerators();
-    void cleanupRandomGenerators();
-    double generateSpeed();
-    double generateHeading();
+  void csvDataToNmeaInfo(const float dLat, const float dLong,
+                         const float dHeading, nmeaINFO* nmeaBuffer);
+  void initRandomGenerators();
+  void cleanupRandomGenerators();
+  double generateSpeed();
+  double generateHeading();
 };

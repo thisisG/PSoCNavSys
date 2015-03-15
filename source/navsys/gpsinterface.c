@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -12,32 +21,32 @@ extern "C" {
 
 void decodeGpsStringInNavState(NavState* navS)
 {
-    // Need to pass the address to the second char value since the 0th is
-    // occupied by '$'
-    int pack = nmea_pack_type(&(navS->gpsBuffer.gpsStringBuffer)[1],
-                              navS->gpsBuffer.gpsBufferLength);
+  // Need to pass the address to the second char value since the 0th is
+  // occupied by '$'
+  int pack = nmea_pack_type(&(navS->gpsBuffer.gpsStringBuffer)[1],
+                            navS->gpsBuffer.gpsBufferLength);
 
-    // Check if the string is identified as a type we can decode and use and get
-    // the data if the string type is recognized.
-    if (pack == GPRMC)
-    {
-        nmeaGPRMC gprmcBuffer;
-        nmea_zero_GPRMC(&gprmcBuffer);
-        nmea_parse_GPRMC((navS->gpsBuffer.gpsStringBuffer),
-                         navS->gpsBuffer.gpsBufferLength, &gprmcBuffer);
+  // Check if the string is identified as a type we can decode and use and get
+  // the data if the string type is recognized.
+  if (pack == GPRMC)
+  {
+    nmeaGPRMC gprmcBuffer;
+    nmea_zero_GPRMC(&gprmcBuffer);
+    nmea_parse_GPRMC((navS->gpsBuffer.gpsStringBuffer),
+                     navS->gpsBuffer.gpsBufferLength, &gprmcBuffer);
 
-        nmeaINFO nmeaBuffer;
-        nmea_zero_INFO(&nmeaBuffer);
-        nmea_GPRMC2info(&gprmcBuffer, &nmeaBuffer);
+    nmeaINFO nmeaBuffer;
+    nmea_zero_INFO(&nmeaBuffer);
+    nmea_GPRMC2info(&gprmcBuffer, &nmeaBuffer);
 
-        nmeaInfoToCoord(&nmeaBuffer, &(navS->currentLocation));
+    nmeaInfoToCoord(&nmeaBuffer, &(navS->currentLocation));
 
-        navS->dCurrentHeading = (floatDegree)nmeaBuffer.direction;
+    navS->dCurrentHeading = (floatDegree)nmeaBuffer.direction;
 
-        navS->currentSpeedKmh = nmeaBuffer.speed;
-    }
-    else
-    {
-        return;
-    }
+    navS->currentSpeedKmh = nmeaBuffer.speed;
+  }
+  else
+  {
+    return;
+  }
 }

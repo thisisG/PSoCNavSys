@@ -1,8 +1,13 @@
 /*
-Source code written by Geir Istad for the completion of a MEng thesis at the
-University of Aberdeen
-The code is written by the author unless otherwise indicated.
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
 
+/*
 Format for longitude/latitude is as follows:
 
 N/S +/-
@@ -112,7 +117,7 @@ CurrentNavState atExceptionGoalHandler(NavState* navS);
 
 // TODO
 uint8_t coordsEqual(const struct Coordinate* coordA,
-                   const struct Coordinate* coordB);
+                    const struct Coordinate* coordB);
 
 #ifdef _WIN32
 void printCoordData(Coordinate* coord);

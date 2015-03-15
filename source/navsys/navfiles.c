@@ -1,14 +1,12 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
 */
+
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
@@ -21,13 +19,13 @@ extern "C" {
 
 // TODO Test
 // PC: OK
-// PSoC: 
+// PSoC:
 NAV_FILE* NAV_fopen(const char* filename, const char* mode)
 {
 #ifdef __GNUC__
-    return FS_FOpen(filename, mode);
+  return FS_FOpen(filename, mode);
 #else
-    return fopen(filename, mode);
+  return fopen(filename, mode);
 #endif // __GNUC__
 }
 
@@ -35,9 +33,9 @@ NAV_FILE* NAV_fopen(const char* filename, const char* mode)
 int NAV_fclose(NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
-    return FS_FClose(ptrNavFile);
+  return FS_FClose(ptrNavFile);
 #else
-    return fclose(ptrNavFile);
+  return fclose(ptrNavFile);
 #endif // __GNUC__
 }
 
@@ -45,29 +43,31 @@ int NAV_fclose(NAV_FILE* ptrNavFile)
 int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 {
 #ifdef __GNUC__
-    return FS_Fseek(ptrNavFile, offset, origin);
+  return FS_Fseek(ptrNavFile, offset, origin);
 #else
-    return fseek(ptrNavFile, offset, origin);
+  return fseek(ptrNavFile, offset, origin);
 #endif // __GNUC__
 }
 
 // TODO Test
-size_t NAV_fwrite(const void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile)
+size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
+                  NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
-    return FS_FWrite(ptrData, size, count, ptrNavFile);
+  return FS_FWrite(ptrData, size, count, ptrNavFile);
 #else
-    return fwrite(ptrData, size, count, ptrNavFile);
+  return fwrite(ptrData, size, count, ptrNavFile);
 #endif // __GNUC__
 }
 
-// TODO 
-uint32_t NAV_fread(void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile)
+// TODO
+uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
+                   NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
-    return FS_Fread(prtData, size, count, ptrNavFile);
+  return FS_Fread(prtData, size, count, ptrNavFile);
 #else
-    return fread(ptrData, size, count, ptrNavFile);
+  return fread(ptrData, size, count, ptrNavFile);
 #endif // __GNUC__
 }
 

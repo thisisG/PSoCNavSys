@@ -1,14 +1,12 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
 */
+
 #ifndef NAVFILES_H
 #define NAVFILES_H
 
@@ -47,26 +45,28 @@ int NAV_fclose(NAV_FILE* ptrNavFile);
 int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin);
 
 // TODO Description NAV_fwrite()
-size_t NAV_fwrite(const void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile);
+size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
+                  NAV_FILE* ptrNavFile);
 
 // TODO Description NAV_fread()
-uint32_t NAV_fread(void * ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile);
+uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
+                   NAV_FILE* ptrNavFile);
 
 /* ENUM NavFileType
 Numbered list describing the type of files the system is aware of and know how
 to perform operations with.
 The numbers are chosen apparently at random, and care should be taken to choose
 a new number when adding new types.
-The INVALID_MAX_FILE_TYPE is defined to force the enum to be the size of 4 B 
+The INVALID_MAX_FILE_TYPE is defined to force the enum to be the size of 4 B
 since the PSoC will otherwise make the enum of length 1 B.
 */
 typedef enum NavFileType
 {
-    INVALID_FILE_TYPE = 0,
-    WAYPOINT_LIST_FILE = 3245,
-    EXCEPTION_WAYPOINT_LIST_FILE = 5723,
-    WAYPOINT_CONFIG_FILE = 6573,
-    INVALID_MAX_FILE_TYPE = 2147483647
+  INVALID_FILE_TYPE = 0,
+  WAYPOINT_LIST_FILE = 3245,
+  EXCEPTION_WAYPOINT_LIST_FILE = 5723,
+  WAYPOINT_CONFIG_FILE = 6573,
+  INVALID_MAX_FILE_TYPE = 2147483647
 } NavFileType;
 
 /* ENUM NavVersion
@@ -75,9 +75,9 @@ case it is needed for further development of the system.
 */
 typedef enum NavVersion
 {
-    INVALID_FILE_VERSION = 0,
-    FILE_VERSION_1,
-    INVALID_MAX_VERSION = 2147483647
+  INVALID_FILE_VERSION = 0,
+  FILE_VERSION_1,
+  INVALID_MAX_VERSION = 2147483647
 } NavVersion;
 
 /* STRUCT NavFileHeader
@@ -90,9 +90,9 @@ read back by the PSoC.
 */
 typedef struct NavFileHeader
 {
-    NavFileType fileType;
-    NavVersion fileVersion;
-    size_t headerBlockSize; // The size of the header block after the file header
+  NavFileType fileType;
+  NavVersion fileVersion;
+  size_t headerBlockSize; // The size of the header block after the file header
 } NavFileHeader;
 
 /* ENUM NavDataType
@@ -103,9 +103,9 @@ a new and unused number when adding new types.
 */
 typedef enum NavDataType
 {
-    INVALID_DATA_TYPE = 0,
-    WAYPOINT_DATA = 5123,
-    EXCEPTION_WAYPOINT_DATA = 3455
+  INVALID_DATA_TYPE = 0,
+  WAYPOINT_DATA = 5123,
+  EXCEPTION_WAYPOINT_DATA = 3455
 } NavDataType;
 
 /* STRUCT NavDataBlockHeader
@@ -116,9 +116,9 @@ more recent versions of stored data.
 */
 typedef struct NavDataBlockHeader
 {
-    NavDataType dataType;
-    NavVersion dataVersion;
-    size_t dataBlockSize; // The size of the data block after the header
+  NavDataType dataType;
+  NavVersion dataVersion;
+  size_t dataBlockSize; // The size of the data block after the header
 } NavDataBlockHeader;
 
 /* STRUCT NavFileWPListHeader
@@ -126,10 +126,10 @@ ADS that describes the contents of a list of waypoints contained in the file.
 */
 typedef struct NavFileWPListHeader
 {
-    Coordinate startCoordinate;
-    Coordinate endCoordinate;
-    size_t numberOfEntries;
-    size_t dataBlockSize;
+  Coordinate startCoordinate;
+  Coordinate endCoordinate;
+  size_t numberOfEntries;
+  size_t dataBlockSize;
 } NavFileWPListHeader;
 
 #endif // NAVFILES_H

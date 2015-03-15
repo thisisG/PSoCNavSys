@@ -1,3 +1,12 @@
+/*
+**
+** NavSys library
+** URL: https://github.com/thisisG
+** Author: Geir Istad (geir dot istad at gmail dot com)
+** Licence: MIT
+**
+*/
+
 #ifndef NAV_SYSTEM_CONFIG_H
 #define NAV_SYSTEM_CONFIG_H
 
