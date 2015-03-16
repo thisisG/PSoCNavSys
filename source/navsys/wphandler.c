@@ -17,6 +17,11 @@ extern "C" {
 }
 #endif // __cplusplus
 
+void initNavWPFileManager(NavWPFileManager* WPFileManager) 
+{
+  strncpy(WPFileManager->cfgFileName, "", strlen(""));
+}
+
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
@@ -120,7 +125,7 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
   size_t startOffset = wpHandler->offsetFirstWPBlock;
 
   size_t wpDataOffset = wpNumber
-                        * (sizeof(NavDataBlockHeader) + sizeof(Coordinate));
+      * (sizeof(NavDataBlockHeader) + sizeof(Coordinate));
 
   size_t totalOffset = startOffset + wpDataOffset;
 

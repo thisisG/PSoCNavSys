@@ -18,6 +18,31 @@ extern "C" {
 #endif // __cplusplus
 
 // TODO Test
+void initNavFileHeader(NavFileHeader *fileHeader)
+{
+  fileHeader->fileType = INVALID_FILE_TYPE;
+  fileHeader->fileVersion = INVALID_NAV_VERSION;
+  fileHeader->headerBlockSize = 0;
+}
+
+// TODO Test
+void initNavDataBlockHeader(NavDataBlockHeader* dataHeader)
+{
+  dataHeader->dataType = INVALID_DATA_TYPE;
+  dataHeader->dataVersion = INVALID_NAV_VERSION;
+  dataHeader->dataBlockSize = 0;
+}
+
+// TODO Test
+void initNavFileWPListHeader(NavFileWPListHeader* WPListHeader)
+{
+  zeroCoordinate(&(WPListHeader->startCoordinate));
+  zeroCoordinate(&(WPListHeader->endCoordinate));
+  WPListHeader->numberOfEntries = 0;
+  WPListHeader->dataBlockSize = 0;
+}
+
+// TODO Test
 // PC: OK
 // PSoC:
 NAV_FILE* NAV_fopen(const char* filename, const char* mode)

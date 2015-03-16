@@ -24,59 +24,65 @@ char filename[20] = "wplist1.wp";
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    somefile = NAV_fopen(filename, "wb");
+  NavWPHandler navHandler;
 
-    size_t totalSize = 0;
+  strncpy(navHandler.fileManager.cfgFileName, "sometext", strlen("sometext"));
 
-    NavFileHeader fileHeader;
-    NavFileWPListHeader WPListHeader;
 
-    fileHeader.fileType = WAYPOINT_LIST_FILE;
-    fileHeader.fileVersion = (NavVersion)255;
-    fileHeader.headerBlockSize = sizeof(WPListHeader);
+  somefile = NAV_fopen(filename, "wb");
 
-    std::cout << "sizeof(WPListHeader): " << sizeof(WPListHeader) << std::endl;
+  size_t totalSize = 0;
 
-    Coordinate coordArray[1];
+  NavFileHeader fileHeader;
+  NavFileWPListHeader WPListHeader;
 
-    for (size_t i = 0; i < (sizeof(coordArray) / sizeof(coordArray[0])); i++)
-    {
-        zeroCoordinate(&coordArray[i]);
-        // coordArray[i].dLatitude = 0xFFFF;
-        coordArray[i].dLatitude = 1;
-        coordArray[i].dLongitude = 2 * i;
-        coordArray[i].mLatitude = 0;
-        coordArray[i].mLongitude = 0;
-        coordArray[i].priority = 20 * i;
-    }
+  fileHeader.fileType = WAYPOINT_LIST_FILE;
+  fileHeader.fileVersion = (NavVersion)255;
+  fileHeader.headerBlockSize = sizeof(WPListHeader);
 
-    WPListHeader.startCoordinate = coordArray[0];
-    WPListHeader.endCoordinate = coordArray[0];
-    WPListHeader.numberOfEntries = (sizeof(coordArray) / sizeof(coordArray[0]));
-    WPListHeader.dataBlockSize = sizeof(coordArray[0]);
+  std::cout << "sizeof(WPListHeader): " << sizeof(WPListHeader) << std::endl;
 
-    somefile = fopen(filename, "wb");
+  Coordinate coordArray[1];
 
-    fwrite(&fileHeader, sizeof(fileHeader), 1, somefile);
-    totalSize += sizeof(fileHeader);
-    std::cout << "totalSize after fileHeader: " << totalSize << std::endl;
+  for (size_t i = 0; i < (sizeof(coordArray) / sizeof(coordArray[0])); i++)
+  {
+    zeroCoordinate(&coordArray[i]);
+    // coordArray[i].dLatitude = 0xFFFF;
+    coordArray[i].dLatitude = 1;
+    coordArray[i].dLongitude = 2 * i;
+    coordArray[i].mLatitude = 0;
+    coordArray[i].mLongitude = 0;
+    coordArray[i].priority = 20 * i;
+  }
 
-    fwrite(&WPListHeader, sizeof(WPListHeader), 1, somefile);
-    totalSize += sizeof(WPListHeader);
-    std::cout << "totalSize after NavFileWPListHeader: " << totalSize
-              << std::endl;
+  WPListHeader.startCoordinate = coordArray[0];
+  WPListHeader.endCoordinate = coordArray[0];
+  WPListHeader.numberOfEntries = (sizeof(coordArray) / sizeof(coordArray[0]));
+  WPListHeader.dataBlockSize = sizeof(coordArray[0]);
 
-    for (size_t i = 0; i < (sizeof(coordArray) / sizeof(coordArray[0])); i++)
-    {
-        fwrite(&coordArray[i], sizeof(Coordinate), 1, somefile);
-        std::cout << "Wrote:" << std::endl;
-        printCoordData(&coordArray[i]);
-        totalSize += sizeof(Coordinate);
-    }
-    std::cout << "Expected file size: " << totalSize << std::endl;
-    fclose(somefile);
+  somefile = fopen(filename, "wb");
 
-    std::cout << "sizeof(fileheader.fileVersion): " << sizeof(fileHeader.fileVersion) << std::endl;
+  fwrite(&fileHeader, sizeof(fileHeader), 1, somefile);
+  totalSize += sizeof(fileHeader);
+  std::cout << "totalSize after fileHeader: " << totalSize << std::endl;
 
-    return 0;
+  fwrite(&WPListHeader, sizeof(WPListHeader), 1, somefile);
+  totalSize += sizeof(WPListHeader);
+  std::cout << "totalSize after NavFileWPListHeader: " << totalSize
+            << std::endl;
+
+  for (size_t i = 0; i < (sizeof(coordArray) / sizeof(coordArray[0])); i++)
+  {
+    fwrite(&coordArray[i], sizeof(Coordinate), 1, somefile);
+    std::cout << "Wrote:" << std::endl;
+    printCoordData(&coordArray[i]);
+    totalSize += sizeof(Coordinate);
+  }
+  std::cout << "Expected file size: " << totalSize << std::endl;
+  fclose(somefile);
+
+  std::cout << "sizeof(fileheader.fileVersion): "
+            << sizeof(fileHeader.fileVersion) << std::endl;
+
+  return 0;
 }

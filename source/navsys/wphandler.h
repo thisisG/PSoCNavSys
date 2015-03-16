@@ -21,6 +21,8 @@ extern "C" {
 // as file types
 #include "navfiles.h"
 #include "navfunctions.h"
+// Depends on standard types and string operations
+#include <stdio.h>
 #include <sys/types.h>
 
 #ifdef __cplusplus

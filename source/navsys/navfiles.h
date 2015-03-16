@@ -16,7 +16,14 @@ extern "C" {
 
 // Depends on Coordinate and NavState structures when writing to files.
 #include "navtypes.h"
+// Depends on initialization functions for navtypes
+#include "navfunctions.h"
 #include <sys/types.h>
+
+// Depends on the emFile library when on the PSoC
+#ifdef __GNUC__
+#include "FS.h"
+#endif // __GNUC__
 
 #ifdef __cplusplus
 }
@@ -75,9 +82,9 @@ case it is needed for further development of the system.
 */
 typedef enum NavVersion
 {
-  INVALID_FILE_VERSION = 0,
-  FILE_VERSION_1,
-  INVALID_MAX_VERSION = 2147483647
+  INVALID_NAV_VERSION = 0,
+  NAV_VERSION_1,
+  INVALID_MAX_NAV_VERSION = 2147483647
 } NavVersion;
 
 /* STRUCT NavFileHeader
@@ -105,7 +112,8 @@ typedef enum NavDataType
 {
   INVALID_DATA_TYPE = 0,
   WAYPOINT_DATA = 5123,
-  EXCEPTION_WAYPOINT_DATA = 3455
+  EXCEPTION_WAYPOINT_DATA = 3455,
+  INVALID_MAX_DATA_TYPE = 2147483647
 } NavDataType;
 
 /* STRUCT NavDataBlockHeader
@@ -131,6 +139,15 @@ typedef struct NavFileWPListHeader
   size_t numberOfEntries;
   size_t dataBlockSize;
 } NavFileWPListHeader;
+
+// TODO Description initNavFileHeader()
+void initNavFileHeader(NavFileHeader *fileHeader);
+
+// TODO Description initNavDataBlockHeader()
+void initNavDataBlockHeader(NavDataBlockHeader* dataHeader);
+
+// TODO Description initNavFileWPListHeader()
+void initNavFileWPListHeader(NavFileWPListHeader* WPListHeader);
 
 #endif // NAVFILES_H
 
