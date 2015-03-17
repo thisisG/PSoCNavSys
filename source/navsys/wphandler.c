@@ -17,16 +17,22 @@ extern "C" {
 }
 #endif // __cplusplus
 
-void initNavWPFileManager(NavWPFileManager* WPFileManager) 
+void initNavWPFileManager(NavWPFileManager* WPFileManager)
 {
   strncpy(WPFileManager->cfgFileName, "", strlen(""));
+  strncpy(WPFileManager->wpListFileName, "", strlen(""));
+  strncpy(WPFileManager->eWPListFileName, "", strlen(""));
+  WPFileManager->ptrCfgFile = NULL;
+  WPFileManager->ptrWPList = NULL;
+  WPFileManager->numberOfExceptionEntries = 0;
+  WPFileManager->currentExceptionEntry = 0;
 }
 
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
 
-  // Close any currently open file assigned to the pointer
+  // Close any currently open file assigned to the pointer.
   NAV_fclose(wpHandler->fileManager.ptrWPList);
 
   // Set the file pointer to zero
@@ -36,10 +42,10 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 
   if (wpHandler->fileManager.ptrWPList != 0)
   {
-    // Able to open the file, update the status
+    // Able to open the file, update the status.
     statusFileOpen = 1;
 
-    // Read the file header and update the offsetFirstWPBlock
+    // Read the file header and update the offsetFirstWPBlock.
     NavFileHeader fileHeader = { 0, 0, 0 };
 
     NAV_fread(wpHandler->fileManager.ptrWPList, &fileHeader, 1,
@@ -47,22 +53,22 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 
     wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
 
-    // Read the WP List header and update the offsetFirstWPBlock
+    // Read the WP List header and update the offsetFirstWPBlock.
     NavFileWPListHeader WPListHeader = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     NAV_fread(wpHandler->fileManager.ptrWPList, &WPListHeader, 1,
-              fileHeader.headerBlockSize);
+              fileHeader.nextHeaderSize);
 
-    wpHandler->offsetFirstWPBlock += fileHeader.headerBlockSize;
+    wpHandler->offsetFirstWPBlock += fileHeader.nextHeaderSize;
 
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
 
-    // Set the current wp counter to 0 to show that we are at the start of
-    // the list
+    // Set the current wp counter to 0 to show that we are at the start of the
+    // list.
     wpHandler->currentWPCount = 0;
 
-    // Set the maximum wp count to number of entries in list
+    // Set the maximum wp count to number of entries in list.
     wpHandler->maxWPCount = WPListHeader.numberOfEntries;
   }
 
@@ -76,7 +82,7 @@ void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal)
 
 size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
 {
-  // Set the return value to 0 by default
+  // Set the return value to 0 by default.
   // The return value should be 0 if we have no more waypoints in the list, if
   // not it should be the number of the WP we are currently at.
   size_t returnCount = 0;
@@ -88,14 +94,14 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
   // Check if there are more wps left in the list
   if ((WPCount + 1) <= WPMaxCount)
   {
-    // The file should already be in a position for reading the next WP
-    // Read the data block header
+    // The file should already be in a position for reading the next WP.
+    // Read the data block header.
     NavDataBlockHeader dataHeader;
 
     NAV_fread(&dataHeader, sizeof(dataHeader), 1,
               wpHandler->fileManager.ptrWPList);
 
-    // Read the coordinate
+    // Read the coordinate.
     Coordinate coord;
     zeroCoordinate(&coord);
 
@@ -110,7 +116,7 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
     // Do nothing, return value already 0.
   }
 
-  // Update the external variables
+  // Update the external variables.
   wpHandler->currentWPCount = WPCount;
   return returnCount;
 }

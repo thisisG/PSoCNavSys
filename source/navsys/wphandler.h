@@ -29,6 +29,10 @@ extern "C" {
 }
 #endif // __cplusplus
 
+/***********************************************
+** Type declarations
+***********************************************/
+
 /* STRUCT NavWPFileManager
 ADS that contain the filenames and pointers used for managing waypoints via
 files.
@@ -55,6 +59,10 @@ typedef struct NavWPHandler
   size_t currentWPCount;
   size_t maxWPCount;
 } NavWPHandler;
+
+/***********************************************
+** Function declarations
+***********************************************/
 
 // TODO Description WPHandlerOpen()
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName);

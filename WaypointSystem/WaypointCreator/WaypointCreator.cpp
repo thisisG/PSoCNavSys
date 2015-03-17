@@ -28,7 +28,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
   strncpy(navHandler.fileManager.cfgFileName, "sometext", strlen("sometext"));
 
-
   somefile = NAV_fopen(filename, "wb");
 
   size_t totalSize = 0;
@@ -38,7 +37,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   fileHeader.fileType = WAYPOINT_LIST_FILE;
   fileHeader.fileVersion = (NavVersion)255;
-  fileHeader.headerBlockSize = sizeof(WPListHeader);
+  fileHeader.nextHeaderSize = sizeof(WPListHeader);
 
   std::cout << "sizeof(WPListHeader): " << sizeof(WPListHeader) << std::endl;
 
@@ -58,7 +57,7 @@ int _tmain(int argc, _TCHAR* argv[])
   WPListHeader.startCoordinate = coordArray[0];
   WPListHeader.endCoordinate = coordArray[0];
   WPListHeader.numberOfEntries = (sizeof(coordArray) / sizeof(coordArray[0]));
-  WPListHeader.dataBlockSize = sizeof(coordArray[0]);
+  WPListHeader.nextHeaderSize = sizeof(coordArray[0]);
 
   somefile = fopen(filename, "wb");
 
