@@ -23,6 +23,7 @@ extern "C" {
 #include "navfunctions.h"
 // Depends on standard types and string operations
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 
 #ifdef __cplusplus

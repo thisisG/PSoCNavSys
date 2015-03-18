@@ -48,16 +48,16 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
     // Read the file header and update the offsetFirstWPBlock.
     NavFileHeader fileHeader = { 0, 0, 0 };
 
-    NAV_fread(wpHandler->fileManager.ptrWPList, &fileHeader, 1,
-              sizeof(fileHeader));
+    NAV_fread(&fileHeader, 1, sizeof(fileHeader),
+              wpHandler->fileManager.ptrWPList);
 
     wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
 
     // Read the WP List header and update the offsetFirstWPBlock.
     NavFileWPListHeader WPListHeader = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    NAV_fread(wpHandler->fileManager.ptrWPList, &WPListHeader, 1,
-              fileHeader.nextHeaderSize);
+    NAV_fread(&WPListHeader, 1,
+      fileHeader.nextHeaderSize, wpHandler->fileManager.ptrWPList);
 
     wpHandler->offsetFirstWPBlock += fileHeader.nextHeaderSize;
 
@@ -96,7 +96,7 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
   {
     // The file should already be in a position for reading the next WP.
     // Read the data block header.
-    NavDataBlockHeader dataHeader;
+    NavDatablockHeader dataHeader;
 
     NAV_fread(&dataHeader, sizeof(dataHeader), 1,
               wpHandler->fileManager.ptrWPList);
@@ -127,11 +127,11 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
   // wpNumber of waypoints we want to seek to.
   // The total offset is then calculated from the offset stored in
   // wpHandler->offsetFirstWPBlock plus
-  // wpNumber*(sizeof(NavDataBlockHeader) + sizeof(Coordinate))
+  // wpNumber*(sizeof(NavDatablockHeader) + sizeof(Coordinate))
   size_t startOffset = wpHandler->offsetFirstWPBlock;
 
   size_t wpDataOffset = wpNumber
-      * (sizeof(NavDataBlockHeader) + sizeof(Coordinate));
+      * (sizeof(NavDatablockHeader) + sizeof(Coordinate));
 
   size_t totalOffset = startOffset + wpDataOffset;
 

@@ -53,6 +53,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>../../source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,55 +82,56 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\WaypointSystem\config.h" />
-    <ClInclude Include="..\WaypointSystem\coordimport.h" />
-    <ClInclude Include="..\WaypointSystem\csv.h" />
-    <ClInclude Include="..\WaypointSystem\gpsemulator.h" />
-    <ClInclude Include="..\WaypointSystem\gpsinterface.h" />
-    <ClInclude Include="..\WaypointSystem\navfunctions.h" />
-    <ClInclude Include="..\WaypointSystem\navmath.h" />
-    <ClInclude Include="..\WaypointSystem\navsys.h" />
-    <ClInclude Include="..\WaypointSystem\navtypes.h" />
-    <ClInclude Include="..\WaypointSystem\nmeafunctions.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\config.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\context.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\generate.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\generator.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\gmath.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\info.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\nmea.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\parse.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\parser.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\sentence.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\time.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\tok.h" />
-    <ClInclude Include="..\WaypointSystem\nmea\units.h" />
-    <ClInclude Include="..\WaypointSystem\serialcom.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp" />
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c" />
+    <ClCompile Include="..\..\source\navsys\navfiles.c" />
+    <ClCompile Include="..\..\source\navsys\navfunctions.c" />
+    <ClCompile Include="..\..\source\navsys\navmath.c" />
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c" />
+    <ClCompile Include="..\..\source\navsys\serialcom.c" />
+    <ClCompile Include="..\..\source\navsys\wphandler.c" />
+    <ClCompile Include="..\..\source\nmea\context.c" />
+    <ClCompile Include="..\..\source\nmea\generate.c" />
+    <ClCompile Include="..\..\source\nmea\generator.c" />
+    <ClCompile Include="..\..\source\nmea\gmath.c" />
+    <ClCompile Include="..\..\source\nmea\info.c" />
+    <ClCompile Include="..\..\source\nmea\nmeatime.c" />
+    <ClCompile Include="..\..\source\nmea\parse.c" />
+    <ClCompile Include="..\..\source\nmea\parser.c" />
+    <ClCompile Include="..\..\source\nmea\sentence.c" />
+    <ClCompile Include="..\..\source\nmea\tok.c" />
+    <ClCompile Include="NavTester.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\WaypointSystem\gpsemulator.cpp" />
-    <ClCompile Include="..\WaypointSystem\gpsinterface.c" />
-    <ClCompile Include="..\WaypointSystem\navfunctions.c" />
-    <ClCompile Include="..\WaypointSystem\navmath.c" />
-    <ClCompile Include="..\WaypointSystem\nmeafunctions.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\context.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\generate.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\generator.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\gmath.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\info.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\parse.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\parser.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\sentence.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\time.c" />
-    <ClCompile Include="..\WaypointSystem\nmea\tok.c" />
-    <ClCompile Include="..\WaypointSystem\serialcom.c" />
-    <ClCompile Include="NavTester.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClInclude Include="..\..\source\csv\csv.h" />
+    <ClInclude Include="..\..\source\navmanager\coordimport.h" />
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h" />
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h" />
+    <ClInclude Include="..\..\source\navsystest\testhelper.h" />
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
+    <ClInclude Include="..\..\source\navsys\navconfig.h" />
+    <ClInclude Include="..\..\source\navsys\navfiles.h" />
+    <ClInclude Include="..\..\source\navsys\navfunctions.h" />
+    <ClInclude Include="..\..\source\navsys\navmath.h" />
+    <ClInclude Include="..\..\source\navsys\navsys.h" />
+    <ClInclude Include="..\..\source\navsys\navtypes.h" />
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h" />
+    <ClInclude Include="..\..\source\navsys\serialcom.h" />
+    <ClInclude Include="..\..\source\navsys\wphandler.h" />
+    <ClInclude Include="..\..\source\nmea\config.h" />
+    <ClInclude Include="..\..\source\nmea\context.h" />
+    <ClInclude Include="..\..\source\nmea\generate.h" />
+    <ClInclude Include="..\..\source\nmea\generator.h" />
+    <ClInclude Include="..\..\source\nmea\gmath.h" />
+    <ClInclude Include="..\..\source\nmea\info.h" />
+    <ClInclude Include="..\..\source\nmea\nmea.h" />
+    <ClInclude Include="..\..\source\nmea\nmeatime.h" />
+    <ClInclude Include="..\..\source\nmea\parse.h" />
+    <ClInclude Include="..\..\source\nmea\parser.h" />
+    <ClInclude Include="..\..\source\nmea\sentence.h" />
+    <ClInclude Include="..\..\source\nmea\tok.h" />
+    <ClInclude Include="..\..\source\nmea\units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

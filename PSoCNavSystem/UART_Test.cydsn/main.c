@@ -17,6 +17,7 @@
 #include "GPS_RX_ISR.h"
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
+#include "navsystest/navfilestests.h"
 #include <FS.h> // For file system for SD card
 
 /* Global variables and pointers */
@@ -34,8 +35,9 @@ int main()
     // LCD Setup
     LCD_Start();
     LCD_Position(0u, 0u);
-    LCD_PrintString("UART Test!");
+    LCD_PrintString("I AM PSoC");
     LCD_Position(1u, 0u);
+    LCD_PrintString("FEED ME DATA");
     
     // Navsystem setup
     struct NavState myNavState;
@@ -79,10 +81,17 @@ int main()
     char uStatus = '\0';
     uint8 directToLCD = 0;
     
-    // File related variables
+    uint8 helloSent = 0;
+    uint8 performedTests = 0;
     
     for(;;)
     {
+      if (helloSent == 0)
+      {
+        UART_GPS_PutString("PSoC ready in 1 second!\r\n");
+        CyDelay(1000);
+        helloSent = 1;
+      }
         // General SD card test sequence
         /* 
         static char logFileName[32] = "\\DIR\\stdlog.txt";
@@ -193,7 +202,9 @@ int main()
         }
         */
         
+      
         // File open and read SD card test sequence
+        /*
         static char wpListFileName[20] = "wplist1.wp";
         static char tempString[20];
         static FS_FILE* ptrWpListFile = NULL;
@@ -244,7 +255,7 @@ int main()
             LCD_PrintString(tempString);
             
             LCD_PrintString(" hsZ ");
-            sprintf(tempString, "%d", fileHeader.headerBlockSize);
+            sprintf(tempString, "%lu", fileHeader.nextHeaderSize);
             LCD_PrintString(tempString);
             
             wpListTestStage++;
@@ -307,6 +318,17 @@ int main()
             // data is now handled by the ISR
             txStringReady = 0;
         }
+        */
+      
+      if (performedTests == 0)
+      {
+        testfCoordinate();
+        testfNavFileHeader();
+        testfWPListHeader();
+        testfNavDatablockHeader();
+        performedTests = 1;
+      }
+
     }
 }
 

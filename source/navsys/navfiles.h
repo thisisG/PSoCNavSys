@@ -114,18 +114,18 @@ typedef struct NavFileWPListHeader
   uint32_t nextHeaderSize;
 } NavFileWPListHeader;
 
-/* STRUCT NavDataBlockHeader
+/* STRUCT NavDatablockHeader
 ADS that contains information about the block of data following the header.
 Any datablock should have one of these in front of them in order to allow for
 future expansion of datatypes, and also allow older versions of the software to
 more recent versions of stored data.
 */
-typedef struct NavDataBlockHeader
+typedef struct NavDatablockHeader
 {
   uint8_t dataType;
   uint8_t dataVersion;
   uint32_t nextDataSize; // The size of the data block after the header
-} NavDataBlockHeader;
+} NavDatablockHeader;
 
 /***********************************************
 **
@@ -140,7 +140,7 @@ void initNavFileHeader(NavFileHeader* fileHeader);
 void initNavFileWPListHeader(NavFileWPListHeader* WPListHeader);
 
 // TODO Description initNavDataBlockHeader()
-void initNavDataBlockHeader(NavDataBlockHeader* dataHeader);
+void initNavDatablockHeader(NavDatablockHeader* dataHeader);
 
 /***********************************************
 **
@@ -191,6 +191,14 @@ size_t fwriteNavFileWPListHeader(const NavFileWPListHeader* ptrWPListHeader,
 // TODO Description freadNavFileWPListHeader()
 size_t freadNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader,
                                 NAV_FILE* ptrNavFile);
+
+// TODO Description fwriteNavDataBlockHeader()
+size_t fwriteNavDatablockHeader(const NavDatablockHeader* ptrDataHeader,
+                                NAV_FILE* ptrNavFile);
+
+// TODO Description freadNavDataBlockHeader()
+size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
+                               NAV_FILE* ptrNavFile);
 
 #endif // NAVFILES_H
 

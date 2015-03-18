@@ -19,144 +19,174 @@
     <Filter Include="Source Files\nmea">
       <UniqueIdentifier>{faabef72-9dd1-4027-aa2a-97ef0129adbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\csv">
+      <UniqueIdentifier>{6c985195-c544-42e4-a348-4def878ed098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navmanager">
+      <UniqueIdentifier>{5119d110-d1ab-4f0e-a6fe-511f1a473a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navsys">
+      <UniqueIdentifier>{8ebb4ea3-8fbb-4269-8a29-eff1e38f6d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navsystest">
+      <UniqueIdentifier>{97aa5207-b146-44c6-93e1-14ac1283ca5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navmanager">
+      <UniqueIdentifier>{0c9c1bfe-06b1-4847-9b16-01a4f43a36c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navsys">
+      <UniqueIdentifier>{5727765b-2a37-4cae-b45a-0837001214b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\serialcom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmeafunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\navtypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\navsys.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\navmath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\navfunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\gpsinterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\gpsemulator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\csv.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\coordimport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\units.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\tok.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\time.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\sentence.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\parser.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\parse.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\nmea.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\info.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\gmath.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\generator.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\generate.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\context.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-    <ClInclude Include="..\WaypointSystem\nmea\config.h">
-      <Filter>Header Files\nmea</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="NavTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\gpsinterface.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp">
+      <Filter>Source Files\navmanager</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\navfunctions.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c">
+      <Filter>Source Files\navsys</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\navmath.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\navsys\navfiles.c">
+      <Filter>Source Files\navsys</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmeafunctions.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\navsys\navfunctions.c">
+      <Filter>Source Files\navsys</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\serialcom.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\source\navsys\navmath.c">
+      <Filter>Source Files\navsys</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\context.c">
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\serialcom.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\wphandler.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\context.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\generate.c">
+    <ClCompile Include="..\..\source\nmea\generate.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\generator.c">
+    <ClCompile Include="..\..\source\nmea\generator.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\gmath.c">
+    <ClCompile Include="..\..\source\nmea\gmath.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\info.c">
+    <ClCompile Include="..\..\source\nmea\info.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\parse.c">
+    <ClCompile Include="..\..\source\nmea\nmeatime.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\parser.c">
+    <ClCompile Include="..\..\source\nmea\parse.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\sentence.c">
+    <ClCompile Include="..\..\source\nmea\parser.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\time.c">
+    <ClCompile Include="..\..\source\nmea\sentence.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\nmea\tok.c">
+    <ClCompile Include="..\..\source\nmea\tok.c">
       <Filter>Source Files\nmea</Filter>
     </ClCompile>
-    <ClCompile Include="..\WaypointSystem\gpsemulator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\csv\csv.h">
+      <Filter>Header Files\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navmanager\coordimport.h">
+      <Filter>Header Files\navmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h">
+      <Filter>Header Files\navmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navconfig.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfiles.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfunctions.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navmath.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navsys.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navtypes.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\serialcom.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\wphandler.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\testhelper.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\config.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\context.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\generate.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\generator.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\gmath.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\info.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\nmea.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\nmeatime.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\parse.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\parser.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\sentence.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\tok.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\units.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

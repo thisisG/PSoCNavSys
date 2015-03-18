@@ -84,6 +84,9 @@
     <ClInclude Include="..\..\source\csv\csv.h" />
     <ClInclude Include="..\..\source\navmanager\coordimport.h" />
     <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h" />
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h" />
+    <ClInclude Include="..\..\source\navsystest\testhelper.h" />
     <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
     <ClInclude Include="..\..\source\navsys\navfiles.h" />
     <ClInclude Include="..\..\source\navsys\navfunctions.h" />

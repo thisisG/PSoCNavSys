@@ -37,6 +37,9 @@
     <Filter Include="Source Files\NMEA">
       <UniqueIdentifier>{073dee7a-4a58-44e8-8942-1a673cb17094}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\navsystest">
+      <UniqueIdentifier>{58030fd0-3dfe-46e8-99c1-e081c9a9a44c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -122,6 +125,15 @@
     </ClInclude>
     <ClInclude Include="..\..\source\navsys\navfiles.h">
       <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\testhelper.h">
+      <Filter>Header Files\navsystest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
