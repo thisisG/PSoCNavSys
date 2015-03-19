@@ -62,7 +62,15 @@ typedef struct NavWPHandler
 } NavWPHandler;
 
 /***********************************************
-** Function declarations
+** Initialisation function declarations
+***********************************************/
+
+void initNavWPFileManager(NavWPFileManager* WPFileManager);
+
+void initNavWPHandler(NavWPHandler* WPHandler);
+
+/***********************************************
+** WPHandler function declarations
 ***********************************************/
 
 // TODO Description WPHandlerOpen()

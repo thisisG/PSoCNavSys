@@ -28,6 +28,15 @@ void initNavWPFileManager(NavWPFileManager* WPFileManager)
   WPFileManager->currentExceptionEntry = 0;
 }
 
+void initNavWPHandler(NavWPHandler* WPHandler)
+{
+  initNavWPFileManager(&(WPHandler->fileManager));
+  zeroCoordinate(&(WPHandler->wpGoal));
+  WPHandler->offsetFirstWPBlock = 0;
+  WPHandler->currentWPCount = 0;
+  WPHandler->maxWPCount = 0;
+}
+
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
@@ -46,7 +55,8 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
     statusFileOpen = 1;
 
     // Read the file header and update the offsetFirstWPBlock.
-    NavFileHeader fileHeader = { 0, 0, 0 };
+    NavFileHeader fileHeader;
+    initNavFileHeader(&fileHeader);
 
     NAV_fread(&fileHeader, 1, sizeof(fileHeader),
               wpHandler->fileManager.ptrWPList);
@@ -54,7 +64,8 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
     wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
 
     // Read the WP List header and update the offsetFirstWPBlock.
-    NavFileWPListHeader WPListHeader = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    NavFileWPListHeader WPListHeader;
+    initNavFileWPListHeader(&WPListHeader);
 
     NAV_fread(&WPListHeader, 1,
       fileHeader.nextHeaderSize, wpHandler->fileManager.ptrWPList);
@@ -97,6 +108,7 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
     // The file should already be in a position for reading the next WP.
     // Read the data block header.
     NavDatablockHeader dataHeader;
+    initNavDatablockHeader(&dataHeader);
 
     NAV_fread(&dataHeader, sizeof(dataHeader), 1,
               wpHandler->fileManager.ptrWPList);
