@@ -24,63 +24,82 @@ extern "C" {
 void testWPHandler()
 {
   uint8_t testPassed = 1;
-  size_t bytesWritten = 0;
-  size_t bytesRead = 0;
+  size_t numberItemsWritten = 0;
+  size_t numberItems = 0;
   const char testName[64] = "testWPHandler()";
   const int arrayLength = 5;
   const char testFileName[20] = "wphndlr.tst";
   NAV_FILE* navFile;
 
+  printTestHeader(testName);
+
+  //////
+  // Initialise test structures
+  //////
+
+  // Test structure
   NavWPHandler testWPHandler;
   initNavWPHandler(&testWPHandler);
 
+  // File structures
+  NavFileHeader fileHeader;
+  initNavFileHeader(&fileHeader);
+
+  NavFileWPListHeader WPListHeader;
+  initNavFileWPListHeader(&WPListHeader);
+
+  // Data structures
   NavDatablockHeader navDataHdrArrayIn[arrayLength];
   NavDatablockHeader navDataHdrArrayOut[arrayLength];
-
   Coordinate coordIn[arrayLength];
   Coordinate coordOut[arrayLength];
 
-
-
-  printTestHeader(testName);
-
-  for (size_t i = 0; i < arrayLength; i++)
+  // Initialise test arrays
+  size_t i = 0;
+  for (i = 0; i < arrayLength; i++)
   {
-    initNavDatablockHeader(&testArrayIn[i]);
-    initNavDatablockHeader(&testArrayOut[i]);
-    // Fill array with numbers that are sensible and different
-    testArrayIn[i] = { i, i + 4, i + 9 };
+    initNavDatablockHeader(&navDataHdrArrayIn[i]);
+    initNavDatablockHeader(&navDataHdrArrayOut[i]);
+
+    zeroCoordinate(&coordIn[i]);
+    zeroCoordinate(&coordOut[i]);
   }
 
-  navFile = NAV_fopen(testFileName, "wb");
+  //////
+  // Load test data
+  //////
 
-  for (size_t i = 0; i < arrayLength; i++)
+  // Load the input arrays with data
+  for (i = 0; i < arrayLength; i++)
   {
-    bytesWritten += fwriteNavDatablockHeader(&testArrayIn[i], navFile);
+    navDataHdrArrayIn[i].dataType = WAYPOINT_DATA;
+    navDataHdrArrayIn[i].dataVersion = NAV_VERSION_1;
+    // The data size should be the real size of a coordinate but is currently
+    // not used.
+    // Here to allow the system to be further developed.
+    navDataHdrArrayIn[i].nextDataSize = 0;
+
+    coordIn[i].dLatitude = 255;
+    coordIn[i].dLongitude = i + 5;
+    coordIn[i].mLatitude = i + 23;
+    coordIn[i].mLongitude = i + 88;
+    coordIn[i].priority = i + 65;
   }
 
-  NAV_fclose(navFile);
-  navFile = NULL;
-  navFile = NAV_fopen(testFileName, "rb");
+  // Create a test-file with the input as generated data
+  numberItemsWritten = generateWPListFile(testFileName, navDataHdrArrayIn,
+                                          coordIn, arrayLength);
 
-  for (size_t i = 0; i < arrayLength; i++)
-  {
-    bytesRead += freadNavDatablockHeader(&testArrayOut[i], navFile);
-  }
-
-  for (size_t i = 0; i < arrayLength; i++)
-  {
-    if ((compNavDatablockHeader(&testArrayIn[i], &testArrayOut[i])) == 0)
-    {
-      testPassed = 0;
-    }
-  }
-
-  if (bytesWritten != bytesRead)
+  // Check if the number of items written is the expected size
+  // Each dataheader have 3 members, each coordinate have 5 members
+  numberItems = (arrayLength * 3) + (arrayLength * 5);
+  if (numberItemsWritten != numberItems)
   {
     testPassed = 0;
-    NAV_fprint("read/write size different.");
+    NAV_printf("Number of items written to file different from expected.\r\n");
   }
+
+  // TODO Continue here asap
 
   if (testPassed)
   {
@@ -91,8 +110,5 @@ void testWPHandler()
     printFailed(testName);
   }
 }
-
-}
-
 
 #endif // WPHANDLERTESTS_H

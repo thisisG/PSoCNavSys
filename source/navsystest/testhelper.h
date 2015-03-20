@@ -21,7 +21,7 @@ extern "C" {
 }
 #endif // __cplusplus
 
-void NAV_fprint(const char* message)
+void NAV_printf(const char* message)
 {
 // GNU ifdef / else block
 #ifdef __GNUC__
@@ -33,32 +33,33 @@ void NAV_fprint(const char* message)
 void printStars()
 {
   const char stars[20] = "****************\r\n";
-  NAV_fprint(stars);
+  NAV_printf(stars);
 }
 
 void printTestHeader(const char* message)
 {
   printStars();
-  NAV_fprint(message);
-  NAV_fprint("\r\n");
+  NAV_printf("Running: ");
+  NAV_printf(message);
+  NAV_printf("\r\n");
   printStars();
 }
 
 void printFailed(const char* message)
 {
   printStars();
-  NAV_fprint(message);
-  NAV_fprint(" failed!");
-  NAV_fprint("\r\n");
+  NAV_printf(message);
+  NAV_printf(" failed!");
+  NAV_printf("\r\n");
   printStars();
 }
 
 void printPassed(const char* message)
 {
   printStars();
-  NAV_fprint(message);
-  NAV_fprint(" passed!");
-  NAV_fprint("\r\n");
+  NAV_printf(message);
+  NAV_printf(" passed!");
+  NAV_printf("\r\n");
   printStars();
 }
 

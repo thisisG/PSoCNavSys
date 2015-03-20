@@ -62,7 +62,7 @@ typedef struct NavWPHandler
 } NavWPHandler;
 
 /***********************************************
-** Initialisation function declarations
+** Initialisation functions
 ***********************************************/
 
 void initNavWPFileManager(NavWPFileManager* WPFileManager);
@@ -70,7 +70,7 @@ void initNavWPFileManager(NavWPFileManager* WPFileManager);
 void initNavWPHandler(NavWPHandler* WPHandler);
 
 /***********************************************
-** WPHandler function declarations
+** WPHandler functions
 ***********************************************/
 
 // TODO Description WPHandlerOpen()
@@ -84,6 +84,15 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 
 // TODO Description WPHandlerSeekWP()
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
+
+/***********************************************
+** File generation functions
+***********************************************/
+
+size_t generateWPListFile(const char* fileName,
+                           const NavDatablockHeader* blockHeaderArray,
+                           const Coordinate* coordArray,
+                           const size_t arrayLength);
 
 #endif // WPHANDLER_H
 

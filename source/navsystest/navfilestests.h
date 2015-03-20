@@ -75,7 +75,7 @@ void testfCoordinate()
   if (bytesWritten != bytesRead)
   {
     testPassed = 0;
-    NAV_fprint("read/write size different.\r\n");
+    NAV_printf("read/write size different.\r\n");
   }
 
   if (testPassed)
@@ -140,7 +140,7 @@ void testfNavFileHeader()
   if (bytesWritten != bytesRead)
   {
     testPassed = 0;
-    NAV_fprint("read/write size different.\r\n");
+    NAV_printf("read/write size different.\r\n");
   }
 
   if (testPassed)
@@ -222,7 +222,7 @@ void testfWPListHeader()
   if (bytesWritten != bytesRead)
   {
     testPassed = 0;
-    NAV_fprint("read/write size different.\r\n");
+    NAV_printf("read/write size different.\r\n");
   }
 
   if (testPassed)
@@ -287,7 +287,7 @@ void testfNavDatablockHeader()
   if (bytesWritten != bytesRead)
   {
     testPassed = 0;
-    NAV_fprint("read/write size different.");
+    NAV_printf("read/write size different.");
   }
 
   if (testPassed)

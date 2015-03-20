@@ -18,9 +18,7 @@ extern "C" {
 #endif // __cplusplus
 
 /***********************************************
-**
-** Structure initialisation functions
-**
+** Initialisation function implementations
 ***********************************************/
 
 // TODO Test
@@ -49,9 +47,7 @@ void initNavDatablockHeader(NavDatablockHeader* ptrDataHeader)
 }
 
 /***********************************************
-**
 ** Basic file interfaces
-**
 ***********************************************/
 
 // TODO Test
@@ -97,8 +93,9 @@ size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
 #endif // __GNUC__
 }
 
-// TODO
-uint32_t NAV_fread(void* ptrData, size_t size, size_t count, NAV_FILE* ptrNavFile)
+// TODO Test
+uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
+                   NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
   return FS_FRead(ptrData, size, count, ptrNavFile);
@@ -107,10 +104,18 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count, NAV_FILE* ptrNavFil
 #endif // __GNUC__
 }
 
+// TODO Test
+int32_t NAV_ftell(NAV_FILE* ptrNavFile)
+{
+#ifdef __GNUC__
+  return FS_FTell(ptrNavFile);
+#else
+  return ftell(ptrNavFile);
+#endif // __GNUC__
+}
+
 /***********************************************
-**
 ** Structure read/write functions
-**
 ***********************************************/
 
 // Test
@@ -291,5 +296,9 @@ size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
 
   return bytesRead;
 }
+
+/***********************************************
+** File generation functions
+***********************************************/
 
 /* [] END OF FILE */

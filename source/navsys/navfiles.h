@@ -100,7 +100,10 @@ typedef struct NavFileHeader
 {
   uint8_t fileType;
   uint8_t fileVersion;
-  uint32_t nextHeaderSize; // The size of the header block after the file header
+  // The size of the header block after the header.
+  // This feature is currently not used, but the space is reserved for future
+  // development of the system.
+  uint32_t nextHeaderSize;
 } NavFileHeader;
 
 /* STRUCT NavFileWPListHeader
@@ -111,6 +114,9 @@ typedef struct NavFileWPListHeader
   Coordinate startCoordinate;
   Coordinate endCoordinate;
   uint32_t numberOfEntries;
+  // The size of the header block after the header.
+  // This feature is currently not used, but the space is reserved for future
+  // development of the system.
   uint32_t nextHeaderSize;
 } NavFileWPListHeader;
 
@@ -124,13 +130,14 @@ typedef struct NavDatablockHeader
 {
   uint8_t dataType;
   uint8_t dataVersion;
-  uint32_t nextDataSize; // The size of the data block after the header
+  // The size of the data block after the header.
+  // This feature is currently not used, but the space is reserved for future
+  // development of the system.
+  uint32_t nextDataSize;
 } NavDatablockHeader;
 
 /***********************************************
-**
-** Structure initialisation functions
-**
+** Initialisation function declarations
 ***********************************************/
 
 // TODO Description initNavFileHeader()
@@ -143,9 +150,7 @@ void initNavFileWPListHeader(NavFileWPListHeader* WPListHeader);
 void initNavDatablockHeader(NavDatablockHeader* dataHeader);
 
 /***********************************************
-**
 ** Basic file interfaces
-**
 ***********************************************/
 
 // TODO Description NAV_fopen()
@@ -165,10 +170,11 @@ size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
 uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
                    NAV_FILE* ptrNavFile);
 
+// TODO Description NAV_ftell()
+int32_t NAV_ftell(NAV_FILE *ptrNavFile);
+
 /***********************************************
-**
 ** Structure read/write functions
-**
 ***********************************************/
 
 // TODO Description fwriteCoordinate()
@@ -199,6 +205,8 @@ size_t fwriteNavDatablockHeader(const NavDatablockHeader* ptrDataHeader,
 // TODO Description freadNavDataBlockHeader()
 size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
                                NAV_FILE* ptrNavFile);
+
+
 
 #endif // NAVFILES_H
 

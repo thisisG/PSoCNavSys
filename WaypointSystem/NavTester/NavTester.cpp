@@ -15,15 +15,22 @@ extern "C" {
 #include "navsys\serialcom.h"
 #include "navsys\gpsinterface.h"
 #include "navsystest\navfilestests.h"
+#include "navsystest\wphandlertests.h"
 #ifdef __cplusplus
 }
 #endif
 
 int main()
 {
+  // Navfile tests
   testfCoordinate();
   testfNavFileHeader();
   testfWPListHeader();
   testfNavDatablockHeader();
+
+  // WP handler tests
+  testWPHandler();
+
+
   return 0;
 }

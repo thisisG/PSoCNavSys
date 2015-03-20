@@ -17,6 +17,10 @@ extern "C" {
 }
 #endif // __cplusplus
 
+/***********************************************
+** Initialisation functions
+***********************************************/
+
 void initNavWPFileManager(NavWPFileManager* WPFileManager)
 {
   strncpy(WPFileManager->cfgFileName, "", strlen(""));
@@ -37,6 +41,10 @@ void initNavWPHandler(NavWPHandler* WPHandler)
   WPHandler->maxWPCount = 0;
 }
 
+/***********************************************
+** WPHandler functions
+***********************************************/
+
 uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
@@ -51,26 +59,23 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
 
   if (wpHandler->fileManager.ptrWPList != 0)
   {
-    // Able to open the file, update the status.
+    // Able to open the file, update the status and WPBlock offset
     statusFileOpen = 1;
+    wpHandler->offsetFirstWPBlock = 0;
 
     // Read the file header and update the offsetFirstWPBlock.
     NavFileHeader fileHeader;
     initNavFileHeader(&fileHeader);
 
-    NAV_fread(&fileHeader, 1, sizeof(fileHeader),
-              wpHandler->fileManager.ptrWPList);
-
-    wpHandler->offsetFirstWPBlock = sizeof(fileHeader);
+    wpHandler->offsetFirstWPBlock
+        += freadNavFileHeader(&fileHeader, wpHandler->fileManager.ptrWPList);
 
     // Read the WP List header and update the offsetFirstWPBlock.
     NavFileWPListHeader WPListHeader;
     initNavFileWPListHeader(&WPListHeader);
 
-    NAV_fread(&WPListHeader, 1,
-      fileHeader.nextHeaderSize, wpHandler->fileManager.ptrWPList);
-
-    wpHandler->offsetFirstWPBlock += fileHeader.nextHeaderSize;
+    wpHandler->offsetFirstWPBlock += freadNavFileWPListHeader(
+        &WPListHeader, wpHandler->fileManager.ptrWPList);
 
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
@@ -148,6 +153,57 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
   size_t totalOffset = startOffset + wpDataOffset;
 
   NAV_fseek(wpHandler->fileManager.ptrWPList, totalOffset, NAV_SEEK_SET);
+}
+
+/***********************************************
+** File generation functions
+***********************************************/
+
+size_t generateWPListFile(const char* fileName,
+                          const NavDatablockHeader* blockHeaderArray,
+                          const Coordinate* coordArray,
+                          const size_t arrayLength)
+{
+  size_t dataItemsWritten = 0;
+  NAV_FILE* navFile = NAV_fopen(fileName, "wb");
+
+  if (navFile != NULL)
+  {
+    NavFileHeader fileHeader;
+    initNavFileHeader(&fileHeader);
+
+    fileHeader.fileType = WAYPOINT_LIST_FILE;
+    fileHeader.fileVersion = NAV_VERSION_1;
+    fileHeader.nextHeaderSize = 0; // Currently not implemented.
+
+    NavFileWPListHeader listHeader;
+    initNavFileWPListHeader(&listHeader);
+
+    listHeader.numberOfEntries = arrayLength;
+    listHeader.startCoordinate = coordArray[0];
+    listHeader.endCoordinate = coordArray[arrayLength - 1];
+    listHeader.nextHeaderSize = 0; // Currently not implemented.
+
+    fwriteNavFileHeader(&fileHeader, navFile);
+
+    fwriteNavFileWPListHeader(&listHeader, navFile);
+
+    size_t i = 0;
+    for (i = 0; i < arrayLength; i++)
+    {
+      dataItemsWritten
+          += fwriteNavDatablockHeader(&(blockHeaderArray[i]), navFile);
+      dataItemsWritten += fwriteCoordinate(&(coordArray[i]), navFile);
+    }
+
+    NAV_fclose(navFile);
+    navFile = NULL;
+  }
+  else
+  {
+    // LOG ERROR
+  }
+  return dataItemsWritten;
 }
 
 /* [] END OF FILE */
