@@ -91,6 +91,8 @@
         <Files Root="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn">
           <File BuildType="BUILD" Toolchain="">..\..\source\navsystest\navfilestests.h</File>
           <File BuildType="BUILD" Toolchain="">..\..\source\navsystest\testhelper.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\source\navsystest\wphandlertests.h</File>
+          <File BuildType="BUILD" Toolchain="">..\..\source\navsystest\navmathtests.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="C:\Users\Geir\Documents\GitHub\Thesis\PSoCNavSystem\UART_Test.cydsn\Generated_Source\PSoC5">

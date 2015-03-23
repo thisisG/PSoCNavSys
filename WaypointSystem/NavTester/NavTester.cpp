@@ -16,6 +16,7 @@ extern "C" {
 #include "navsys\gpsinterface.h"
 #include "navsystest\navfilestests.h"
 #include "navsystest\wphandlertests.h"
+#include "navsystest\navmathtests.h"
 #ifdef __cplusplus
 }
 #endif
@@ -31,6 +32,8 @@ int main()
   // WP handler tests
   testWPHandler();
 
+  // Navmath tests
+  testNavMath();
 
   return 0;
 }

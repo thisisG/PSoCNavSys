@@ -48,11 +48,11 @@ void longDegreeFromNmeaFloat(const floatDegree nmeaDeg,
                              signed16Degree* ptrDegree,
                              signed32Degree* ptrMinutes)
 {
-  // Get the degrees by division of 100 and typecasting. DDMM.mmmmmm ->
-  // DD.MMmmmm -> DD
+  // Get the degrees by division of 100 and typecasting. 
+  // DDMM.mmmmmm -> DD.MMmmmm -> DD
   *ptrDegree = (signed16Degree)(nmeaDeg / 100);
   // Get minutes by subtracting (*ptrDegree)*100 then multiplying by 10000.
-  // DDMM.mmmm -> MM.mmmm a-> MMmmmm
+  // DDMM.mmmm -> MM.mmmm -> MMmmmm
   *ptrMinutes = (signed32Degree)((nmeaDeg - ((*ptrDegree) * 100)) * 10000);
 }
 

@@ -74,7 +74,7 @@ void initNavWPHandler(NavWPHandler* WPHandler);
 ***********************************************/
 
 // TODO Description WPHandlerOpen()
-uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName);
+uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName);
 
 // TODO Description WPHandlerGetGoal()
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);

@@ -28,4 +28,12 @@
 #define EXCEPTION_MAX_WP_DISTANCE (100000)
 #define EXCEPTION_ARRIVED_WP_DISTANCE (1000)
 
+// Sizes for datastructures in packed binary style since sizeof() would return
+// an errenouous value.
+// wphandler.h/c
+#define SIZE_NAV_FILE_HEADER (6)
+#define SIZE_NAV_FILE_WP_LIST_HEADER (13*2 + 8)
+#define SIZE_NAV_DATABLOCK_HEADER (6)
+#define SIZE_COORDINATE (13)
+
 #endif // NAV_SYSTEM_CONFIG_H

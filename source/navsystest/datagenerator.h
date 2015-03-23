@@ -23,6 +23,7 @@ extern "C" {
 #include "./../navsys/gpsinterface.h"
 #include "./../navsys/navtypes.h"
 #include "./../navsys/navtypes.h"
+#include "./../navsys/serialcom.h"
 
 #ifdef __cplusplus
 }

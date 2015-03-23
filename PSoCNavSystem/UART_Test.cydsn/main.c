@@ -13,11 +13,16 @@
 #include "navsys/navtypes.h"
 #include "navsys/navfunctions.h"
 #include "navsys/navisr.h"
-#include "navsys/navfiles.h"
+// ISRs and serial
 #include "GPS_RX_ISR.h"
 #include "GPS_TX_ISR.h"
 #include "UART_GPS.h"
+// Tests
 #include "navsystest/navfilestests.h"
+#include "navsystest/wphandlertests.h"
+#include "navsystest/navmathtests.h"
+// File system
+#include "navsys/navfiles.h"
 #include <FS.h> // For file system for SD card
 
 /* Global variables and pointers */
@@ -322,10 +327,24 @@ int main()
       
       if (performedTests == 0)
       {
+        // File tests
         testfCoordinate();
+        CyDelay(500);
         testfNavFileHeader();
+        CyDelay(500);
         testfWPListHeader();
+        CyDelay(500);
         testfNavDatablockHeader();
+        CyDelay(500);
+        
+        
+        // WP handler tests
+        testWPHandler();
+        CyDelay(500);
+        
+        // Navmath tests
+        testNavMath();
+        
         performedTests = 1;
       }
 

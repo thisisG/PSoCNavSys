@@ -46,17 +46,19 @@ output:
 (value) floatDegree fracDegree
 remarks:
 Converts a set of two numbers representing a coordinate to a floating point
-value with
-fractional parts.
+value with fractional parts.
 Works for both positive and negative degree.
 Note that the value calculated could be both degrees or radians, so care should
-be taken to
-convert the results to the appropriate form before performing mathematical
-operations on the
-result.
+be taken to convert the results to the appropriate form before performing
+mathematical operations on the result.
 */
 floatDegree floatFromLongDegree(const signed16Degree degree,
                                 const signed32Degree minutes); // OK
+
+// TODO
+void longDegreeFromFloatDegree(const floatDegree fDegree,
+                               signed16Degree* sDegree,
+                               signed32Degree* sMinutes);
 
 // TODO
 floatDegree

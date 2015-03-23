@@ -23,6 +23,20 @@ floatDegree floatFromLongDegree(const signed16Degree degree,
   return fracDeg + fracMin;
 }
 
+void longDegreeFromFloatDegree(const floatDegree fDegree,
+                               signed16Degree* sDegree,
+                               signed32Degree* sMinutes)
+{
+  // Remove decimal points of fDegree by typecasting
+  (*sDegree) = (signed16Degree)fDegree;
+  // Extract the fractional degree by subtracting the degrees from the fDegree
+  // This will handle both positives and negatives properly
+  floatDegree tempMinutes = fDegree - (floatDegree)(*sDegree);
+  // Find the minutes in MMmmmm format
+  // 0.DDdddd*10000 -> DDdddd*60 -> MMmmmm
+  (*sMinutes) = tempMinutes * 600000;
+}
+
 floatDegree toDegree(const floatDegree rAngle)
 {
   return (floatDegree)(((rAngle)*180) / M_PI);

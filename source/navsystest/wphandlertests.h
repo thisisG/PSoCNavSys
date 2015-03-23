@@ -28,7 +28,8 @@ void testWPHandler()
   size_t numberItems = 0;
   const char testName[64] = "testWPHandler()";
   const int arrayLength = 5;
-  const char testFileName[20] = "wphndlr.tst";
+  size_t readCoords = 0;
+  char testFileName[20] = "wphndlr.tst";
   NAV_FILE* navFile;
 
   printTestHeader(testName);
@@ -49,6 +50,8 @@ void testWPHandler()
   initNavFileWPListHeader(&WPListHeader);
 
   // Data structures
+  Coordinate tempCoord;
+  zeroCoordinate(&tempCoord);
   NavDatablockHeader navDataHdrArrayIn[arrayLength];
   NavDatablockHeader navDataHdrArrayOut[arrayLength];
   Coordinate coordIn[arrayLength];
@@ -79,7 +82,7 @@ void testWPHandler()
     // Here to allow the system to be further developed.
     navDataHdrArrayIn[i].nextDataSize = 0;
 
-    coordIn[i].dLatitude = 255;
+    coordIn[i].dLatitude = i;
     coordIn[i].dLongitude = i + 5;
     coordIn[i].mLatitude = i + 23;
     coordIn[i].mLongitude = i + 88;
@@ -99,7 +102,73 @@ void testWPHandler()
     NAV_printf("Number of items written to file different from expected.\r\n");
   }
 
-  // TODO Continue here asap
+  // Let WPhandler open the file
+  WPHandlerOpen(&testWPHandler, testFileName);
+
+  // Get the goal into a temp Coordinate structure
+  WPHandlerGetGoal(&testWPHandler, &tempCoord);
+
+  // Check if goal is the last entry in the array
+  if (coordsEqual(&tempCoord, &(coordIn[arrayLength - 1])) == 0)
+  {
+    testPassed = 0;
+    NAV_printf(
+        "Retreived goal is not same as last entry in coordinate array.\r\n");
+  }
+
+  // Get each WP until list is empty and store in coordOut array
+  i = 0;
+  while (WPHandlerNextWP(&testWPHandler, &coordOut[i]))
+  {
+    i++;
+  }
+
+  // Check that coordIn contains same as coordOut
+  for (i = 0; i < arrayLength; i++)
+  {
+    readCoords++;
+    if (coordsEqual(&(coordIn[i]), &(coordOut[i])) == 0)
+    {
+      testPassed = 0;
+      NAV_printf("coordIn != coordOut\r\n");
+    }
+  }
+
+  // Check that we've read the correct number of coords
+  if (readCoords != arrayLength)
+  {
+    testPassed = 0;
+    NAV_printf("readCoords != arrayLength\r\n");
+  }
+
+  // Test if WPHandlerSeekWP functions as expected.
+  // Three test cases - first(0), one in the middle and last(arrayLength-1).
+  WPHandlerSeekWP(&testWPHandler, 0);
+  zeroCoordinate(&tempCoord);
+  WPHandlerNextWP(&testWPHandler, &tempCoord);
+  if (coordsEqual(&(coordIn[0]), &tempCoord) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("coordIn[0] != tempCoord\r\n");
+  }
+
+  WPHandlerSeekWP(&testWPHandler, 3);
+  zeroCoordinate(&tempCoord);
+  WPHandlerNextWP(&testWPHandler, &tempCoord);
+  if (coordsEqual(&(coordIn[3]), &tempCoord) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("coordIn[3] != tempCoord\r\n");
+  }
+
+  WPHandlerSeekWP(&testWPHandler, arrayLength - 1);
+  zeroCoordinate(&tempCoord);
+  WPHandlerNextWP(&testWPHandler, &tempCoord);
+  if (coordsEqual(&(coordIn[arrayLength - 1]), &tempCoord) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("coordIn[arrayLength - 1] != tempCoord\r\n");
+  }
 
   if (testPassed)
   {

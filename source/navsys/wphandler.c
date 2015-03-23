@@ -45,12 +45,16 @@ void initNavWPHandler(NavWPHandler* WPHandler)
 ** WPHandler functions
 ***********************************************/
 
-uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
+uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
 
-  // Close any currently open file assigned to the pointer.
-  NAV_fclose(wpHandler->fileManager.ptrWPList);
+  // If file pointer is not NULL, close currently open file.
+  if (wpHandler->fileManager.ptrWPList != NULL)
+  {
+    NAV_fclose(wpHandler->fileManager.ptrWPList);
+    wpHandler->fileManager.ptrWPList = NULL;
+  }
 
   // Set the file pointer to zero
   wpHandler->fileManager.ptrWPList = 0;
@@ -67,15 +71,15 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, char* wpFileName)
     NavFileHeader fileHeader;
     initNavFileHeader(&fileHeader);
 
-    wpHandler->offsetFirstWPBlock
-        += freadNavFileHeader(&fileHeader, wpHandler->fileManager.ptrWPList);
+    wpHandler->offsetFirstWPBlock += SIZE_NAV_FILE_HEADER;
+    freadNavFileHeader(&fileHeader, wpHandler->fileManager.ptrWPList);
 
     // Read the WP List header and update the offsetFirstWPBlock.
     NavFileWPListHeader WPListHeader;
     initNavFileWPListHeader(&WPListHeader);
 
-    wpHandler->offsetFirstWPBlock += freadNavFileWPListHeader(
-        &WPListHeader, wpHandler->fileManager.ptrWPList);
+    wpHandler->offsetFirstWPBlock += SIZE_NAV_FILE_WP_LIST_HEADER;
+    freadNavFileWPListHeader(&WPListHeader, wpHandler->fileManager.ptrWPList);
 
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
@@ -114,15 +118,12 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
     // Read the data block header.
     NavDatablockHeader dataHeader;
     initNavDatablockHeader(&dataHeader);
-
-    NAV_fread(&dataHeader, sizeof(dataHeader), 1,
-              wpHandler->fileManager.ptrWPList);
+    freadNavDatablockHeader(&dataHeader, wpHandler->fileManager.ptrWPList);
 
     // Read the coordinate.
     Coordinate coord;
     zeroCoordinate(&coord);
-
-    NAV_fread(&coord, sizeof(coord), 1, wpHandler->fileManager.ptrWPList);
+    freadCoordinate(&coord, wpHandler->fileManager.ptrWPList);
 
     (*nextWP) = coord;
     WPCount++;
@@ -148,11 +149,12 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
   size_t startOffset = wpHandler->offsetFirstWPBlock;
 
   size_t wpDataOffset = wpNumber
-      * (sizeof(NavDatablockHeader) + sizeof(Coordinate));
+      * (SIZE_NAV_DATABLOCK_HEADER + SIZE_COORDINATE);
 
   size_t totalOffset = startOffset + wpDataOffset;
 
   NAV_fseek(wpHandler->fileManager.ptrWPList, totalOffset, NAV_SEEK_SET);
+  wpHandler->currentWPCount = wpNumber;
 }
 
 /***********************************************

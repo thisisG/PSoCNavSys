@@ -52,6 +52,7 @@ void printFailed(const char* message)
   NAV_printf(" failed!");
   NAV_printf("\r\n");
   printStars();
+  NAV_printf("\r\n");
 }
 
 void printPassed(const char* message)
@@ -61,6 +62,7 @@ void printPassed(const char* message)
   NAV_printf(" passed!");
   NAV_printf("\r\n");
   printStars();
+  NAV_printf("\r\n");
 }
 
 uint8_t compNavFileHeader(const struct NavFileHeader* headerA,
