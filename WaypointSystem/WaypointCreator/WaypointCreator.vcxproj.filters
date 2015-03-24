@@ -138,6 +138,9 @@
     <ClInclude Include="..\..\source\navsystest\wphandlertests.h">
       <Filter>Header Files\navsystest</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navconfig.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

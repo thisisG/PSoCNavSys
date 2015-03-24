@@ -60,8 +60,10 @@ void zeroSystemTime(SystemTime* time)
 void initStateDataStructure(StateDataStructure* stateD)
 {
   stateD->stateKeeper = closestWP;
+  initNavWPHandler(&(stateD->WPHandler));
   zeroCoordinate(&(stateD->WPGoal));
   zeroCoordinate(&(stateD->eWPGoal));
+  zeroCoordinate(&(stateD->nextWP));
   stateD->maxWPDistance = MAX_WP_DISTANCE;
   stateD->arrivalWPDistance = ARRIVED_WP_DISTANCE;
   stateD->exceptionMaxWPDistance = EXCEPTION_MAX_WP_DISTANCE;
@@ -151,7 +153,90 @@ void updateNavState(NavState* navS)
 }
 
 // TODO
-CurrentNavState closestWPHandler(NavState* navS) { return closestWP; }
+CurrentNavState closestWPHandler(NavState* navS)
+{
+  CurrentNavState returnState = toWP;
+
+  // Check if cfg file is currently open, if it is close it
+  checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
+  // Open config file
+  navS->stateData.WPHandler.fileManager.ptrCfgFile
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
+
+  // Read the file header and config file header.
+  NavFileHeader fileHeader;
+  initNavFileHeader(&fileHeader);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+  cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+                            &fileHeader, &cfgHeader);
+
+  // Seek to the offset of the char array for the current WP listed
+  size_t dataOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER
+      + (cfgHeader.currentWPList
+         * (SIZE_NAV_DATABLOCK_HEADER + sizeof(char[20])));
+  NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile, dataOffset,
+            NAV_SEEK_SET);
+
+  // Read data header and name of WPlist into wpListFilename
+  NavDatablockHeader dataHeader;
+  initNavDatablockHeader(&dataHeader);
+  freadNavDatablockHeader(&dataHeader,
+                          navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  NAV_fread(navS->stateData.WPHandler.fileManager.wpListFileName,
+            sizeof(char[20]), 1,
+            navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
+  // We are now done with the cfg file, so we should close it.
+  NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
+  // Open the WP list file
+  WPHandlerOpen(&(navS->stateData.WPHandler),
+                navS->stateData.WPHandler.fileManager.ptrWPList);
+
+  // Get the distance to the goal that was updated by WPHandlerOpen() for a
+  // baseline distance that we compare the rest of the list to
+  float minDist = distanceCirclePathAtoB(&(navS->currentLocation),
+                                         &(navS->stateData.WPGoal));
+
+  // Cycle through the waypoints using WPHandlerGetNextWP and find the
+  // closest wp and store the number of the WP
+  int32_t WPCount = 0;
+  int32_t nextWPNumber = 0;
+  while (WPCount != -1)
+  {
+    WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler),
+                              &(navS->stateData.nextWP));
+    float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
+                                            &(navS->stateData.nextWP));
+    if (tempDist < minDist)
+    {
+      nextWPNumber = WPCount;
+      minDist = tempDist;
+    }
+  }
+
+  // If the closest WP is within allowable distances set it as current WP, seek
+  // to the next WP following the chosen WP using WPSeek and set returnstate to
+  // toWP
+  if (minDist < navS->stateData.maxWPDistance)
+  {
+    nextWPNumber++;
+    WPHandlerSeekWP(&(navS->stateData.WPHandler), nextWPNumber);
+    navS->nextWaypoint = navS->stateData.nextWP;
+    navS->distanceToCurrentWP = minDist;
+    returnState = toWP;
+  }
+  // If no WPs are within permitted distances set returnstate to
+  // closestExceptionWP
+  else
+  {
+    returnState = closestExceptionWP;
+  }
+
+  return returnState;
+}
 
 CurrentNavState toWPHandler(NavState* navS)
 {

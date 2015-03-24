@@ -95,6 +95,12 @@
     <ClCompile Include="..\..\source\navsys\serialcom.c">
       <Filter>Source Files\navsys</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\navsys\wphandler.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navfiles.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="csvtest.csv">
@@ -171,6 +177,15 @@
     </ClInclude>
     <ClInclude Include="..\..\source\nmea\units.h">
       <Filter>Header Files\NMEA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\wphandler.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfiles.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navconfig.h">
+      <Filter>Header Files\navsys</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

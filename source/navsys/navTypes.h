@@ -119,6 +119,7 @@ system.
 typedef struct StateDataStructure
 {
   enum CurrentNavState stateKeeper;
+  struct NavWPHandler WPHandler;
   struct Coordinate WPGoal;
   struct Coordinate eWPGoal;
   struct Coordinate nextWP;

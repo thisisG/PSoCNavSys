@@ -80,7 +80,7 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName);
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);
 
 // TODO Description WPHandlerNextWP()
-size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
+int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 
 // TODO Description WPHandlerSeekWP()
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
@@ -93,6 +93,8 @@ size_t generateWPListFile(const char* fileName,
                            const NavDatablockHeader* blockHeaderArray,
                            const Coordinate* coordArray,
                            const size_t arrayLength);
+
+size_t makeTemplateCfgFile(const char* fileName);
 
 #endif // WPHANDLER_H
 

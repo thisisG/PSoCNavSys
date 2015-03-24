@@ -10,6 +10,10 @@
 #ifndef NAV_SYSTEM_CONFIG_H
 #define NAV_SYSTEM_CONFIG_H
 
+// Default config filename used to initialise NavWPFileManager structures
+// wphandler.h/c
+#define DEFAULT_CONFIG_FILE "navsys.cfg"
+
 // Buffer length for UART FIFO buffer structure
 // serialcom.h/c
 #define UART_BUFFER_LENGTH (128)
@@ -32,6 +36,7 @@
 // an errenouous value.
 // wphandler.h/c
 #define SIZE_NAV_FILE_HEADER (6)
+#define SIZE_NAV_CFG_FILE_HEADER (4*4)
 #define SIZE_NAV_FILE_WP_LIST_HEADER (13*2 + 8)
 #define SIZE_NAV_DATABLOCK_HEADER (6)
 #define SIZE_COORDINATE (13)

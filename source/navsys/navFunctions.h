@@ -44,6 +44,8 @@ remarks:
 extern "C" {
 #endif // __cplusplus
 #include <stdint.h>
+#include "wphandler.h"
+#include "navfiles.h"
 
 #ifdef _WIN32
 #include <stdio.h>
