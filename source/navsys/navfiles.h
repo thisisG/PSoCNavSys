@@ -61,7 +61,7 @@ typedef enum NavFileType
   INVALID_FILE_TYPE = 0,
   WAYPOINT_LIST_FILE = 1,
   EXCEPTION_WAYPOINT_LIST_FILE = 2,
-  WAYPOINT_CONFIG_FILE = 3
+  CONFIG_FILE = 3
 } NavFileType;
 
 /* ENUM NavVersion

@@ -96,6 +96,6 @@ size_t generateWPListFile(const char* fileName,
 
 size_t makeTemplateCfgFile(const char* fileName);
 
-#endif // WPHANDLER_H
+size_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName);
 
-/* [] END OF FILE */
+#endif // WPHANDLER_H

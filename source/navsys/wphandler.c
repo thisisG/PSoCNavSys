@@ -205,19 +205,57 @@ size_t generateWPListFile(const char* fileName,
   return dataItemsWritten;
 }
 
-size_t makeTemplateCfgFile(const char* fileName)
+size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion)
 {
+  size_t itemsWritten = 0;
   NAV_FILE *cfgFile = NAV_fopen(fileName, "wb");
 
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
-  fwriteNavFileHeader(&fileHeader, cfgFile);
+  fileHeader.fileType = CONFIG_FILE;
+  fileHeader.fileVersion = sysVersion;
+  itemsWritten += fwriteNavFileHeader(&fileHeader, cfgFile);
 
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
-  fwriteNavConfigFileHeader(&cfgHeader);
+  itemsWritten += fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
 
   NAV_fclose(cfgFile);
+
+  return itemsWritten;
 }
 
-/* [] END OF FILE */
+uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
+{
+  uint8_t operationSuccess = 1;
+
+  // Open the cfg file for read and write mode
+  NAV_FILE *cfgFile = NAV_fopen(cfgFileName, "r+b");
+
+  // Get the count of items stored in the list
+  NavFileHeader cfgFileHeader;
+  initNavFileHeader(&cfgFileHeader);
+  freadNavFileHeader(&cfgFileHeader, cfgFile);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+  freadNavConfigFileHeader(&cfgHeader, cfgFile);
+
+  size_t WPListCount = cfgHeader.numberOfWPLists;
+  size_t newWPListCount = WPListCount + 1;
+  size_t ExceptionWPListCount = cfgHeader.numberOfExeptionWPLists;
+
+  // Update the header to the new WPListcount and write it to file
+  cfgHeader.numberOfWPLists = newWPListCount;
+  NAV_fseek(cfgFile, -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
+  fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
+
+  // Make room for the new char[20] array for the added WPList in the cfg file.
+  // Find the position we want to insert the new char[20]array
+  size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER;
+  // The insert position is after the base offset and after the last char[20]
+  // array of WPList filenames, before ExceptionWPList names begin.
+  size_t insertPosition = baseOffset + WPListCount*sizeof(char[20]);
+
+  // Find the last position in the file
+  // size_t lastArrayStartPosition = (WPListCount + ExceptionWPListCount) * 
+}
