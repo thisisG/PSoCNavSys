@@ -256,6 +256,18 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
   // array of WPList filenames, before ExceptionWPList names begin.
   size_t insertPosition = baseOffset + WPListCount*sizeof(char[20]);
 
-  // Find the last position in the file
-  // size_t lastArrayStartPosition = (WPListCount + ExceptionWPListCount) * 
+  // Find the last character array position in the file, taking into account
+  // that the file might be longer than the number of character arrays and
+  // headers in it.
+  size_t lastArrayStartPosition = 0;
+  if ((WPListCount + ExceptionWPListCount) == 0)
+  {
+    lastArrayStartPosition = baseOffset;
+  }
+  else
+  {
+    lastArrayStartPosition = baseOffset
+        + (WPListCount + ExceptionWPListCount) * sizeof(char[20]);
+  }
+
 }
