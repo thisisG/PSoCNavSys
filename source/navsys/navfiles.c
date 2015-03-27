@@ -21,7 +21,9 @@ extern "C" {
 ** Initialisation function implementations
 ***********************************************/
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 void initNavFileHeader(NavFileHeader* ptrFileHeader)
 {
   ptrFileHeader->fileType = INVALID_FILE_TYPE;
@@ -29,7 +31,9 @@ void initNavFileHeader(NavFileHeader* ptrFileHeader)
   ptrFileHeader->nextHeaderSize = 0;
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
 {
   ptrCfgFileHeader->numberOfWPLists = 0;
@@ -38,7 +42,9 @@ void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
   ptrCfgFileHeader->currentExeptionWPList = 0;
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 void initNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader)
 {
   zeroCoordinate(&(ptrWPListHeader->startCoordinate));
@@ -47,7 +53,9 @@ void initNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader)
   ptrWPListHeader->nextHeaderSize = 0;
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 void initNavDatablockHeader(NavDatablockHeader* ptrDataHeader)
 {
   ptrDataHeader->dataType = INVALID_DATA_TYPE;
@@ -71,7 +79,9 @@ NAV_FILE* NAV_fopen(const char* filename, const char* mode)
 #endif // __GNUC__
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 int NAV_fclose(NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
@@ -81,7 +91,9 @@ int NAV_fclose(NAV_FILE* ptrNavFile)
 #endif // __GNUC__
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 {
 #ifdef __GNUC__
@@ -91,7 +103,9 @@ int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 #endif // __GNUC__
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
                   NAV_FILE* ptrNavFile)
 {
@@ -102,7 +116,9 @@ size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
 #endif // __GNUC__
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
                    NAV_FILE* ptrNavFile)
 {
@@ -113,7 +129,9 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
 #endif // __GNUC__
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 int32_t NAV_ftell(NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
@@ -143,6 +161,9 @@ void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
   freadNavConfigFileHeader(cfgHeader, cfgFile);
 }
 
+// Test
+// VS2013: OK
+// PSoC: OK
 void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
                         const size_t startEntryAtEnd)
 {
@@ -257,7 +278,9 @@ size_t freadNavFileHeader(NavFileHeader* ptrFileHeader, NAV_FILE* ptrNavFile)
   return bytesRead;
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
                                  NAV_FILE* ptrNavFile)
 {
@@ -282,7 +305,9 @@ size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
   return itemsWritten;
 }
 
-// TODO Test
+// Test
+// VS2013: OK
+// PSoC: OK
 size_t freadNavConfigFileHeader(NavConfigFileHeader* ptrCfgHeader,
   NAV_FILE* ptrNavFile)
 {
@@ -391,9 +416,5 @@ size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
 
   return bytesRead;
 }
-
-/***********************************************
-** File generation functions
-***********************************************/
 
 /* [] END OF FILE */

@@ -32,126 +32,14 @@ extern "C" {
 #endif // __cplusplus
 
 /***********************************************
-**
 ** Defines
-**
 ***********************************************/
 // Define seek parameters for use with NAV_fseek() function calls.
 #define NAV_SEEK_SET 0
 #define NAV_SEEK_CUR 1
 #define NAV_SEEK_END 2
 
-/***********************************************
-**
-** Type declarations
-**
-***********************************************/
 
-// Create typedefs for file pointers in order to create interfaces for
-// FS_FOpen()/fopen(), FS_Read()/fread(), FS_FSeek()/fseek() etc.
-#ifdef __GNUC__
-typedef FS_FILE NAV_FILE;
-#else
-typedef FILE NAV_FILE;
-#endif // __GNUC__
-
-/* ENUM NavFileType
-Numbered list describing the type of files the system is aware of and know how
-to perform operations with.
-*/
-typedef enum NavFileType
-{
-  INVALID_FILE_TYPE = 0,
-  WAYPOINT_LIST_FILE = 1,
-  EXCEPTION_WAYPOINT_LIST_FILE = 2,
-  CONFIG_FILE = 3
-} NavFileType;
-
-/* ENUM NavVersion
-Numbered list describing the type version of the file we are working with in
-case it is needed for further development of the system.
-*/
-typedef enum NavVersion
-{
-  INVALID_NAV_VERSION = 0,
-  NAV_VERSION_1
-} NavVersion;
-
-/* ENUM NavDataType
-Numbered list describing the type of data blocks the system is aware of and know
-how to perform operations on.
-*/
-typedef enum NavDataType
-{
-  INVALID_DATA_TYPE = 0,
-  WAYPOINT_DATA = 1,
-  EXCEPTION_WAYPOINT_DATA = 2
-} NavDataType;
-
-/* STRUCT NavFileHeader
-ADS that contain information of the type of file we have opened.
-Any file which the system intends to read and write to should have one of these
-present as the first entry in the file.
-The exception are text files which are opened in append mode only, examples of
-this would a system log file which are made in pure text and not intended to be
-read back by the PSoC.
-*/
-typedef struct NavFileHeader
-{
-  uint8_t fileType;
-  uint8_t fileVersion;
-  // The size of the header block after the header.
-  // This feature is currently not used, but the space is reserved for future
-  // development of the system.
-  uint32_t nextHeaderSize;
-} NavFileHeader;
-
-/* STRUCT NavConfigFileHeader
-ADS containing the number of WP lists and exception WP lists.
-The file also contains the currently used list and should be updated to the
-correct number when a new list is chosen in order to resume operations in case
-of power failure or other types of system resets.
-After this header there will be numberOfWPLists + numberOfExeptionWPLists
-char[20] arrays containing the filenames of the lists the system should be aware
-of.
-*/
-typedef struct NavConfigFileHeader
-{
-  uint32_t numberOfWPLists;
-  uint32_t currentWPList;
-  uint32_t numberOfExeptionWPLists;
-  uint32_t currentExeptionWPList;
-} NavConfigFileHeader;
-
-/* STRUCT NavFileWPListHeader
-ADS that describes the contents of a list of waypoints contained in the file.
-*/
-typedef struct NavFileWPListHeader
-{
-  Coordinate startCoordinate;
-  Coordinate endCoordinate;
-  uint32_t numberOfEntries;
-  // The size of the header block after the header.
-  // This feature is currently not used, but the space is reserved for future
-  // development of the system.
-  uint32_t nextHeaderSize;
-} NavFileWPListHeader;
-
-/* STRUCT NavDatablockHeader
-ADS that contains information about the block of data following the header.
-Any datablock should have one of these in front of them in order to allow for
-future expansion of datatypes, and also allow older versions of the software to
-more recent versions of stored data.
-*/
-typedef struct NavDatablockHeader
-{
-  uint8_t dataType;
-  uint8_t dataVersion;
-  // The size of the data block after the header.
-  // This feature is currently not used, but the space is reserved for future
-  // development of the system.
-  uint32_t nextDataSize;
-} NavDatablockHeader;
 
 /***********************************************
 ** Initialisation function declarations
@@ -246,7 +134,5 @@ size_t fwriteNavDatablockHeader(const NavDatablockHeader* ptrDataHeader,
 // TODO Description freadNavDataBlockHeader()
 size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
                                NAV_FILE* ptrNavFile);
-
-
 
 #endif // NAVFILES_H

@@ -34,7 +34,6 @@ int main()
   testmakeTemplateCfgFile();
   testaddWPListFileToCfgFile();
 
-
   // Navmath tests
   testNavMath();
 

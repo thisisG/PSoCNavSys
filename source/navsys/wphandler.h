@@ -30,36 +30,6 @@ extern "C" {
 }
 #endif // __cplusplus
 
-/***********************************************
-** Type declarations
-***********************************************/
-
-/* STRUCT NavWPFileManager
-ADS that contain the filenames and pointers used for managing waypoints via
-files.
-*/
-typedef struct NavWPFileManager
-{
-  char cfgFileName[20];
-  char wpListFileName[20];
-  char eWPListFileName[20];
-  NAV_FILE* ptrCfgFile;
-  NAV_FILE* ptrWPList;
-  size_t numberOfExceptionEntries;
-  size_t currentExceptionEntry;
-} NavWPFileManager;
-
-/* STRUCT NavWPHandler
-ADS that contain data regarding the management of waypoints.
-*/
-typedef struct NavWPHandler
-{
-  struct NavWPFileManager fileManager;
-  struct Coordinate wpGoal;
-  size_t offsetFirstWPBlock;
-  size_t currentWPCount;
-  size_t maxWPCount;
-} NavWPHandler;
 
 /***********************************************
 ** Initialisation functions
@@ -80,7 +50,7 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName);
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);
 
 // TODO Description WPHandlerNextWP()
-size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
+int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 
 // TODO Description WPHandlerSeekWP()
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
