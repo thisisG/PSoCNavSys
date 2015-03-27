@@ -14,11 +14,11 @@
 extern "C" {
 #endif // __cplusplus
 
+#include <sys/types.h>
 // Depends on Coordinate and NavState structures when writing to files.
 #include "navtypes.h"
 // Depends on initialization functions for navtypes
 #include "navfunctions.h"
-#include <sys/types.h>
 
 // Depends on the emFile library when on the PSoC
 #ifdef __GNUC__
@@ -126,8 +126,8 @@ ADS that describes the contents of a list of waypoints contained in the file.
 */
 typedef struct NavFileWPListHeader
 {
-  Coordinate startCoordinate;
-  Coordinate endCoordinate;
+  struct Coordinate startCoordinate;
+  struct Coordinate endCoordinate;
   uint32_t numberOfEntries;
   // The size of the header block after the header.
   // This feature is currently not used, but the space is reserved for future

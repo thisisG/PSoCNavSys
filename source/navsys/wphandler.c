@@ -284,7 +284,7 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     {
       NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
       NAV_fwrite(charBuffer, sizeof(char[20]), 1, cfgFile);
-      NAV_fseek(cfgFile, ((-2) * (sizeof(char[20]))), NAV_SEEK_CUR);
+      // NAV_fseek(cfgFile, ((-2) * (sizeof(char[20]))), NAV_SEEK_CUR);
       copySize -= sizeof(char[20]);
     }
 

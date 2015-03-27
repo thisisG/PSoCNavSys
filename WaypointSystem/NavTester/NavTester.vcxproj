@@ -112,6 +112,7 @@
     <ClInclude Include="..\..\source\navsystest\navfilestests.h" />
     <ClInclude Include="..\..\source\navsystest\navmathtests.h" />
     <ClInclude Include="..\..\source\navsystest\testhelper.h" />
+    <ClInclude Include="..\..\source\navsystest\wphandlertests.h" />
     <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
     <ClInclude Include="..\..\source\navsys\navconfig.h" />
     <ClInclude Include="..\..\source\navsys\navfiles.h" />

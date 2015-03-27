@@ -15,8 +15,8 @@ extern "C" {
 #endif
 
 #include <math.h>
-#include "navfunctions.h"
 #include "navtypes.h"
+#include "navfunctions.h"
 #include "../nmea/nmea.h"
 
 #ifdef __cplusplus

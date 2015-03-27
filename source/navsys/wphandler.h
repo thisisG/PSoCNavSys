@@ -38,28 +38,34 @@ extern "C" {
 ADS that contain the filenames and pointers used for managing waypoints via
 files.
 */
+/*
 typedef struct NavWPFileManager
 {
-  char cfgFileName[20];
-  char wpListFileName[20];
-  char eWPListFileName[20];
-  NAV_FILE* ptrCfgFile;
-  NAV_FILE* ptrWPList;
-  size_t numberOfExceptionEntries;
-  size_t currentExceptionEntry;
+char cfgFileName[20];
+char wpListFileName[20];
+char eWPListFileName[20];
+NAV_FILE* ptrCfgFile;
+NAV_FILE* ptrWPList;
+size_t numberOfExceptionEntries;
+size_t currentExceptionEntry;
 } NavWPFileManager;
+*/
+
 
 /* STRUCT NavWPHandler
 ADS that contain data regarding the management of waypoints.
 */
+/*
 typedef struct NavWPHandler
 {
-  struct NavWPFileManager fileManager;
-  struct Coordinate wpGoal;
-  size_t offsetFirstWPBlock;
-  size_t currentWPCount;
-  size_t maxWPCount;
+struct NavWPFileManager fileManager;
+struct Coordinate wpGoal;
+size_t offsetFirstWPBlock;
+size_t currentWPCount;
+size_t maxWPCount;
 } NavWPHandler;
+*/
+
 
 /***********************************************
 ** Initialisation functions
