@@ -22,7 +22,8 @@ extern "C" {
 
 void initNavWPFileManager(NavWPFileManager* WPFileManager)
 {
-  strncpy(WPFileManager->cfgFileName, "", strlen(""));
+  strncpy(WPFileManager->cfgFileName, DEFAULT_CONFIG_FILE,
+          strlen(DEFAULT_CONFIG_FILE));
   strncpy(WPFileManager->wpListFileName, "", strlen(""));
   strncpy(WPFileManager->eWPListFileName, "", strlen(""));
   WPFileManager->ptrCfgFile = NULL;
@@ -48,15 +49,8 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
 
-  // If file pointer is not NULL, close currently open file.
-  if (wpHandler->fileManager.ptrWPList != NULL)
-  {
-    NAV_fclose(wpHandler->fileManager.ptrWPList);
-    wpHandler->fileManager.ptrWPList = NULL;
-  }
-
-  // Set the file pointer to zero
-  wpHandler->fileManager.ptrWPList = 0;
+  // Check if WP file is currently open, if it is close it
+  checkAndCloseNavFile(wpHandler->fileManager.ptrWPList);
 
   wpHandler->fileManager.ptrWPList = NAV_fopen(wpFileName, "rb");
 
@@ -83,9 +77,10 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
 
-    // Set the current wp counter to 0 to show that we are at the start of the
-    // list.
-    wpHandler->currentWPCount = 0;
+    // Set the current wp counter to -1 to show that we are at the start of the
+    // list and that the WP handler is ready for the first call to get the next
+    // WP in the list via the WPHandlerNextWP() function.
+    wpHandler->currentWPCount = -1;
 
     // Set the maximum wp count to number of entries in list.
     wpHandler->maxWPCount = WPListHeader.numberOfEntries;
@@ -99,12 +94,12 @@ void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal)
   (*wpGoal) = wpHandler->wpGoal;
 }
 
-size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
+int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
 {
-  // Set the return value to 0 by default.
-  // The return value should be 0 if we have no more waypoints in the list, if
+  // Set the return value to -1 by default.
+  // The return value should be -1 if we have no more waypoints in the list, if
   // not it should be the number of the WP we are currently at.
-  size_t returnCount = 0;
+  int32_t returnCount = -1;
 
   // Store local copies of variables for clarity
   size_t WPCount = wpHandler->currentWPCount;
@@ -130,7 +125,7 @@ size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
   }
   else
   {
-    // Do nothing, return value already 0.
+    // Do nothing, return value already -1 to show there are no more waypoints.
   }
 
   // Update the external variables.
@@ -202,7 +197,7 @@ size_t generateWPListFile(const char* fileName,
   }
   else
   {
-    // LOG ERROR
+    // TODO LOG ERROR
   }
   return dataItemsWritten;
 }
