@@ -26,7 +26,7 @@ void testNavMath()
 {
   uint8_t testPassed = 1;
   const int arrayLength = 10;
-  const char testName[64] = "testfCoordinate()";
+  const char testName[64] = "testNavMath()";
   floatDegree floatArrayIn[arrayLength];
   floatDegree floatArrayOut[arrayLength];
   signed16Degree degrees[arrayLength];
@@ -34,9 +34,9 @@ void testNavMath()
   floatDegree haversineResults[arrayLength];
   floatDegree inverseHaversineResults[arrayLength];
   size_t i = 0;
-  floatDegree tempFloat = -180;
-  floatDegree deltaDegree = 44.46235;
-  floatDegree errorLimit = 0.0001;
+  floatDegree tempFloat = -180.0f;
+  floatDegree deltaDegree = 44.46235f;
+  floatDegree errorLimit = 0.0001f;
 
   printTestHeader(testName);
 

@@ -16,11 +16,11 @@ extern "C" {
 
 // Depends on Coordinate and NavState structures when writing to files
 #include "navtypes.h"
-
 // Depends on having access to the file system functions and definitions as well
 // as file types
 #include "navfiles.h"
 #include "navfunctions.h"
+
 // Depends on standard types and string operations
 #include <stdio.h>
 #include <string.h>
@@ -38,34 +38,28 @@ extern "C" {
 ADS that contain the filenames and pointers used for managing waypoints via
 files.
 */
-/*
 typedef struct NavWPFileManager
 {
-char cfgFileName[20];
-char wpListFileName[20];
-char eWPListFileName[20];
-NAV_FILE* ptrCfgFile;
-NAV_FILE* ptrWPList;
-size_t numberOfExceptionEntries;
-size_t currentExceptionEntry;
+  char cfgFileName[20];
+  char wpListFileName[20];
+  char eWPListFileName[20];
+  NAV_FILE* ptrCfgFile;
+  NAV_FILE* ptrWPList;
+  size_t numberOfExceptionEntries;
+  size_t currentExceptionEntry;
 } NavWPFileManager;
-*/
-
 
 /* STRUCT NavWPHandler
 ADS that contain data regarding the management of waypoints.
 */
-/*
 typedef struct NavWPHandler
 {
-struct NavWPFileManager fileManager;
-struct Coordinate wpGoal;
-size_t offsetFirstWPBlock;
-size_t currentWPCount;
-size_t maxWPCount;
+  struct NavWPFileManager fileManager;
+  struct Coordinate wpGoal;
+  size_t offsetFirstWPBlock;
+  size_t currentWPCount;
+  size_t maxWPCount;
 } NavWPHandler;
-*/
-
 
 /***********************************************
 ** Initialisation functions
@@ -86,7 +80,7 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName);
 void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal);
 
 // TODO Description WPHandlerNextWP()
-int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
+size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 
 // TODO Description WPHandlerSeekWP()
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
@@ -105,3 +99,5 @@ size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion);
 uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName);
 
 #endif // WPHANDLER_H
+
+/* [] END OF FILE */

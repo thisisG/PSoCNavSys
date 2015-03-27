@@ -19,9 +19,6 @@ extern "C" {
 #include <stdio.h>
 #endif // _WIN32
 #include "navconfig.h"
-  // DEBUG ADDED
-#include "wphandler.h"
-#include "navfiles.h"
 
 #ifdef __cplusplus
 }
@@ -115,26 +112,6 @@ typedef enum CurrentNavState
   lastCurrentNavState
 } CurrentNavState;
 
-typedef struct NavWPFileManager
-{
-  char cfgFileName[20];
-  char wpListFileName[20];
-  char eWPListFileName[20];
-  NAV_FILE* ptrCfgFile;
-  NAV_FILE* ptrWPList;
-  size_t numberOfExceptionEntries;
-  size_t currentExceptionEntry;
-} NavWPFileManager;
-
-typedef struct NavWPHandler
-{
-  struct NavWPFileManager fileManager;
-  struct Coordinate wpGoal;
-  size_t offsetFirstWPBlock;
-  size_t currentWPCount;
-  size_t maxWPCount;
-} NavWPHandler;
-
 /* STRUCT StateData
 ADS that contains the data needed to evaluate the current and next state of the
 system.
@@ -142,7 +119,6 @@ system.
 typedef struct StateDataStructure
 {
   enum CurrentNavState stateKeeper;
-  struct NavWPHandler WPHandler;
   struct Coordinate WPGoal;
   struct Coordinate eWPGoal;
   struct Coordinate nextWP;

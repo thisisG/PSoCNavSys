@@ -43,7 +43,7 @@ void decodeGpsStringInNavState(NavState* navS)
 
     navS->dCurrentHeading = (floatDegree)nmeaBuffer.direction;
 
-    navS->currentSpeedKmh = nmeaBuffer.speed;
+    navS->currentSpeedKmh = (floatDegree)nmeaBuffer.speed;
   }
   else
   {

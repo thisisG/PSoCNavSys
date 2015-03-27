@@ -10,7 +10,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
-
 #include "wphandler.h"
 
 #ifdef __cplusplus
@@ -23,8 +22,7 @@ extern "C" {
 
 void initNavWPFileManager(NavWPFileManager* WPFileManager)
 {
-  strncpy(WPFileManager->cfgFileName, DEFAULT_CONFIG_FILE,
-          strlen(DEFAULT_CONFIG_FILE));
+  strncpy(WPFileManager->cfgFileName, "", strlen(""));
   strncpy(WPFileManager->wpListFileName, "", strlen(""));
   strncpy(WPFileManager->eWPListFileName, "", strlen(""));
   WPFileManager->ptrCfgFile = NULL;
@@ -50,10 +48,16 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
 {
   uint8_t statusFileOpen = 0;
 
-  // Check if WP file is currently open, if it is close it
-  checkAndCloseNavFile(wpHandler->fileManager.ptrWPList);
+  // If file pointer is not NULL, close currently open file.
+  if (wpHandler->fileManager.ptrWPList != NULL)
+  {
+    NAV_fclose(wpHandler->fileManager.ptrWPList);
+    wpHandler->fileManager.ptrWPList = NULL;
+  }
 
-  // Open the WP list for reading
+  // Set the file pointer to zero
+  wpHandler->fileManager.ptrWPList = 0;
+
   wpHandler->fileManager.ptrWPList = NAV_fopen(wpFileName, "rb");
 
   if (wpHandler->fileManager.ptrWPList != 0)
@@ -79,10 +83,9 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
 
-    // Set the current wp counter to -1 to show that we are at the start of the
-    // list and that the WP handler is ready for the first call to get the next
-    // WP in the list via the WPHandlerNextWP() function.
-    wpHandler->currentWPCount = -1;
+    // Set the current wp counter to 0 to show that we are at the start of the
+    // list.
+    wpHandler->currentWPCount = 0;
 
     // Set the maximum wp count to number of entries in list.
     wpHandler->maxWPCount = WPListHeader.numberOfEntries;
@@ -96,12 +99,12 @@ void WPHandlerGetGoal(NavWPHandler* wpHandler, Coordinate* wpGoal)
   (*wpGoal) = wpHandler->wpGoal;
 }
 
-int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
+size_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
 {
-  // Set the return value to -1 by default.
-  // The return value should be -1 if we have no more waypoints in the list, if
+  // Set the return value to 0 by default.
+  // The return value should be 0 if we have no more waypoints in the list, if
   // not it should be the number of the WP we are currently at.
-  int32_t returnCount = -1;
+  size_t returnCount = 0;
 
   // Store local copies of variables for clarity
   size_t WPCount = wpHandler->currentWPCount;
@@ -199,16 +202,15 @@ size_t generateWPListFile(const char* fileName,
   }
   else
   {
-    // TODO LOG ERROR
+    // LOG ERROR
   }
-
   return dataItemsWritten;
 }
 
 size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion)
 {
   size_t itemsWritten = 0;
-  NAV_FILE *cfgFile = NAV_fopen(fileName, "wb");
+  NAV_FILE* cfgFile = NAV_fopen(fileName, "wb");
 
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
@@ -230,7 +232,7 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
   uint8_t operationSuccess = 0;
 
   // Open the cfg file for read and write mode
-  NAV_FILE *cfgFile = NAV_fopen(cfgFileName, "r+b");
+  NAV_FILE* cfgFile = NAV_fopen(cfgFileName, "r+b");
 
   if (cfgFile != 0)
   {
@@ -257,7 +259,7 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER;
     // The insert position is after the base offset and after the last char[20]
     // array of WPList filenames, before ExceptionWPList names begin.
-    size_t insertPosition = baseOffset + WPListCount*sizeof(char[20]);
+    size_t insertPosition = baseOffset + WPListCount * sizeof(char[20]);
 
     // Find the last character array position currently in the in the file,
     // taking into account that the file might be longer than the number of
@@ -280,11 +282,12 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     // the end
     NAV_fseek(cfgFile, lastArrayStartPosition, NAV_SEEK_SET);
     char charBuffer[20];
+    int32_t bytesTwoCharArrays = 2 * sizeof(char[20]);
     while (copySize > 0)
     {
       NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
       NAV_fwrite(charBuffer, sizeof(char[20]), 1, cfgFile);
-      // NAV_fseek(cfgFile, ((-2) * (sizeof(char[20]))), NAV_SEEK_CUR);
+      NAV_fseek(cfgFile, -bytesTwoCharArrays, NAV_SEEK_CUR);
       copySize -= sizeof(char[20]);
     }
 

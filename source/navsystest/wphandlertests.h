@@ -30,7 +30,6 @@ void testWPHandler()
   const int arrayLength = 5;
   size_t readCoords = 0;
   char testFileName[20] = "wphndlr.tst";
-  NAV_FILE* navFile;
 
   printTestHeader(testName);
 

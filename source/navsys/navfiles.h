@@ -14,11 +14,11 @@
 extern "C" {
 #endif // __cplusplus
 
-#include <sys/types.h>
 // Depends on Coordinate and NavState structures when writing to files.
 #include "navtypes.h"
 // Depends on initialization functions for navtypes
 #include "navfunctions.h"
+#include <sys/types.h>
 
 // Depends on the emFile library when on the PSoC
 #ifdef __GNUC__
@@ -32,16 +32,19 @@ extern "C" {
 #endif // __cplusplus
 
 /***********************************************
+**
 ** Defines
+**
 ***********************************************/
-
 // Define seek parameters for use with NAV_fseek() function calls.
 #define NAV_SEEK_SET 0
 #define NAV_SEEK_CUR 1
 #define NAV_SEEK_END 2
 
 /***********************************************
+**
 ** Type declarations
+**
 ***********************************************/
 
 // Create typedefs for file pointers in order to create interfaces for
@@ -120,14 +123,13 @@ typedef struct NavConfigFileHeader
   uint32_t currentExeptionWPList;
 } NavConfigFileHeader;
 
-
 /* STRUCT NavFileWPListHeader
 ADS that describes the contents of a list of waypoints contained in the file.
 */
 typedef struct NavFileWPListHeader
 {
-  struct Coordinate startCoordinate;
-  struct Coordinate endCoordinate;
+  Coordinate startCoordinate;
+  Coordinate endCoordinate;
   uint32_t numberOfEntries;
   // The size of the header block after the header.
   // This feature is currently not used, but the space is reserved for future
@@ -192,16 +194,6 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
 int32_t NAV_ftell(NAV_FILE *ptrNavFile);
 
 /***********************************************
-** Single purpose file functions
-***********************************************/
-
-void checkAndCloseNavFile(NAV_FILE* navFile);
-
-void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile,
-  NavConfigFileHeader* fileHeader,
-  NavConfigFileHeader* cfgHeader);
-
-/***********************************************
 ** Structure read/write functions
 ***********************************************/
 
@@ -218,9 +210,11 @@ size_t fwriteNavFileHeader(const NavFileHeader* ptrFileHeader,
 // TODO Description freadNavFileHeader()
 size_t freadNavFileHeader(NavFileHeader* ptrFileHeader, NAV_FILE* ptrNavFile);
 
-size_t fwriteNavConfigFileHeader(NavConfigFileHeader* ptrCfgHeader,
+// TODO Description fwriteNavConfigFileHeader()
+size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
                                  NAV_FILE* ptrNavFile);
 
+// TODO Description freadNavConfigFileHeader()
 size_t freadNavConfigFileHeader(NavConfigFileHeader* ptrCfgHeader,
                                 NAV_FILE* ptrNavFile);
 
@@ -239,5 +233,7 @@ size_t fwriteNavDatablockHeader(const NavDatablockHeader* ptrDataHeader,
 // TODO Description freadNavDataBlockHeader()
 size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
                                NAV_FILE* ptrNavFile);
+
+
 
 #endif // NAVFILES_H

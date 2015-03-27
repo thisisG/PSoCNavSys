@@ -33,6 +33,10 @@ int main()
   testWPHandler();
   testmakeTemplateCfgFile();
 
+  const char cfgFile[20] = "cfgtmplt.tst";
+  const char wpList[20] = "list.tst";
+  addWPListFileToCfgFile(cfgFile, wpList);
+
   // Navmath tests
   testNavMath();
 
