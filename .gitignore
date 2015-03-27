@@ -5,6 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
+*/*.tags
+*/*.tags_sorted_by_file
 
 # PSoC Creator specific files and directories
 .DS_Store
