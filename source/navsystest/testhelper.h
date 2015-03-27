@@ -65,6 +65,18 @@ void printPassed(const char* message)
   NAV_printf("\r\n");
 }
 
+void printConclusion(const uint8_t testPassed, const char* message)
+{
+  if (testPassed == 1)
+  {
+    printPassed(message);
+  }
+  else
+  {
+    printFailed(message);
+  }
+}
+
 uint8_t compNavFileHeader(const struct NavFileHeader* headerA,
                           const struct NavFileHeader* headerB)
 {

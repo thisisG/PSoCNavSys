@@ -341,6 +341,10 @@ int main()
         // WP handler tests
         testWPHandler();
         CyDelay(500);
+        testmakeTemplateCfgFile();
+        CyDelay(500);
+        testaddWPListFileToCfgFile();
+        CyDelay(500);
         
         // Navmath tests
         testNavMath();

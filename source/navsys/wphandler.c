@@ -240,10 +240,9 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     // Get the count of items stored in the list
     NavFileHeader cfgFileHeader;
     initNavFileHeader(&cfgFileHeader);
-    freadNavFileHeader(&cfgFileHeader, cfgFile);
     NavConfigFileHeader cfgHeader;
     initNavConfigFileHeader(&cfgHeader);
-    freadNavConfigFileHeader(&cfgHeader, cfgFile);
+    cfgGetFileHeaderCfgHeader(cfgFile, &cfgFileHeader, &cfgHeader);
 
     size_t WPListCount = cfgHeader.numberOfWPLists;
     size_t newWPListCount = WPListCount + 1;
@@ -276,22 +275,13 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     }
 
     // Find the total size of what we want to copy
-    size_t copySize = lastArrayStartPosition - insertPosition;
+    size_t copySize = insertPosition - lastArrayStartPosition;
 
     // Copy each location sizeof(char[20]) bytes down in the file, starting at
     // the end
-    NAV_fseek(cfgFile, lastArrayStartPosition, NAV_SEEK_SET);
-    char charBuffer[20];
-    int32_t bytesTwoCharArrays = 2 * sizeof(char[20]);
-    while (copySize > 0)
-    {
-      NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
-      NAV_fwrite(charBuffer, sizeof(char[20]), 1, cfgFile);
-      NAV_fseek(cfgFile, -bytesTwoCharArrays, NAV_SEEK_CUR);
-      copySize -= sizeof(char[20]);
-    }
+    moveCharArraysDown(cfgFile, copySize, lastArrayStartPosition);
 
-    // Go to seek position and insert the new char array.
+    // Go to insert position and insert the new char array.
     NAV_fseek(cfgFile, insertPosition, NAV_SEEK_SET);
     NAV_fwrite(WPFileName, sizeof(char[20]), 1, cfgFile);
 

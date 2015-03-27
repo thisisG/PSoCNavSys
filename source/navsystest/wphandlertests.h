@@ -21,7 +21,7 @@ extern "C" {
 }
 #endif // __cplusplus
 
-void testWPHandler()
+uint8_t testWPHandler()
 {
   uint8_t testPassed = 1;
   size_t numberItemsWritten = 0;
@@ -169,14 +169,9 @@ void testWPHandler()
     NAV_printf("coordIn[arrayLength - 1] != tempCoord\r\n");
   }
 
-  if (testPassed)
-  {
-    printPassed(testName);
-  }
-  else
-  {
-    printFailed(testName);
-  }
+  printConclusion(testPassed, testName);
+
+  return testPassed;
 }
 
 uint8_t testmakeTemplateCfgFile()
@@ -232,14 +227,54 @@ uint8_t testmakeTemplateCfgFile()
     NAV_printf("cfgHeader.currentExeptionWPList != 0");
   }
 
-  if (testPassed == 1)
+  printConclusion(testPassed, testName);
+
+  return testPassed;
+}
+
+uint8_t testaddWPListFileToCfgFile()
+{
+  uint8_t testPassed = 1;
+  const char testName[64] = "testaddWPListFileToCfgFile()";
+  const char cfgFileName[20] = "cfgtmp.tst";
+  const char WPListIn1[20] = "aAaAaA.bBb";
+  const char WPListIn2[20] = "TtTtTt.OoO";
+  char WPListOut1[20] = "";
+  char WPListOut2[20] = "";
+  NAV_FILE* navFile;
+  NavVersion version = NAV_VERSION_1;
+
+  printTestHeader(testName);
+
+  makeTemplateCfgFile(cfgFileName, version);
+  if (addWPListFileToCfgFile(cfgFileName, WPListIn1) != 1)
   {
-    printPassed(testName);
+    testPassed = 0;
+    NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn1) != 1\r\n");
   }
-  else
+
+  if (addWPListFileToCfgFile(cfgFileName, WPListIn2) != 1)
   {
-    printFailed(testName);
+    testPassed = 0;
+    NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn2) != 1\r\n");
   }
+    
+  navFile = NAV_fopen(cfgFileName, "rb");
+  NAV_fseek(navFile, SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_SET);
+  NAV_fread(WPListOut1, sizeof(char[20]), 1, navFile);
+  NAV_fread(WPListOut2, sizeof(char[20]), 1, navFile);
+  if (strncmp(WPListIn1, WPListOut1, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(WPListIn1, WPListOut1, 20) != 0\r\n");
+  }
+  if (strncmp(WPListIn2, WPListOut2, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(WPListIn2, WPListOut2, 20) != 0\r\n");
+  }
+
+  printConclusion(testPassed, testName);
 
   return testPassed;
 }

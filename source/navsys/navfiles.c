@@ -124,6 +124,44 @@ int32_t NAV_ftell(NAV_FILE* ptrNavFile)
 }
 
 /***********************************************
+** Single purpose file functions
+***********************************************/
+
+void checkAndCloseNavFile(NAV_FILE* navFile)
+{
+  if (navFile != NULL)
+  {
+    NAV_fclose(navFile);
+    navFile = NULL;
+  }
+}
+
+void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
+                               NavConfigFileHeader* cfgHeader)
+{
+  freadNavFileHeader(fileHeader, cfgFile);
+  freadNavConfigFileHeader(cfgHeader, cfgFile);
+}
+
+void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
+                        const size_t startEntryAtEnd)
+{
+  size_t leftToCopy = copySize;
+  char charBuffer[20];
+  int32_t bytesTwoCharArrays = 2 * sizeof(char[20]);
+  NAV_fseek(cfgFile, startEntryAtEnd, NAV_SEEK_SET);
+  // Copy last entry to next position in file, then second last entry to the
+  // previous position of the last entry etc until copySize = 0.
+  while (leftToCopy > 0)
+  {
+    NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
+    NAV_fwrite(charBuffer, sizeof(char[20]), 1, cfgFile);
+    NAV_fseek(cfgFile, -bytesTwoCharArrays, NAV_SEEK_CUR);
+    leftToCopy -= sizeof(char[20]);
+  }
+}
+
+/***********************************************
 ** Structure read/write functions
 ***********************************************/
 

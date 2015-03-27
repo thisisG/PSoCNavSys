@@ -194,6 +194,19 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
 int32_t NAV_ftell(NAV_FILE *ptrNavFile);
 
 /***********************************************
+** Single purpose file functions
+***********************************************/
+
+void checkAndCloseNavFile(NAV_FILE* navFile);
+
+void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile,
+  NavFileHeader* fileHeader,
+                               NavConfigFileHeader* cfgHeader);
+
+void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
+                        const size_t startEntryAtEnd);
+
+/***********************************************
 ** Structure read/write functions
 ***********************************************/
 
