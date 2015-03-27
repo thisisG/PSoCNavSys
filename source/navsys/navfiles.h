@@ -87,13 +87,6 @@ int32_t NAV_ftell(NAV_FILE *ptrNavFile);
 
 void checkAndCloseNavFile(NAV_FILE* navFile);
 
-void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile,
-  NavFileHeader* fileHeader,
-                               NavConfigFileHeader* cfgHeader);
-
-void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
-                        const size_t startEntryAtEnd);
-
 /***********************************************
 ** Structure read/write functions
 ***********************************************/

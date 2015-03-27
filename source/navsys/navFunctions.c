@@ -161,7 +161,7 @@ CurrentNavState closestWPHandler(NavState* navS)
 
   // Open config file
   navS->stateData.WPHandler.fileManager.ptrCfgFile
-    = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
 
   // Read the file header and config file header.
   NavFileHeader fileHeader;
@@ -169,35 +169,35 @@ CurrentNavState closestWPHandler(NavState* navS)
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    &fileHeader, &cfgHeader);
+                            &fileHeader, &cfgHeader);
 
   // Seek to the offset of the char array for the current WP listed
   size_t dataOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER
-    + (cfgHeader.currentWPList
-    * (SIZE_NAV_DATABLOCK_HEADER + sizeof(char[20])));
+      + (cfgHeader.currentWPList
+         * (SIZE_NAV_DATABLOCK_HEADER + sizeof(char[20])));
   NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile, dataOffset,
-    NAV_SEEK_SET);
+            NAV_SEEK_SET);
 
   // Read data header and name of WPlist into wpListFilename
   NavDatablockHeader dataHeader;
   initNavDatablockHeader(&dataHeader);
   freadNavDatablockHeader(&dataHeader,
-    navS->stateData.WPHandler.fileManager.ptrCfgFile);
+                          navS->stateData.WPHandler.fileManager.ptrCfgFile);
   NAV_fread(navS->stateData.WPHandler.fileManager.wpListFileName,
-    sizeof(char[20]), 1,
-    navS->stateData.WPHandler.fileManager.ptrCfgFile);
+            sizeof(char[20]), 1,
+            navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   // We are now done with the cfg file, so we should close it.
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   // Open the WP list file
   WPHandlerOpen(&(navS->stateData.WPHandler),
-    navS->stateData.WPHandler.fileManager.wpListFileName);
+                navS->stateData.WPHandler.fileManager.wpListFileName);
 
   // Get the distance to the goal that was updated by WPHandlerOpen() for a
   // baseline distance that we compare the rest of the list to
   float minDist = distanceCirclePathAtoB(&(navS->currentLocation),
-    &(navS->stateData.WPGoal));
+                                         &(navS->stateData.WPGoal));
 
   // Cycle through the waypoints using WPHandlerGetNextWP and find the
   // closest wp and store the number of the WP
@@ -206,9 +206,9 @@ CurrentNavState closestWPHandler(NavState* navS)
   while (WPCount != -1)
   {
     WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler),
-      &(navS->stateData.nextWP));
+                              &(navS->stateData.nextWP));
     float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
-      &(navS->stateData.nextWP));
+                                            &(navS->stateData.nextWP));
     if (tempDist < minDist)
     {
       nextWPNumber = WPCount;
@@ -379,7 +379,7 @@ uint8_t coordsEqual(const struct Coordinate* coordA,
 }
 
 #ifdef _WIN32
-void printCoordData(Coordinate* coord)
+void printCoordData(const Coordinate* coord)
 {
   printf("Coordinate data: \n");
   printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude,

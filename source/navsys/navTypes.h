@@ -253,7 +253,6 @@ typedef struct NavWPHandler
   size_t maxWPCount;
 } NavWPHandler;
 
-
 /***********************************************
 ** Main types
 ***********************************************/

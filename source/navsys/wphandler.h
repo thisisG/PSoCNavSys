@@ -30,7 +30,6 @@ extern "C" {
 }
 #endif // __cplusplus
 
-
 /***********************************************
 ** Initialisation functions
 ***********************************************/
@@ -56,13 +55,23 @@ int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP);
 void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber);
 
 /***********************************************
+** Helper functions
+***********************************************/
+
+void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
+                               NavConfigFileHeader* cfgHeader);
+
+void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
+                        const size_t startEntryAtEnd);
+
+/***********************************************
 ** File generation functions
 ***********************************************/
 
 size_t generateWPListFile(const char* fileName,
-                           const NavDatablockHeader* blockHeaderArray,
-                           const Coordinate* coordArray,
-                           const size_t arrayLength);
+                          const NavDatablockHeader* blockHeaderArray,
+                          const Coordinate* coordArray,
+                          const size_t arrayLength);
 
 size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion);
 

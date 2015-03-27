@@ -77,10 +77,10 @@ uint8_t WPHandlerOpen(NavWPHandler* wpHandler, const char* wpFileName)
     // Set the wpGoal in the wpHandler
     wpHandler->wpGoal = WPListHeader.endCoordinate;
 
-    // Set the current wp counter to -1 to show that we are at the start of the
+    // Set the current wp counter to 0 to show that we are at the start of the
     // list and that the WP handler is ready for the first call to get the next
     // WP in the list via the WPHandlerNextWP() function.
-    wpHandler->currentWPCount = -1;
+    wpHandler->currentWPCount = 0;
 
     // Set the maximum wp count to number of entries in list.
     wpHandler->maxWPCount = WPListHeader.numberOfEntries;
@@ -119,17 +119,17 @@ int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
     zeroCoordinate(&coord);
     freadCoordinate(&coord, wpHandler->fileManager.ptrWPList);
 
-    (*nextWP) = coord;
     WPCount++;
+    (*nextWP) = coord;
     returnCount = WPCount;
+
+    // Update the external variables.
+    wpHandler->currentWPCount = WPCount;
   }
   else
   {
     // Do nothing, return value already -1 to show there are no more waypoints.
   }
-
-  // Update the external variables.
-  wpHandler->currentWPCount = WPCount;
   return returnCount;
 }
 
@@ -149,6 +149,38 @@ void WPHandlerSeekWP(NavWPHandler* wpHandler, const size_t wpNumber)
 
   NAV_fseek(wpHandler->fileManager.ptrWPList, totalOffset, NAV_SEEK_SET);
   wpHandler->currentWPCount = wpNumber;
+}
+
+/***********************************************
+** Helper functions
+***********************************************/
+
+void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
+                               NavConfigFileHeader* cfgHeader)
+{
+  freadNavFileHeader(fileHeader, cfgFile);
+  freadNavConfigFileHeader(cfgHeader, cfgFile);
+}
+
+// Test
+// VS2013: OK
+// PSoC: OK
+void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
+                        const size_t startEntryAtEnd)
+{
+  size_t leftToCopy = copySize;
+  char charBuffer[20];
+  int32_t bytesTwoCharArrays = 2 * sizeof(char[20]);
+  NAV_fseek(cfgFile, startEntryAtEnd, NAV_SEEK_SET);
+  // Copy last entry to next position in file, then second last entry to the
+  // previous position of the last entry etc until copySize = 0.
+  while (leftToCopy > 0)
+  {
+    NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
+    NAV_fwrite(charBuffer, sizeof(char[20]), 1, cfgFile);
+    NAV_fseek(cfgFile, -bytesTwoCharArrays, NAV_SEEK_CUR);
+    leftToCopy -= sizeof(char[20]);
+  }
 }
 
 /***********************************************

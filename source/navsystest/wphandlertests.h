@@ -117,8 +117,10 @@ uint8_t testWPHandler()
 
   // Get each WP until list is empty and store in coordOut array
   i = 0;
-  while (WPHandlerNextWP(&testWPHandler, &coordOut[i]))
+  zeroCoordinate(&tempCoord);
+  while (WPHandlerNextWP(&testWPHandler, &tempCoord) != -1)
   {
+    coordOut[i] = tempCoord;
     i++;
   }
 

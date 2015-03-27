@@ -120,7 +120,7 @@ uint8_t coordsEqual(const struct Coordinate* coordA,
                     const struct Coordinate* coordB);
 
 #ifdef _WIN32
-void printCoordData(Coordinate* coord);
+void printCoordData(const Coordinate* coord);
 void printCurrentCoordAndHeading(NavState* navS);
 #endif // _WIN32
 
