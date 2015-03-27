@@ -94,8 +94,8 @@ size_t generateWPListFile(const char* fileName,
                            const Coordinate* coordArray,
                            const size_t arrayLength);
 
-size_t makeTemplateCfgFile(const char* fileName);
+size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion);
 
-size_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName);
+uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName);
 
 #endif // WPHANDLER_H

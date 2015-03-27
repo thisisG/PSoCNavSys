@@ -180,4 +180,69 @@ void testWPHandler()
   }
 }
 
+uint8_t testmakeTemplateCfgFile()
+{
+  uint8_t testPassed = 1;
+  const char testName[64] = "testmakeTemplateCfgFile()";
+  const char testFileName[20] = "cfgtmplt.tst";
+  NAV_FILE* navFile;
+  NavVersion version = NAV_VERSION_1;
+
+  printTestHeader(testName);
+
+  makeTemplateCfgFile(testFileName, version);
+
+  navFile = NAV_fopen(testFileName, "rb");
+
+  NavFileHeader fileHeader;
+  initNavFileHeader(&fileHeader);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+
+  freadNavFileHeader(&fileHeader, navFile);
+  if (fileHeader.fileType != CONFIG_FILE)
+  {
+    testPassed = 0;
+    NAV_printf("fileHeader.fileType != CONFIG_FILE\r\n");
+  }
+  else if (fileHeader.fileVersion != version)
+  {
+    testPassed = 0;
+    NAV_printf("fileHeader.fileVersion != version\r\n");
+  }
+
+  freadNavConfigFileHeader(&cfgHeader, navFile);
+  if (cfgHeader.numberOfWPLists != 0)
+  {
+    testPassed = 0;
+    NAV_printf("cfgHeader.numberOfWPLists != 0");
+  }
+  else if (cfgHeader.currentWPList != 0)
+  {
+    testPassed = 0;
+    NAV_printf("cfgHeader.currentWPList != 0");
+  }
+  else if (cfgHeader.numberOfExeptionWPLists != 0)
+  {
+    testPassed = 0;
+    NAV_printf("cfgHeader.numberOfExeptionWPLists != 0");
+  }
+  else if (cfgHeader.currentExeptionWPList != 0)
+  {
+    testPassed = 0;
+    NAV_printf("cfgHeader.currentExeptionWPList != 0");
+  }
+
+  if (testPassed == 1)
+  {
+    printPassed(testName);
+  }
+  else
+  {
+    printFailed(testName);
+  }
+
+  return testPassed;
+}
+
 #endif // WPHANDLERTESTS_H

@@ -31,6 +31,7 @@ int main()
 
   // WP handler tests
   testWPHandler();
+  testmakeTemplateCfgFile();
 
   // Navmath tests
   testNavMath();

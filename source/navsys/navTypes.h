@@ -19,6 +19,7 @@ extern "C" {
 #include <stdio.h>
 #endif // _WIN32
 #include "navconfig.h"
+#include "wphandler.h"
 
 #ifdef __cplusplus
 }
