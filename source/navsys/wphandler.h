@@ -64,6 +64,11 @@ void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
 void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
                         const size_t startEntryAtEnd);
 
+void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char* listName);
+
+void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
+                            char* listName);
+
 /***********************************************
 ** File generation functions
 ***********************************************/
@@ -73,9 +78,22 @@ size_t generateWPListFile(const char* fileName,
                           const Coordinate* coordArray,
                           const size_t arrayLength);
 
-size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion);
+uint8_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion);
 
-uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName);
+uint8_t makeTemplateWPListFile(const char* fileName, NavVersion sysVersion,
+                               NavFileType fileType);
+
+uint8_t appendCoordToWPListFile(const char* fileName, const Coordinate* coord,
+                                const NavDataType dataType);
+
+uint8_t addRegularWPListFileToCfgFile(const char* cfgFileName,
+                                      const char* WPFileName);
+
+uint8_t addExeptionWPListFileToCfgFile(const char* cfgFileName,
+                                      const char* EWPFileName);
+
+uint8_t addWPListToCfgFile(const char* cfgFileName, const char* listFileName,
+                           const NavFileType fileType);
 
 #endif // WPHANDLER_H
 

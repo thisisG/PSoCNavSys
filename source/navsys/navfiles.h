@@ -39,8 +39,6 @@ extern "C" {
 #define NAV_SEEK_CUR 1
 #define NAV_SEEK_END 2
 
-
-
 /***********************************************
 ** Initialisation function declarations
 ***********************************************/
@@ -79,7 +77,7 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
                    NAV_FILE* ptrNavFile);
 
 // TODO Description NAV_ftell()
-int32_t NAV_ftell(NAV_FILE *ptrNavFile);
+int32_t NAV_ftell(NAV_FILE* ptrNavFile);
 
 /***********************************************
 ** Single purpose file functions

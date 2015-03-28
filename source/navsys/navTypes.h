@@ -113,7 +113,7 @@ typedef enum CurrentNavState
 } CurrentNavState;
 
 /***********************************************
-** File type declarations
+** File management declarations
 ***********************************************/
 
 // Create typedefs for file pointers in order to create interfaces for

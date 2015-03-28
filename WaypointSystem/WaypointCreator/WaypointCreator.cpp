@@ -45,7 +45,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
   for (size_t i = 0; i < (sizeof(coordArray) / sizeof(coordArray[0])); i++)
   {
-    zeroCoordinate(&coordArray[i]);
+    initCoordinate(&coordArray[i]);
     // coordArray[i].dLatitude = 0xFFFF;
     coordArray[i].dLatitude = 1;
     coordArray[i].dLongitude = 2 * i;

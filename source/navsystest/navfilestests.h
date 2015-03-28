@@ -37,8 +37,8 @@ void testfCoordinate()
   size_t i = 0;
   for (i = 0; i < arrayLength; i++)
   {
-    zeroCoordinate(&testArrayIn[i]);
-    zeroCoordinate(&testArrayOut[i]);
+    initCoordinate(&testArrayIn[i]);
+    initCoordinate(&testArrayOut[i]);
     // Fill array with numbers that are sensible and different
     testArrayIn[i].dLatitude = i;
     testArrayIn[i].dLongitude = i + 5;
@@ -167,8 +167,8 @@ void testfWPListHeader()
 
   Coordinate testCoordA;
   Coordinate testCoordB;
-  zeroCoordinate(&testCoordA);
-  zeroCoordinate(&testCoordB);
+  initCoordinate(&testCoordA);
+  initCoordinate(&testCoordB);
 
   printTestHeader(testName);
 

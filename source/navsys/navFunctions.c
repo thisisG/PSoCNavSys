@@ -16,7 +16,7 @@ extern "C" {
 }
 #endif
 
-void zeroCoordinate(Coordinate* coord)
+void initCoordinate(Coordinate* coord)
 {
   coord->dLatitude = 0;
   coord->dLongitude = 0;
@@ -46,7 +46,7 @@ void initSerialBuffer(SerialBuffer* serialB)
   }
 }
 
-void zeroSystemTime(SystemTime* time)
+void initSystemTime(SystemTime* time)
 {
   time->Sec = 0;
   time->Min = 0;
@@ -61,15 +61,15 @@ void zeroSystemTime(SystemTime* time)
 void initStateDataStructure(StateDataStructure* stateD)
 {
   stateD->stateKeeper = closestWP;
-  zeroCoordinate(&(stateD->WPGoal));
-  zeroCoordinate(&(stateD->eWPGoal));
+  initCoordinate(&(stateD->WPGoal));
+  initCoordinate(&(stateD->eWPGoal));
   stateD->maxWPDistance = MAX_WP_DISTANCE;
   stateD->arrivalWPDistance = ARRIVED_WP_DISTANCE;
   stateD->exceptionMaxWPDistance = EXCEPTION_MAX_WP_DISTANCE;
   stateD->exceptionWPArrivalDistance = EXCEPTION_ARRIVED_WP_DISTANCE;
 }
 
-void zeroNavState(NavState* navS)
+void initNavState(NavState* navS)
 {
   // Want the default state of the system to be well defined at a point that
   // can handle all modes of normal operation and exceptions after the system
@@ -77,9 +77,9 @@ void zeroNavState(NavState* navS)
   initStateDataStructure(&(navS->stateData));
   initGpsBuffer(&(navS->gpsBuffer));
   initSerialBuffer(&(navS->serialBuffer));
-  zeroCoordinate(&(navS->currentLocation));
-  zeroCoordinate(&(navS->nextWaypoint));
-  zeroSystemTime(&(navS->time));
+  initCoordinate(&(navS->currentLocation));
+  initCoordinate(&(navS->nextWaypoint));
+  initSystemTime(&(navS->time));
   navS->dCurrentHeading = 0;
   navS->dOverallHeading = 0;
   navS->currentSpeedKmh = 0;
@@ -143,7 +143,7 @@ void updateNavState(NavState* navS)
   case firstCurrentNavState:
   case lastCurrentNavState:
   default:
-    // The way to handle these as they should never ocurr is to set the
+    // The way to handle these as they should never occur is to set the
     // stateKeeper to closestWP as this should be the default state in case
     // of unforseen actions.
     newState = closestWPHandler(navS);
@@ -173,8 +173,7 @@ CurrentNavState closestWPHandler(NavState* navS)
 
   // Seek to the offset of the char array for the current WP listed
   size_t dataOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER
-      + (cfgHeader.currentWPList
-         * (SIZE_NAV_DATABLOCK_HEADER + sizeof(char[20])));
+      + (cfgHeader.currentWPList * (sizeof(char[20])));
   NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile, dataOffset,
             NAV_SEEK_SET);
 
@@ -203,16 +202,20 @@ CurrentNavState closestWPHandler(NavState* navS)
   // closest wp and store the number of the WP
   int32_t WPCount = 0;
   int32_t nextWPNumber = 0;
+  // WPHandlerNextWP returns -1 when there are no more waypoints in the list
   while (WPCount != -1)
   {
     WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler),
                               &(navS->stateData.nextWP));
-    float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
-                                            &(navS->stateData.nextWP));
-    if (tempDist < minDist)
+    if (WPCount != -1)
     {
-      nextWPNumber = WPCount;
-      minDist = tempDist;
+      float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
+                                              &(navS->stateData.nextWP));
+      if (tempDist < minDist)
+      {
+        nextWPNumber = WPCount;
+        minDist = tempDist;
+      }
     }
   }
 
@@ -279,8 +282,29 @@ CurrentNavState atWPHandler(NavState* navS)
   return returnState;
 }
 
-// TODO
-CurrentNavState nextWPHandler(NavState* navS) { return closestWP; }
+CurrentNavState nextWPHandler(NavState* navS)
+{
+  CurrentNavState returnState = toWP;
+
+  // Update the WP and the distance
+  int32_t wpCount = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+  
+  // Check that the WP number is indeed valid
+  if (wpCount != -1)
+  {
+  navS->distanceToCurrentWP
+      = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
+  }
+  // If we get -1 the last wp in the list is different from the WPgoal, this
+  // should never happen.
+  else
+  {
+    // TODO ERROR REPORTING
+    returnState = closestWP;
+  }
+
+  return returnState;
+}
 
 // TODO
 CurrentNavState atGoalHandler(NavState* navS) { return closestWP; }

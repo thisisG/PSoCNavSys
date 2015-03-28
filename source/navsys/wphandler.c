@@ -35,7 +35,7 @@ void initNavWPFileManager(NavWPFileManager* WPFileManager)
 void initNavWPHandler(NavWPHandler* WPHandler)
 {
   initNavWPFileManager(&(WPHandler->fileManager));
-  zeroCoordinate(&(WPHandler->wpGoal));
+  initCoordinate(&(WPHandler->wpGoal));
   WPHandler->offsetFirstWPBlock = 0;
   WPHandler->currentWPCount = 0;
   WPHandler->maxWPCount = 0;
@@ -106,6 +106,8 @@ int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
   size_t WPMaxCount = wpHandler->maxWPCount;
 
   // Check if there are more wps left in the list
+  // WPCount goes from 0 to N-1, WPMaxCount is N, when N-1 + 1 == N we are out
+  // of WPs to use.
   if ((WPCount + 1) <= WPMaxCount)
   {
     // The file should already be in a position for reading the next WP.
@@ -116,7 +118,7 @@ int32_t WPHandlerNextWP(NavWPHandler* wpHandler, Coordinate* nextWP)
 
     // Read the coordinate.
     Coordinate coord;
-    zeroCoordinate(&coord);
+    initCoordinate(&coord);
     freadCoordinate(&coord, wpHandler->fileManager.ptrWPList);
 
     WPCount++;
@@ -183,6 +185,33 @@ void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
   }
 }
 
+void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char* listName)
+{
+  // Calculate offset and seek to position
+  size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_FILE_WP_LIST_HEADER;
+  size_t totalOffset = baseOffset + (listNumber * sizeof(char[20]));
+  NAV_fseek(cfgFile, totalOffset, NAV_SEEK_SET);
+
+  // Read the list name directly into listName
+  NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
+}
+
+void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
+                            char* listName)
+{
+  // See to the cfg header and read the cfg header
+  NAV_fseek(cfgFile, SIZE_NAV_FILE_HEADER, NAV_SEEK_SET);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+  freadNavConfigFileHeader(&cfgHeader, cfgFile);
+
+  // Find offset, seek to it and read the exception list name
+  size_t regularWPListCount = cfgHeader.numberOfWPLists;
+  size_t offset = (regularWPListCount + listNumber) * sizeof(char[20]);
+  NAV_fseek(cfgFile, offset, NAV_SEEK_CUR);
+  NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
+}
+
 /***********************************************
 ** File generation functions
 ***********************************************/
@@ -234,27 +263,130 @@ size_t generateWPListFile(const char* fileName,
   return dataItemsWritten;
 }
 
-size_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion)
+uint8_t makeTemplateCfgFile(const char* fileName, NavVersion sysVersion)
 {
-  size_t itemsWritten = 0;
+  uint8_t success = 0;
   NAV_FILE* cfgFile = NAV_fopen(fileName, "wb");
 
-  NavFileHeader fileHeader;
-  initNavFileHeader(&fileHeader);
-  fileHeader.fileType = CONFIG_FILE;
-  fileHeader.fileVersion = sysVersion;
-  itemsWritten += fwriteNavFileHeader(&fileHeader, cfgFile);
+  if (cfgFile != NULL)
+  {
+    success = 1;
+    NavFileHeader fileHeader;
+    initNavFileHeader(&fileHeader);
+    fileHeader.fileType = CONFIG_FILE;
+    fileHeader.fileVersion = sysVersion;
+    fwriteNavFileHeader(&fileHeader, cfgFile);
 
-  NavConfigFileHeader cfgHeader;
-  initNavConfigFileHeader(&cfgHeader);
-  itemsWritten += fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
+    NavConfigFileHeader cfgHeader;
+    initNavConfigFileHeader(&cfgHeader);
+    fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
 
-  NAV_fclose(cfgFile);
+    NAV_fclose(cfgFile);
+  }
+  else
+  {
+    // Do nothing, ptr was NULL and return value is already 0
+  }
 
-  return itemsWritten;
+  return success;
 }
 
-uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
+uint8_t makeTemplateWPListFile(const char* fileName,
+                               const NavVersion sysVersion,
+                               const NavFileType fileType)
+{
+  uint8_t success = 0;
+
+  NAV_FILE* wpFile = NAV_fopen(fileName, "wb");
+
+  if (wpFile != NULL)
+  {
+    success = 1;
+    NavFileHeader fileHeader;
+    initNavFileHeader(&fileHeader);
+    fileHeader.fileType = fileType;
+    fileHeader.fileVersion = sysVersion;
+    fileHeader.nextHeaderSize = 0; // Not implemented yet
+    fwriteNavFileHeader(&fileHeader, wpFile);
+
+    NavFileWPListHeader wpListHeader;
+    initNavFileWPListHeader(&wpListHeader);
+    // All parameters are zero since there are no entries yet.
+    fwriteNavFileWPListHeader(&wpListHeader, wpFile);
+
+    NAV_fclose(wpFile);
+  }
+  else
+  {
+    // Do nothing, ptr was NULL and return value is already 0
+  }
+
+  return success;
+}
+
+uint8_t appendCoordToWPListFile(const char* fileName, const Coordinate* coord,
+                                const NavDataType dataType)
+{
+  uint8_t success = 0;
+
+  // Open for both read and write
+  NAV_FILE* wpFile = NAV_fopen(fileName, "r+b");
+
+  if (wpFile != NULL)
+  {
+    success = 1;
+
+    NavFileHeader fileHeader;
+    initNavFileHeader(&fileHeader);
+    freadNavFileHeader(&fileHeader, wpFile);
+
+    NavFileWPListHeader wpFileHeader;
+    initNavFileWPListHeader(&wpFileHeader);
+
+    // Check if this is the first WP added, if so add it to the data structure
+    // as the starting point
+    if (wpFileHeader.numberOfEntries == 0)
+    {
+      wpFileHeader.startCoordinate = (*coord);
+    }
+    // Assign the added WP as the goal in the data structure
+    wpFileHeader.endCoordinate = (*coord);
+
+    // Store the current WP count for inserting new coordinate later
+    uint32_t oldWPCount = wpFileHeader.numberOfEntries;
+
+    // Update the WP count
+    wpFileHeader.numberOfEntries += 1;
+    // Seek back and update the wpHeader stored in file
+    NAV_fseek(wpFile, -SIZE_NAV_FILE_WP_LIST_HEADER, NAV_SEEK_CUR);
+    fwriteNavFileWPListHeader(&wpFileHeader, wpFile);
+
+    // Seek to the insert position for the coordinate we are after
+    int32_t seekPosition = oldWPCount
+        * (SIZE_NAV_DATABLOCK_HEADER + SIZE_COORDINATE);
+    NAV_fseek(wpFile, seekPosition, NAV_SEEK_CUR);
+
+    // Write a datablockheader and coordinate
+    NavDatablockHeader dataHeader;
+    initNavDatablockHeader(&dataHeader);
+    dataHeader.dataVersion = fileHeader.fileVersion;
+    dataHeader.dataType = dataType;
+    dataHeader.nextDataSize = 0; // Yet to be implemented
+    fwriteNavDatablockHeader(&dataHeader, wpFile);
+    fwriteCoordinate(coord, wpFile);
+
+    NAV_fclose(wpFile);
+  }
+  else
+  {
+    // Do nothing, ptr was NULL and return value is already 0
+  }
+
+  return success;
+}
+
+uint8_t addRegularWPListFileToCfgFile(const char* cfgFileName,
+                                      const char* WPFileName)
 {
   uint8_t operationSuccess = 0;
 
@@ -280,7 +412,7 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
     NAV_fseek(cfgFile, -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
     fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
 
-    // Make room for the new char[20] array  in the cfg file.
+    // Make room for the new char[20] array in the cfg file.
     // Find the position we want to insert the new char[20]array
     size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER;
     // The insert position is after the base offset and after the last char[20]
@@ -317,4 +449,79 @@ uint8_t addWPListFileToCfgFile(const char* cfgFileName, const char* WPFileName)
   }
 
   return operationSuccess;
+}
+
+uint8_t addExeptionWPListFileToCfgFile(const char* cfgFileName,
+                                       const char* EWPFileName)
+{
+  uint8_t success = 0;
+
+  NAV_FILE* cfgFile = NAV_fopen(cfgFileName, "r+b");
+  if (cfgFile != NULL)
+  {
+    success = 1;
+
+    // Get the count of items stored in the list
+    NavFileHeader cfgFileHeader;
+    initNavFileHeader(&cfgFileHeader);
+    NavConfigFileHeader cfgHeader;
+    initNavConfigFileHeader(&cfgHeader);
+    cfgGetFileHeaderCfgHeader(cfgFile, &cfgFileHeader, &cfgHeader);
+
+    size_t ExceptionWPListCount = cfgHeader.numberOfExeptionWPLists;
+    size_t newExWPListCount = ExceptionWPListCount + 1;
+    size_t WPListCount = cfgHeader.numberOfWPLists;
+
+    // Update the header to the new newExWPListCount and write it to file
+    cfgHeader.numberOfExeptionWPLists = newExWPListCount;
+    NAV_fseek(cfgFile, -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
+    fwriteNavConfigFileHeader(&cfgHeader, cfgFile);
+
+    // Add the new char[20] array with new exception list to the end of the
+    // current list of character arrays.
+    size_t totalCount = WPListCount + ExceptionWPListCount;
+    size_t insertPosition = 0;
+    // Check if it is the first list added, if so the offset from current
+    // position is 0
+    if (totalCount == 0)
+    {
+      insertPosition = 0;
+    }
+    else
+    {
+      insertPosition = (totalCount - 1) * sizeof(char[20]);
+    }
+
+    // Seek to the insertposition and write the char array
+    NAV_fseek(cfgFile, insertPosition, NAV_SEEK_CUR);
+    NAV_fwrite(EWPFileName, sizeof(char[20]), 1, cfgFile);
+
+    // Close the file
+    NAV_fclose(cfgFile);
+  }
+  else
+  {
+    // For completeness. Returnvalue is already 0.
+  }
+
+  return success;
+}
+
+uint8_t addWPListToCfgFile(const char* cfgFileName, const char* listFileName,
+                           const NavFileType fileType)
+{
+  uint8_t success = 0;
+  if (fileType == WAYPOINT_LIST_FILE)
+  {
+    success = addRegularWPListFileToCfgFile(cfgFileName, listFileName);
+  }
+  else if (fileType == EXCEPTION_WAYPOINT_LIST_FILE)
+  {
+    success = addExeptionWPListFileToCfgFile(cfgFileName, listFileName);
+  }
+  else
+  {
+    // Case for completion, return value already 0.
+  }
+  return success;
 }

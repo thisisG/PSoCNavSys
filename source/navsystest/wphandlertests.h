@@ -50,7 +50,7 @@ uint8_t testWPHandler()
 
   // Data structures
   Coordinate tempCoord;
-  zeroCoordinate(&tempCoord);
+  initCoordinate(&tempCoord);
   NavDatablockHeader navDataHdrArrayIn[arrayLength];
   NavDatablockHeader navDataHdrArrayOut[arrayLength];
   Coordinate coordIn[arrayLength];
@@ -63,8 +63,8 @@ uint8_t testWPHandler()
     initNavDatablockHeader(&navDataHdrArrayIn[i]);
     initNavDatablockHeader(&navDataHdrArrayOut[i]);
 
-    zeroCoordinate(&coordIn[i]);
-    zeroCoordinate(&coordOut[i]);
+    initCoordinate(&coordIn[i]);
+    initCoordinate(&coordOut[i]);
   }
 
   //////
@@ -117,7 +117,7 @@ uint8_t testWPHandler()
 
   // Get each WP until list is empty and store in coordOut array
   i = 0;
-  zeroCoordinate(&tempCoord);
+  initCoordinate(&tempCoord);
   while (WPHandlerNextWP(&testWPHandler, &tempCoord) != -1)
   {
     coordOut[i] = tempCoord;
@@ -145,7 +145,7 @@ uint8_t testWPHandler()
   // Test if WPHandlerSeekWP functions as expected.
   // Three test cases - first(0), one in the middle and last(arrayLength-1).
   WPHandlerSeekWP(&testWPHandler, 0);
-  zeroCoordinate(&tempCoord);
+  initCoordinate(&tempCoord);
   WPHandlerNextWP(&testWPHandler, &tempCoord);
   if (coordsEqual(&(coordIn[0]), &tempCoord) == 0)
   {
@@ -154,7 +154,7 @@ uint8_t testWPHandler()
   }
 
   WPHandlerSeekWP(&testWPHandler, 3);
-  zeroCoordinate(&tempCoord);
+  initCoordinate(&tempCoord);
   WPHandlerNextWP(&testWPHandler, &tempCoord);
   if (coordsEqual(&(coordIn[3]), &tempCoord) == 0)
   {
@@ -163,7 +163,7 @@ uint8_t testWPHandler()
   }
 
   WPHandlerSeekWP(&testWPHandler, arrayLength - 1);
-  zeroCoordinate(&tempCoord);
+  initCoordinate(&tempCoord);
   WPHandlerNextWP(&testWPHandler, &tempCoord);
   if (coordsEqual(&(coordIn[arrayLength - 1]), &tempCoord) == 0)
   {
@@ -249,20 +249,21 @@ uint8_t testaddWPListFileToCfgFile()
   printTestHeader(testName);
 
   makeTemplateCfgFile(cfgFileName, version);
-  if (addWPListFileToCfgFile(cfgFileName, WPListIn1) != 1)
+  if (addRegularWPListFileToCfgFile(cfgFileName, WPListIn1) != 1)
   {
     testPassed = 0;
     NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn1) != 1\r\n");
   }
 
-  if (addWPListFileToCfgFile(cfgFileName, WPListIn2) != 1)
+  if (addRegularWPListFileToCfgFile(cfgFileName, WPListIn2) != 1)
   {
     testPassed = 0;
     NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn2) != 1\r\n");
   }
-    
+
   navFile = NAV_fopen(cfgFileName, "rb");
-  NAV_fseek(navFile, SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_SET);
+  NAV_fseek(navFile, SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER,
+            NAV_SEEK_SET);
   NAV_fread(WPListOut1, sizeof(char[20]), 1, navFile);
   NAV_fread(WPListOut2, sizeof(char[20]), 1, navFile);
   if (strncmp(WPListIn1, WPListOut1, 20) != 0)
@@ -277,6 +278,107 @@ uint8_t testaddWPListFileToCfgFile()
   }
 
   printConclusion(testPassed, testName);
+
+  return testPassed;
+}
+
+uint8_t testmakeTemplateAndAppend()
+{
+  uint8_t testPassed = 1;
+  const char testName[64] = "testmakeTemplateAndAppend()";
+  const char cfgFileName[20] = "cfgapp.tst";
+
+  const char WPListIn1[20] = "aAaAaA.bBb";
+  const char WPListIn2[20] = "TtTtTt.OoO";
+  char WPListOut1[20] = "";
+  char WPListOut2[20] = "";
+
+  const char ExWPListIn1[20] = "nNmMpP.bBb";
+  const char ExWPListIn2[20] = "EeEeEe.OoO";
+  char ExWPListOut1[20] = "";
+  char ExWPListOut2[20] = "";
+
+  const size_t arrayLength = 5;
+
+  Coordinate WPCoordIn1[arrayLength];
+  Coordinate WPCoordIn2[arrayLength];
+  Coordinate WPCoordOut1[arrayLength];
+  Coordinate WPCoordOut2[arrayLength];
+
+  Coordinate EWPCoordIn1[arrayLength];
+  Coordinate EWPCoordIn2[arrayLength];
+  Coordinate EWPCoordOut1[arrayLength];
+  Coordinate EWPCoordOut2[arrayLength];
+
+  NAV_FILE* cfgFile;
+  NAV_FILE* WPListFile;
+  NAV_FILE* exWPListFile;
+  NavVersion version = NAV_VERSION_1;
+
+  // Create the input data and initialise all coord structures
+  size_t i = 0;
+  for (i = 0; i < arrayLength; i++)
+  {
+    initCoordinate(&WPCoordIn1[i]);
+    initCoordinate(&WPCoordIn2[i]);
+    initCoordinate(&WPCoordOut1[i]);
+    initCoordinate(&WPCoordOut2[i]);
+
+    WPCoordIn1[i].dLatitude = i * i;
+    WPCoordIn1[i].dLongitude = i + 2;
+    WPCoordIn1[i].mLatitude = i;
+    WPCoordIn1[i].mLongitude = 3 * i;
+    WPCoordIn1[i].priority = i;
+
+    WPCoordIn2[i].dLatitude = -(int32_t)(i * i);
+    WPCoordIn2[i].dLongitude = -(int32_t)(i + 2);
+    WPCoordIn2[i].mLatitude = -(int32_t)(i);
+    WPCoordIn2[i].mLongitude = -(int32_t)(3 * i);
+    WPCoordIn2[i].priority = i;
+
+    initCoordinate(&EWPCoordIn1[i]);
+    initCoordinate(&EWPCoordIn2[i]);
+    initCoordinate(&EWPCoordOut1[i]);
+    initCoordinate(&EWPCoordOut2[i]);
+
+    EWPCoordIn1[i].dLatitude = i * i + 3;
+    EWPCoordIn1[i].dLongitude = i + 7;
+    EWPCoordIn1[i].mLatitude = i * 4;
+    EWPCoordIn1[i].mLongitude = 3 * i * i;
+    EWPCoordIn1[i].priority = i;
+
+    EWPCoordIn2[i].dLatitude = -(int32_t)(i * i + 3);
+    EWPCoordIn2[i].dLongitude = -(int32_t)(i + 7);
+    EWPCoordIn2[i].mLatitude = -(int32_t)(i * 4);
+    EWPCoordIn2[i].mLongitude = -(int32_t)(3 * i * i);
+    EWPCoordIn2[i].priority = i;
+  }
+
+  // Create template cfg file and template wp files
+  makeTemplateCfgFile(cfgFileName, NAV_VERSION_1);
+  makeTemplateWPListFile(WPListIn1, NAV_VERSION_1, WAYPOINT_LIST_FILE);
+  makeTemplateWPListFile(WPListIn2, NAV_VERSION_1, WAYPOINT_LIST_FILE);
+  makeTemplateWPListFile(ExWPListIn1, NAV_VERSION_1,
+                         EXCEPTION_WAYPOINT_LIST_FILE);
+  makeTemplateWPListFile(ExWPListIn2, NAV_VERSION_1,
+                         EXCEPTION_WAYPOINT_LIST_FILE);
+
+  // Fill the WPLists with data from input arrays
+  for (i = 0; i < arrayLength; i++)
+  {
+    appendCoordToWPListFile(WPListIn1, &(WPCoordIn1[i]), WAYPOINT_DATA);
+    appendCoordToWPListFile(WPListIn2, &(WPCoordIn2[i]), WAYPOINT_DATA);
+    appendCoordToWPListFile(ExWPListIn1, &(EWPCoordIn1[i]),
+                            EXCEPTION_WAYPOINT_DATA);
+    appendCoordToWPListFile(ExWPListIn2, &(EWPCoordIn2[i]),
+                            EXCEPTION_WAYPOINT_DATA);
+  }
+
+  // Add the wp and exception wp lists to the cfg file
+  addWPListToCfgFile(cfgFileName, WPListIn1, WAYPOINT_LIST_FILE);
+  addWPListToCfgFile(cfgFileName, ExWPListIn1, EXCEPTION_WAYPOINT_LIST_FILE);
+  addWPListToCfgFile(cfgFileName, ExWPListIn2, EXCEPTION_WAYPOINT_LIST_FILE);
+  addWPListToCfgFile(cfgFileName, WPListIn2, WAYPOINT_LIST_FILE);
 
   return testPassed;
 }

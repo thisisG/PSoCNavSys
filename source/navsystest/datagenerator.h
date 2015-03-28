@@ -43,7 +43,7 @@ void csvTestGenerator()
   std::cout << nmeaOutputFile << std::endl;
 
   NavState myNavState;
-  zeroNavState(&myNavState);
+  initNavState(&myNavState);
 
   GpsEmulator myGpsEmulator;
   myGpsEmulator.parseCsvToInfoVector(inputFile);

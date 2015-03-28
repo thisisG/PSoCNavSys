@@ -47,8 +47,8 @@ void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
 // PSoC: OK
 void initNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader)
 {
-  zeroCoordinate(&(ptrWPListHeader->startCoordinate));
-  zeroCoordinate(&(ptrWPListHeader->endCoordinate));
+  initCoordinate(&(ptrWPListHeader->startCoordinate));
+  initCoordinate(&(ptrWPListHeader->endCoordinate));
   ptrWPListHeader->numberOfEntries = 0;
   ptrWPListHeader->nextHeaderSize = 0;
 }

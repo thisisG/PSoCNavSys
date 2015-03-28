@@ -57,12 +57,12 @@ extern "C" {
 }
 #endif
 
-void zeroCoordinate(Coordinate* coord);
+void initCoordinate(Coordinate* coord);
 void initGpsBuffer(GpsBuffer* gpsB);
 void initSerialBuffer(SerialBuffer* serialB);
-void zeroSystemTime(SystemTime* time);
+void initSystemTime(SystemTime* time);
 void initStateDataStructure(StateDataStructure* stateD);
-void zeroNavState(NavState* navS);
+void initNavState(NavState* navS);
 
 /* updateNavState();
 input:
