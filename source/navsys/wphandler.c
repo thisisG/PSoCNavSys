@@ -178,7 +178,6 @@ void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
   // previous position of the last entry etc until leftToCopy = 0.
   while (leftToCopy > 0)
   {
-    printf("pos read:%d\r\n", ftell(cfgFile));
     NAV_fread(charBuffer, sizeof(char[20]), 1, cfgFile);
     // According to C standard there has to be a call to fseek before a write
     // operation is performed when in read/write mode. Go figure.
@@ -190,14 +189,13 @@ void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
   }
 }
 
-void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char* listName)
+void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char listName[20])
 {
   // Calculate offset and seek to position
-  size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_FILE_WP_LIST_HEADER;
-  size_t totalOffset = baseOffset + (listNumber * sizeof(char[20]));
+  size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER;
+  size_t totalOffset = baseOffset + ((listNumber-1) * sizeof(char[20]));
   NAV_fseek(cfgFile, totalOffset, NAV_SEEK_SET);
-
-  // Read the list name directly into listName
+  // Read the name
   NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
 }
 
@@ -212,7 +210,7 @@ void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
 
   // Find offset, seek to it and read the exception list name
   size_t regularWPListCount = cfgHeader.numberOfWPLists;
-  size_t offset = (regularWPListCount + listNumber) * sizeof(char[20]);
+  size_t offset = (regularWPListCount + listNumber - 1) * sizeof(char[20]);
   NAV_fseek(cfgFile, offset, NAV_SEEK_CUR);
   NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
 }
@@ -347,6 +345,7 @@ uint8_t appendCoordToWPListFile(const char* fileName, const Coordinate* coord,
 
     NavFileWPListHeader wpFileHeader;
     initNavFileWPListHeader(&wpFileHeader);
+    freadNavFileWPListHeader(&wpFileHeader, wpFile);
 
     // Check if this is the first WP added, if so add it to the data structure
     // as the starting point
@@ -443,14 +442,7 @@ uint8_t addRegularWPListFileToCfgFile(const char* cfgFileName,
 
     // Find the total size of what we want to copy
     size_t copySize = lastArrayEndPosition - insertPosition;
-
-    printf("copySize: %d\r\n", copySize);
-    printf("insertPosition: %d\r\n", insertPosition);
-    printf("lastArrayStartPosition: %d\r\n", lastArrayStartPosition);
-    printf("lastArrayEndPosition: %d\r\n", lastArrayEndPosition);
-
-    // Copy each location sizeof(char[20]) bytes down in the file, starting at
-    // the end
+    // Copy each location sizeof(char[20]) bytes down in the file
     moveCharArraysDown(cfgFile, copySize, lastArrayStartPosition);
 
     // Go to insert position and insert the new char array.

@@ -311,8 +311,10 @@ uint8_t testmakeTemplateAndAppend()
   Coordinate EWPCoordOut2[arrayLength];
 
   NAV_FILE* cfgFile;
-  NAV_FILE* WPListFile;
-  NAV_FILE* exWPListFile;
+  NAV_FILE* WPListFile1;
+  NAV_FILE* WPListFile2;
+  NAV_FILE* exWPListFile1;
+  NAV_FILE* exWPListFile2;
   NavVersion version = NAV_VERSION_1;
 
   printTestHeader(testName);
@@ -356,8 +358,6 @@ uint8_t testmakeTemplateAndAppend()
     EWPCoordIn2[i].priority = i;
   }
 
-  printf("filled arrays\r\n");
-
   // Create template cfg file and template wp files
   makeTemplateCfgFile(cfgFileName, NAV_VERSION_1);
   makeTemplateWPListFile(WPListIn1, NAV_VERSION_1, WAYPOINT_LIST_FILE);
@@ -378,20 +378,128 @@ uint8_t testmakeTemplateAndAppend()
                             EXCEPTION_WAYPOINT_DATA);
   }
 
-  printf("filled WPLists\r\n");
-
   // Add the wp and exception wp lists to the cfg file
   addWPListToCfgFile(cfgFileName, ExWPListIn1, EXCEPTION_WAYPOINT_LIST_FILE);
-  printf("addedWPList ExWPListIn1\r\n");
-  getchar();
-  addWPListToCfgFile(cfgFileName, ExWPListIn2, EXCEPTION_WAYPOINT_LIST_FILE);
-  printf("addedWPList ExWPListIn2\r\n");
-  getchar();
   addWPListToCfgFile(cfgFileName, WPListIn1, WAYPOINT_LIST_FILE);
-  printf("addedWPList WPListIn1\r\n");
-  getchar();
+  addWPListToCfgFile(cfgFileName, ExWPListIn2, EXCEPTION_WAYPOINT_LIST_FILE);
   addWPListToCfgFile(cfgFileName, WPListIn2, WAYPOINT_LIST_FILE);
-  printf("addedWPList WPListIn2\r\n");
+
+  // Open the cfg file
+  cfgFile = NAV_fopen("cfgapp.tst", "rb");
+  // Check if names were stored correctly
+  getWPListName(cfgFile, 1, WPListOut1);
+  getWPListName(cfgFile, 2, WPListOut2);
+  getExceptionWPListName(cfgFile, 1, ExWPListOut1);
+  getExceptionWPListName(cfgFile, 2, ExWPListOut2);
+  if (strncmp(WPListIn1, WPListOut1, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(WPListIn1, WPListOut1, 20) != 0\r\n");
+  }
+  if (strncmp(WPListIn2, WPListOut2, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(WPListIn2, WPListOut2, 20) != 0\r\n");
+  }
+  if (strncmp(ExWPListIn1, ExWPListOut1, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(ExWPListIn1, ExWPListOut1, 20) != 0\r\n");
+  }
+  if (strncmp(ExWPListIn2, ExWPListOut2, 20) != 0)
+  {
+    testPassed = 0;
+    NAV_printf("strncmp(ExWPListIn2, ExWPListOut2, 20) != 0\r\n");
+  }
+  // Close the cfg file
+  checkAndCloseNavFile(cfgFile);
+
+  // Open the WPListFiles
+  WPListFile1 = NAV_fopen(WPListOut1, "rb");
+  WPListFile2 = NAV_fopen(WPListOut2, "rb");
+  exWPListFile1 = NAV_fopen(ExWPListOut1, "rb");
+  exWPListFile2 = NAV_fopen(ExWPListOut2, "rb");
+  
+  // Read the navFileHeader for each file
+  NavFileHeader fileHdrWP1;
+  initNavFileHeader(&fileHdrWP1);
+  NavFileHeader fileHdrWP2;
+  initNavFileHeader(&fileHdrWP2);
+  NavFileHeader fileHdrEWP1;
+  initNavFileHeader(&fileHdrEWP1);
+  NavFileHeader fileHdrEWP2;
+  initNavFileHeader(&fileHdrEWP2);
+
+  freadNavFileHeader(&fileHdrWP1, WPListFile1);
+  freadNavFileHeader(&fileHdrWP2, WPListFile2);
+  freadNavFileHeader(&fileHdrEWP1, exWPListFile1);
+  freadNavFileHeader(&fileHdrEWP2, exWPListFile2);
+  // Check that the version and type are all well defined
+  if (fileHdrWP1.fileType != WAYPOINT_LIST_FILE
+      || fileHdrWP1.fileVersion != NAV_VERSION_1)
+  {
+    testPassed = 0;
+    NAV_printf("Error in fileHdrWP1\r\n");
+  }
+  if (fileHdrWP2.fileType != WAYPOINT_LIST_FILE
+    || fileHdrWP2.fileVersion != NAV_VERSION_1)
+  {
+    testPassed = 0;
+    NAV_printf("Error in fileHdrWP2\r\n");
+  }
+  if (fileHdrEWP1.fileType != EXCEPTION_WAYPOINT_LIST_FILE
+    || fileHdrEWP1.fileVersion != NAV_VERSION_1)
+  {
+    testPassed = 0;
+    NAV_printf("Error in fileHdrEWP1\r\n");
+  }
+  if (fileHdrEWP2.fileType != EXCEPTION_WAYPOINT_LIST_FILE
+    || fileHdrEWP2.fileVersion != NAV_VERSION_1)
+  {
+    testPassed = 0;
+    NAV_printf("Error in fileHdrEWP2\r\n");
+  }
+
+  // Read the wp list header for each file
+  NavFileWPListHeader listHdrWP1;
+  initNavFileWPListHeader(&listHdrWP1);
+  NavFileWPListHeader listHdrWP2;
+  initNavFileWPListHeader(&listHdrWP2);
+  NavFileWPListHeader listHdrEWP1;
+  initNavFileWPListHeader(&listHdrEWP1);
+  NavFileWPListHeader listHdrEWP2;
+  initNavFileWPListHeader(&listHdrEWP2);
+
+  freadNavFileWPListHeader(&listHdrWP1, WPListFile1);
+  freadNavFileWPListHeader(&listHdrWP2, WPListFile2);
+  freadNavFileWPListHeader(&listHdrEWP1, exWPListFile1);
+  freadNavFileWPListHeader(&listHdrEWP2, exWPListFile2);
+  // Check that the start and goals are the first and last entry of input
+  // arrays.
+  if (coordsEqual(&(listHdrWP1.startCoordinate),&(WPCoordIn1[0])) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrWP1.startCoordinate),&(WPCoordIn1[0])) == 0\r\n");
+    printCoordData(&listHdrWP1.startCoordinate);
+    printCoordData(&WPCoordIn1[0]);
+  }
+  if (coordsEqual(&(listHdrWP2.startCoordinate), &(WPCoordIn2[0])) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrWP2.startCoordinate),&(WPCoordIn2[0])) == 0\r\n");
+  }
+  if (coordsEqual(&(listHdrEWP1.startCoordinate), &(EWPCoordIn1[0])) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrEWP1.startCoordinate),&(EWPCoordIn1[0])) == 0\r\n");
+  }
+  if (coordsEqual(&(listHdrEWP2.startCoordinate), &(EWPCoordIn2[0])) == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrEWP2.startCoordinate),&(EWPCoordIn2[0])) == 0\r\n");
+  }
+
+  printConclusion(testPassed, testName);
 
   return testPassed;
 }

@@ -64,7 +64,7 @@ void cfgGetFileHeaderCfgHeader(NAV_FILE* cfgFile, NavFileHeader* fileHeader,
 void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
                         const size_t startEntryAtEnd);
 
-void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char* listName);
+void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char listName[20]);
 
 void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
                             char* listName);
