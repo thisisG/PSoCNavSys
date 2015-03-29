@@ -249,13 +249,13 @@ uint8_t testaddWPListFileToCfgFile()
   printTestHeader(testName);
 
   makeTemplateCfgFile(cfgFileName, version);
-  if (addRegularWPListFileToCfgFile(cfgFileName, WPListIn1) != 1)
+  if (addWPListToCfgFile(cfgFileName, WPListIn1, WAYPOINT_LIST_FILE) != 1)
   {
     testPassed = 0;
     NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn1) != 1\r\n");
   }
 
-  if (addRegularWPListFileToCfgFile(cfgFileName, WPListIn2) != 1)
+  if (addWPListToCfgFile(cfgFileName, WPListIn2, WAYPOINT_LIST_FILE) != 1)
   {
     testPassed = 0;
     NAV_printf("addWPListFileToCfgFile(cfgFileName, WPListIn2) != 1\r\n");
@@ -288,13 +288,13 @@ uint8_t testmakeTemplateAndAppend()
   const char testName[64] = "testmakeTemplateAndAppend()";
   const char cfgFileName[20] = "cfgapp.tst";
 
-  const char WPListIn1[20] = "aAaAaA.bBb";
-  const char WPListIn2[20] = "TtTtTt.OoO";
+  const char WPListIn1[20] = "WP1aAaA.bBb";
+  const char WPListIn2[20] = "WP2TtTt.OoO";
   char WPListOut1[20] = "";
   char WPListOut2[20] = "";
 
-  const char ExWPListIn1[20] = "nNmMpP.bBb";
-  const char ExWPListIn2[20] = "EeEeEe.OoO";
+  const char ExWPListIn1[20] = "EX1mMpP.bBb";
+  const char ExWPListIn2[20] = "EX2EeEe.OoO";
   char ExWPListOut1[20] = "";
   char ExWPListOut2[20] = "";
 
@@ -314,6 +314,8 @@ uint8_t testmakeTemplateAndAppend()
   NAV_FILE* WPListFile;
   NAV_FILE* exWPListFile;
   NavVersion version = NAV_VERSION_1;
+
+  printTestHeader(testName);
 
   // Create the input data and initialise all coord structures
   size_t i = 0;
@@ -354,6 +356,8 @@ uint8_t testmakeTemplateAndAppend()
     EWPCoordIn2[i].priority = i;
   }
 
+  printf("filled arrays\r\n");
+
   // Create template cfg file and template wp files
   makeTemplateCfgFile(cfgFileName, NAV_VERSION_1);
   makeTemplateWPListFile(WPListIn1, NAV_VERSION_1, WAYPOINT_LIST_FILE);
@@ -374,11 +378,20 @@ uint8_t testmakeTemplateAndAppend()
                             EXCEPTION_WAYPOINT_DATA);
   }
 
+  printf("filled WPLists\r\n");
+
   // Add the wp and exception wp lists to the cfg file
-  addWPListToCfgFile(cfgFileName, WPListIn1, WAYPOINT_LIST_FILE);
   addWPListToCfgFile(cfgFileName, ExWPListIn1, EXCEPTION_WAYPOINT_LIST_FILE);
+  printf("addedWPList ExWPListIn1\r\n");
+  getchar();
   addWPListToCfgFile(cfgFileName, ExWPListIn2, EXCEPTION_WAYPOINT_LIST_FILE);
+  printf("addedWPList ExWPListIn2\r\n");
+  getchar();
+  addWPListToCfgFile(cfgFileName, WPListIn1, WAYPOINT_LIST_FILE);
+  printf("addedWPList WPListIn1\r\n");
+  getchar();
   addWPListToCfgFile(cfgFileName, WPListIn2, WAYPOINT_LIST_FILE);
+  printf("addedWPList WPListIn2\r\n");
 
   return testPassed;
 }

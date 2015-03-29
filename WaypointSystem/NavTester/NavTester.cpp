@@ -33,6 +33,7 @@ int main()
   testWPHandler();
   testmakeTemplateCfgFile();
   testaddWPListFileToCfgFile();
+  testmakeTemplateAndAppend();
 
   // Navmath tests
   testNavMath();
