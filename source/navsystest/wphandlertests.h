@@ -480,8 +480,6 @@ uint8_t testmakeTemplateAndAppend()
   {
     testPassed = 0;
     NAV_printf("&(listHdrWP1.startCoordinate),&(WPCoordIn1[0])) == 0\r\n");
-    printCoordData(&listHdrWP1.startCoordinate);
-    printCoordData(&WPCoordIn1[0]);
   }
   if (coordsEqual(&(listHdrWP2.startCoordinate), &(WPCoordIn2[0])) == 0)
   {
@@ -498,6 +496,78 @@ uint8_t testmakeTemplateAndAppend()
     testPassed = 0;
     NAV_printf("&(listHdrEWP2.startCoordinate),&(EWPCoordIn2[0])) == 0\r\n");
   }
+  // Checking goals
+  if (coordsEqual(&(listHdrWP1.endCoordinate), &(WPCoordIn1[arrayLength - 1]))
+      == 0)
+  {
+    testPassed = 0;
+    NAV_printf(
+        "&(listHdrWP1.endCoordinate),&(WPCoordIn1[arrayLength - 1])) == 0\r\n");
+  }
+  if (coordsEqual(&(listHdrWP2.endCoordinate), &(WPCoordIn2[arrayLength - 1]))
+      == 0)
+  {
+    testPassed = 0;
+    NAV_printf(
+        "&(listHdrWP2.endCoordinate),&(WPCoordIn2[arrayLength - 1])) == 0\r\n");
+  }
+  if (coordsEqual(&(listHdrEWP1.endCoordinate), &(EWPCoordIn1[arrayLength - 1]))
+      == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrEWP1.endCoordinate),&(EWPCoordIn1[arrayLength - 1])) "
+               "== 0\r\n");
+  }
+  if (coordsEqual(&(listHdrEWP2.endCoordinate), &(EWPCoordIn2[arrayLength - 1]))
+      == 0)
+  {
+    testPassed = 0;
+    NAV_printf("&(listHdrEWP2.endCoordinate),&(EWPCoordIn2[arrayLength - 1])) "
+               "== 0\r\n");
+  }
+
+  // Read in all of the coordinate data to output arrays.
+  NavDatablockHeader mockBlockHdr;
+  initNavDatablockHeader(&mockBlockHdr);
+  for (i = 0; i < arrayLength; i++)
+  {
+    freadNavDatablockHeader(&mockBlockHdr, WPListFile1);
+    freadCoordinate(&(WPCoordOut1[i]), WPListFile1);
+    freadNavDatablockHeader(&mockBlockHdr, WPListFile2);
+    freadCoordinate(&(WPCoordOut2[i]), WPListFile2);
+    freadNavDatablockHeader(&mockBlockHdr, exWPListFile1);
+    freadCoordinate(&(EWPCoordOut1[i]), exWPListFile1);
+    freadNavDatablockHeader(&mockBlockHdr, exWPListFile2);
+    freadCoordinate(&(EWPCoordOut2[i]), exWPListFile2);
+  }
+  // Check if outputs are same as inputs.
+  for (i = 0; i < arrayLength; i++)
+  {
+    if (coordsEqual(&(WPCoordIn1[i]),&(WPCoordOut1[i])) == 0)
+    {
+      testPassed = 0;
+      NAV_printf("WPCoordIn1 != WPCoordOut1");
+    }
+    if (coordsEqual(&(WPCoordIn2[i]), &(WPCoordOut2[i])) == 0)
+    {
+      testPassed = 0;
+      NAV_printf("WPCoordIn2 != WPCoordOut2");
+    }
+    if (coordsEqual(&(EWPCoordIn1[i]), &(EWPCoordOut1[i])) == 0)
+    {
+      testPassed = 0;
+      NAV_printf("EWPCoordIn1 != EWPCoordOut1");
+    }
+    if (coordsEqual(&(EWPCoordIn2[i]), &(EWPCoordOut2[i])) == 0)
+    {
+      testPassed = 0;
+      NAV_printf("EWPCoordIn2 != EWPCoordOut2");
+    }
+  }
+  NAV_fclose(WPListFile1);
+  NAV_fclose(WPListFile2);
+  NAV_fclose(exWPListFile1);
+  NAV_fclose(exWPListFile2);
 
   printConclusion(testPassed, testName);
 
