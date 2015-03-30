@@ -46,7 +46,7 @@ int main()
     
     // Navsystem setup
     struct NavState myNavState;
-    zeroNavState(&myNavState);
+    initNavState(&myNavState);
     
     /********************************************
     ** UART setup
@@ -344,6 +344,8 @@ int main()
         testmakeTemplateCfgFile();
         CyDelay(500);
         testaddWPListFileToCfgFile();
+        CyDelay(500);
+        testmakeTemplateAndAppend();
         CyDelay(500);
         
         // Navmath tests

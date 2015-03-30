@@ -20,13 +20,6 @@ extern "C" {
 #include "navfunctions.h"
 #include <sys/types.h>
 
-// Depends on the emFile library when on the PSoC
-#ifdef __GNUC__
-#include "FS.h"
-#else
-#include <stdio.h>
-#endif // __GNUC__
-
 #ifdef __cplusplus
 }
 #endif // __cplusplus

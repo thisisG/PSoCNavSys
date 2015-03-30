@@ -171,20 +171,10 @@ CurrentNavState closestWPHandler(NavState* navS)
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
                             &fileHeader, &cfgHeader);
 
-  // Seek to the offset of the char array for the current WP listed
-  size_t dataOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER
-      + (cfgHeader.currentWPList * (sizeof(char[20])));
-  NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile, dataOffset,
-            NAV_SEEK_SET);
-
-  // Read data header and name of WPlist into wpListFilename
-  NavDatablockHeader dataHeader;
-  initNavDatablockHeader(&dataHeader);
-  freadNavDatablockHeader(&dataHeader,
-                          navS->stateData.WPHandler.fileManager.ptrCfgFile);
-  NAV_fread(navS->stateData.WPHandler.fileManager.wpListFileName,
-            sizeof(char[20]), 1,
-            navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  // Get the name of the current WP list
+  getWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+                cfgHeader.currentWPList,
+                navS->stateData.WPHandler.fileManager.wpListFileName);
 
   // We are now done with the cfg file, so we should close it.
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
@@ -287,8 +277,9 @@ CurrentNavState nextWPHandler(NavState* navS)
   CurrentNavState returnState = toWP;
 
   // Update the WP and the distance
-  int32_t wpCount = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
-  
+  int32_t wpCount
+      = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+
   // Check that the WP number is indeed valid
   if (wpCount != -1)
   {
@@ -306,8 +297,47 @@ CurrentNavState nextWPHandler(NavState* navS)
   return returnState;
 }
 
-// TODO
-CurrentNavState atGoalHandler(NavState* navS) { return closestWP; }
+CurrentNavState atGoalHandler(NavState* navS) 
+{
+  // We want to change the current WP list being used by the system. Hence the
+  // return value should reflect that we are going to find the closest waypoint
+  // in this list.
+  CurrentNavState returnState = closestWP;
+
+  // Load the config file
+  checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName,
+            "r+b");
+  // Read file header and config header
+  NavFileHeader fileHeader;
+  initNavFileHeader(&fileHeader);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+  cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+                            &fileHeader, &cfgHeader);
+
+  // Check if there are more WPlists available in the file. 
+  // If there is add one to the count.
+  if (cfgHeader.currentWPList < cfgHeader.numberOfWPLists)
+  {
+    cfgHeader.currentWPList += 1;
+  }
+  // If not wrap around to the first WP list
+  else
+  {
+    cfgHeader.currentWPList = 1;
+  }
+
+  // Seek back the size of the cfg header, write it to file and close the file.
+  NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+            -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
+  fwriteNavConfigFileHeader(&cfgHeader,
+                            navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  navS->stateData.WPHandler.fileManager.ptrCfgFile = NULL;
+
+  return returnState;
+}
 
 // TODO
 CurrentNavState closestExceptionWPHandler(NavState* navS) { return closestWP; }

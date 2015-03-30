@@ -13,12 +13,22 @@
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
+
 #include <stdint.h>
+#include "navconfig.h"
+#include <sys/types.h>
 
 #ifdef _WIN32
 #include <stdio.h>
 #endif // _WIN32
-#include "navconfig.h"
+
+// Depends on the emFile library when on the PSoC
+#ifdef __GNUC__
+#include "FS.h"
+#else
+#include <stdio.h>
+#endif // __GNUC__
+
 
 #ifdef __cplusplus
 }
