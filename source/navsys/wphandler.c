@@ -22,10 +22,9 @@ extern "C" {
 
 void initNavWPFileManager(NavWPFileManager* WPFileManager)
 {
-  strncpy(WPFileManager->cfgFileName, DEFAULT_CONFIG_FILE,
-          strlen(DEFAULT_CONFIG_FILE));
-  strncpy(WPFileManager->wpListFileName, "", strlen(""));
-  strncpy(WPFileManager->eWPListFileName, "", strlen(""));
+  sprintf(WPFileManager->cfgFileName, "%s", DEFAULT_CONFIG_FILE);
+  sprintf(WPFileManager->wpListFileName, "%s", "");
+  sprintf(WPFileManager->eWPListFileName, "%s", "");
   WPFileManager->ptrCfgFile = NULL;
   WPFileManager->ptrWPList = NULL;
   WPFileManager->numberOfExceptionEntries = 0;

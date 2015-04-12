@@ -36,7 +36,7 @@ int _tmain(int argc, _TCHAR* argv[])
   NavFileWPListHeader WPListHeader;
 
   fileHeader.fileType = WAYPOINT_LIST_FILE;
-  fileHeader.fileVersion = (NavVersion)255;
+  fileHeader.fileVersion = (NavVersion)NAV_VERSION_1;
   fileHeader.nextHeaderSize = sizeof(WPListHeader);
 
   std::cout << "sizeof(WPListHeader): " << sizeof(WPListHeader) << std::endl;

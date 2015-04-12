@@ -37,9 +37,9 @@ void initNavFileHeader(NavFileHeader* ptrFileHeader)
 void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
 {
   ptrCfgFileHeader->numberOfWPLists = 0;
-  ptrCfgFileHeader->currentWPList = 0;
+  ptrCfgFileHeader->currentWPList = 1;
   ptrCfgFileHeader->numberOfExeptionWPLists = 0;
-  ptrCfgFileHeader->currentExeptionWPList = 0;
+  ptrCfgFileHeader->currentExeptionWPList = 1;
 }
 
 // Test

@@ -12,7 +12,7 @@
 
 // Default config filename used to initialise NavWPFileManager structures
 // wphandler.h/c
-#define DEFAULT_CONFIG_FILE "navsys.cfg"
+#define DEFAULT_CONFIG_FILE "navsys.cfg\0"
 
 // Buffer length for UART FIFO buffer structure
 // serialcom.h/c
@@ -27,10 +27,10 @@
 // Default value for WP distances for when they should be considered out of
 // range or within range for being considered arrived at. Units are metres.
 // navfunctions.h/c
-#define MAX_WP_DISTANCE (50000)
-#define ARRIVED_WP_DISTANCE (500)
+#define MAX_WP_DISTANCE (1200)
+#define ARRIVED_WP_DISTANCE (100)
 #define EXCEPTION_MAX_WP_DISTANCE (100000)
-#define EXCEPTION_ARRIVED_WP_DISTANCE (1000)
+#define EXCEPTION_ARRIVED_WP_DISTANCE (300)
 
 // Sizes for datastructures in packed binary style since sizeof() would return
 // an errenouous value.

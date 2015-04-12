@@ -81,8 +81,8 @@ int main()
 
     // Load the set into coordinate ADS
     struct Coordinate coordA, coordB;
-    zeroCoordinate(&coordA);
-    zeroCoordinate(&coordB);
+    initCoordinate(&coordA);
+    initCoordinate(&coordB);
 
     coordA.dLatitude = degA;
     coordA.mLatitude = minA;
@@ -185,7 +185,7 @@ int main()
     Test the creation of a NavState and its initialization
     */
     struct NavState myNavState;
-    zeroNavState(&myNavState);
+    initNavState(&myNavState);
     printCurrentCoordAndHeading(&myNavState);
 
     myNavState.currentLocation = coordA;
@@ -346,7 +346,7 @@ int main()
               << mlongitudeBuffer << "m" << std::endl;
 
     // Zero coordinate buffer and load nmea info to it
-    zeroCoordinate(&coordBuffer);
+    initCoordinate(&coordBuffer);
     printCoordData(&coordBuffer);
     nmeaInfoToCoord(&nmeaBuffer, &coordBuffer);
     printCoordData(&coordBuffer);

@@ -63,6 +63,7 @@ void initStateDataStructure(StateDataStructure* stateD)
   stateD->stateKeeper = closestWP;
   initCoordinate(&(stateD->WPGoal));
   initCoordinate(&(stateD->eWPGoal));
+  initNavWPHandler(&(stateD->WPHandler));
   stateD->maxWPDistance = MAX_WP_DISTANCE;
   stateD->arrivalWPDistance = ARRIVED_WP_DISTANCE;
   stateD->exceptionMaxWPDistance = EXCEPTION_MAX_WP_DISTANCE;
@@ -97,7 +98,7 @@ void updateNavState(NavState* navS)
   // Then we want to calculate the distance from the current position to the
   // current WP and update this in navS.
   navS->distanceToCurrentWP
-      = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
+    = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
 
   // Then we want to evaluate our current state based on the stateKeeper in
   // the passed NavState structure.
@@ -151,17 +152,16 @@ void updateNavState(NavState* navS)
   navS->stateData.stateKeeper = newState;
 }
 
-// TODO
 CurrentNavState closestWPHandler(NavState* navS)
 {
   CurrentNavState returnState = toWP;
 
   // Check if cfg file is currently open, if it is close it
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
-
+  
   // Open config file
   navS->stateData.WPHandler.fileManager.ptrCfgFile
-      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
+    = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
 
   // Read the file header and config file header.
   NavFileHeader fileHeader;
@@ -169,46 +169,49 @@ CurrentNavState closestWPHandler(NavState* navS)
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-                            &fileHeader, &cfgHeader);
-
+    &fileHeader, &cfgHeader);
+  
   // Get the name of the current WP list
   getWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-                cfgHeader.currentWPList,
-                navS->stateData.WPHandler.fileManager.wpListFileName);
-
+    cfgHeader.currentWPList,
+    navS->stateData.WPHandler.fileManager.wpListFileName);
+  
   // We are now done with the cfg file, so we should close it.
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   // Open the WP list file
   WPHandlerOpen(&(navS->stateData.WPHandler),
-                navS->stateData.WPHandler.fileManager.wpListFileName);
-
+    navS->stateData.WPHandler.fileManager.wpListFileName);
+  
   // Get the distance to the goal that was updated by WPHandlerOpen() for a
   // baseline distance that we compare the rest of the list to
   float minDist = distanceCirclePathAtoB(&(navS->currentLocation),
-                                         &(navS->stateData.WPGoal));
-
+    &(navS->stateData.WPHandler.wpGoal));
+  
   // Cycle through the waypoints using WPHandlerGetNextWP and find the
   // closest wp and store the number of the WP
   int32_t WPCount = 0;
   int32_t nextWPNumber = 0;
+  Coordinate selectedCoord;
+  initCoordinate(&selectedCoord);
   // WPHandlerNextWP returns -1 when there are no more waypoints in the list
   while (WPCount != -1)
   {
     WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler),
-                              &(navS->stateData.nextWP));
+      &(navS->stateData.nextWP));
     if (WPCount != -1)
     {
       float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
-                                              &(navS->stateData.nextWP));
+        &(navS->stateData.nextWP));
       if (tempDist < minDist)
       {
         nextWPNumber = WPCount;
         minDist = tempDist;
+        selectedCoord = navS->stateData.nextWP;
       }
     }
   }
-
+  
   // If the closest WP is within allowable distances set it as current WP, seek
   // to the next WP following the chosen WP using WPSeek and set returnstate to
   // toWP
@@ -216,7 +219,7 @@ CurrentNavState closestWPHandler(NavState* navS)
   {
     nextWPNumber++;
     WPHandlerSeekWP(&(navS->stateData.WPHandler), nextWPNumber);
-    navS->nextWaypoint = navS->stateData.nextWP;
+    navS->nextWaypoint = selectedCoord;
     navS->distanceToCurrentWP = minDist;
     returnState = toWP;
   }
@@ -226,7 +229,7 @@ CurrentNavState closestWPHandler(NavState* navS)
   {
     returnState = closestExceptionWP;
   }
-
+  
   return returnState;
 }
 
@@ -278,12 +281,12 @@ CurrentNavState nextWPHandler(NavState* navS)
 
   // Update the WP and the distance
   int32_t wpCount
-      = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+    = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
 
   // Check that the WP number is indeed valid
   if (wpCount != -1)
   {
-  navS->distanceToCurrentWP
+    navS->distanceToCurrentWP
       = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
   }
   // If we get -1 the last wp in the list is different from the WPgoal, this
@@ -297,7 +300,7 @@ CurrentNavState nextWPHandler(NavState* navS)
   return returnState;
 }
 
-CurrentNavState atGoalHandler(NavState* navS) 
+CurrentNavState atGoalHandler(NavState* navS)
 {
   // We want to change the current WP list being used by the system. Hence the
   // return value should reflect that we are going to find the closest waypoint
@@ -307,14 +310,14 @@ CurrentNavState atGoalHandler(NavState* navS)
   // Load the config file
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
   NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName,
-            "r+b");
+    "r+b");
   // Read file header and config header
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-                            &fileHeader, &cfgHeader);
+    &fileHeader, &cfgHeader);
 
   // Check if there are more WPlists available in the file. 
   // If there is add one to the count.
@@ -330,17 +333,96 @@ CurrentNavState atGoalHandler(NavState* navS)
 
   // Seek back the size of the cfg header, write it to file and close the file.
   NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-            -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
+    -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
   fwriteNavConfigFileHeader(&cfgHeader,
-                            navS->stateData.WPHandler.fileManager.ptrCfgFile);
+    navS->stateData.WPHandler.fileManager.ptrCfgFile);
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
   navS->stateData.WPHandler.fileManager.ptrCfgFile = NULL;
 
   return returnState;
 }
 
-// TODO
-CurrentNavState closestExceptionWPHandler(NavState* navS) { return closestWP; }
+CurrentNavState closestExceptionWPHandler(NavState* navS)
+{
+  // Open cfg file and get the maximum number of exception waypoints.
+  checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
+  // Read file header and config header
+  NavFileHeader fileHeader;
+  initNavFileHeader(&fileHeader);
+  NavConfigFileHeader cfgHeader;
+  initNavConfigFileHeader(&cfgHeader);
+  cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+    &fileHeader, &cfgHeader);
+
+  
+
+  uint32_t currExList = 1;
+  uint32_t maxExList = cfgHeader.numberOfExeptionWPLists;
+  // Want the minDist to be a distance not possible to achieve on the face of
+  // the planet to ensure that the calculated distances are all less than this.
+  float minDist = (2 * M_PI * earthRadiusM) + earthRadiusM;
+  float tempDist = 0;
+  uint32_t selectedExWPList = -1;
+  uint32_t selectedExWP = -1;
+  uint32_t WPCount = 0;
+  Coordinate tempCoord;
+  Coordinate selectedCoord;
+  initCoordinate(&tempCoord);
+  initCoordinate(&selectedCoord);
+  // Check each file
+  for (currExList = 1; currExList <= maxExList; currExList++)
+  {
+    // Get file name
+    getExceptionWPListName(
+      navS->stateData.WPHandler.fileManager.ptrCfgFile, currExList,
+      navS->stateData.WPHandler.fileManager.eWPListFileName);
+    // Open file
+    WPHandlerOpen(&(navS->stateData.WPHandler),
+      navS->stateData.WPHandler.fileManager.eWPListFileName);
+    // Check each waypoint in each file
+    WPCount = 0;
+    while (WPCount != -1)
+    {
+      WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler), &tempCoord);
+      if (WPCount != -1)
+      {
+        tempDist
+          = distanceCirclePathAtoB(&(navS->currentLocation), &(tempCoord));
+        // If the distance is less than the previous stored distance
+        if (tempDist < minDist)
+        {
+          // Store the exception list numbers and the waypoint
+          minDist = tempDist;
+          selectedCoord = tempCoord;
+          selectedExWPList = currExList;
+          selectedExWP = WPCount;
+        }
+      }
+    }
+  }
+  // Close the cfg file as we are now done with it
+  NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
+  // Open the list with the closest waypoint
+  getExceptionWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
+    selectedExWPList,
+    navS->stateData.WPHandler.fileManager.eWPListFileName);
+  WPHandlerOpen(&(navS->stateData.WPHandler),
+    navS->stateData.WPHandler.fileManager.eWPListFileName);
+  // Seek to the next wp in line after the selected
+  WPHandlerSeekWP(&(navS->stateData.WPHandler), ++selectedExWP);
+  // Set the selected waypoint as the current waypoint
+  navS->nextWaypoint = selectedCoord;
+  // Update the EWP goal
+  WPHandlerGetGoal(&(navS->stateData.WPHandler), &(navS->stateData.eWPGoal));
+  // Update the distance to the waypoint
+  navS->distanceToCurrentWP = minDist;
+  // Update the minimum distance for detecting arrival
+  navS->stateData.exceptionMaxWPDistance = 2 * minDist;
+
+  return closestWP;
+}
 
 CurrentNavState toExceptionWPHandler(NavState* navS)
 {
@@ -353,7 +435,7 @@ CurrentNavState toExceptionWPHandler(NavState* navS)
     returnState = closestWP;
   }
   else if ((navS->distanceToCurrentWP)
-           < (navS->stateData.exceptionWPArrivalDistance))
+    < (navS->stateData.exceptionWPArrivalDistance))
   {
     returnState = atExceptionWP;
   }
@@ -372,7 +454,8 @@ CurrentNavState atExceptionWPHandler(NavState* navS)
   // of undefined behaviour.
   CurrentNavState returnState = closestWP;
 
-  if (coordsEqual(&(navS->currentLocation), &(navS->stateData.eWPGoal)) == 1)
+  // Check if we are at goal
+  if (coordsEqual(&(navS->nextWaypoint), &(navS->stateData.eWPGoal)) == 1)
   {
     returnState = atExceptionGoal;
   }
@@ -380,12 +463,23 @@ CurrentNavState atExceptionWPHandler(NavState* navS)
   {
     returnState = nextExceptionWP;
   }
-
   return returnState;
 }
 
-// TODO
-CurrentNavState nextExceptionWPHandler(NavState* navS) { return closestWP; }
+CurrentNavState nextExceptionWPHandler(NavState* navS)
+{
+  CurrentNavState returnState = toExceptionWP;
+  uint32_t WPCount
+    = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+  // If we for some reason get an errenous WP as the next (return of -1) set the
+  // returnstate to closestWP
+  if (WPCount == -1)
+  {
+    // TODO LOG ERROR
+    returnState = closestWP;
+  }
+  return returnState;
+}
 
 CurrentNavState atExceptionGoalHandler(NavState* navS)
 {
@@ -396,7 +490,7 @@ CurrentNavState atExceptionGoalHandler(NavState* navS)
 }
 
 uint8_t coordsEqual(const struct Coordinate* coordA,
-                    const struct Coordinate* coordB)
+  const struct Coordinate* coordB)
 {
   // Set the default return value to 1 which means that the two coordinates
   // are equal.
@@ -437,8 +531,8 @@ void printCoordData(const Coordinate* coord)
 {
   printf("Coordinate data: \n");
   printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude,
-         coord->mLatitude, coord->dLongitude, coord->mLongitude,
-         coord->priority);
+    coord->mLatitude, coord->dLongitude, coord->mLongitude,
+    coord->priority);
 }
 
 void printCurrentCoordAndHeading(NavState* navS)
@@ -462,7 +556,7 @@ floatDegree longitudeFromCoordinate(const Coordinate* thisCoord)
 }
 
 floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,
-                                   const struct Coordinate* coordB)
+  const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -473,7 +567,7 @@ floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,
 }
 
 floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
-                                     const struct Coordinate* coordB)
+  const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -484,7 +578,7 @@ floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
 }
 
 floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
-                                 const struct Coordinate* coordB)
+  const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -497,8 +591,8 @@ floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
 floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB)
 {
   return dInitialHeading(
-      latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
-      latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
+    latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
+    latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
 }
 
 floatDegree dHeadingToCurrentWP(NavState* navS)

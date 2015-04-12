@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\nmea">
+      <UniqueIdentifier>{c041f616-872a-4738-8829-6ceedf89f835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\nmea">
+      <UniqueIdentifier>{faabef72-9dd1-4027-aa2a-97ef0129adbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\csv">
+      <UniqueIdentifier>{6c985195-c544-42e4-a348-4def878ed098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navmanager">
+      <UniqueIdentifier>{5119d110-d1ab-4f0e-a6fe-511f1a473a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navsys">
+      <UniqueIdentifier>{8ebb4ea3-8fbb-4269-8a29-eff1e38f6d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\navsystest">
+      <UniqueIdentifier>{97aa5207-b146-44c6-93e1-14ac1283ca5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navmanager">
+      <UniqueIdentifier>{0c9c1bfe-06b1-4847-9b16-01a4f43a36c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\navsys">
+      <UniqueIdentifier>{5727765b-2a37-4cae-b45a-0837001214b0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp">
+      <Filter>Source Files\navmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navfiles.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navfunctions.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\navmath.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\serialcom.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\navsys\wphandler.c">
+      <Filter>Source Files\navsys</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\context.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\generate.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\generator.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\gmath.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\info.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\nmeatime.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\parse.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\parser.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\sentence.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\nmea\tok.c">
+      <Filter>Source Files\nmea</Filter>
+    </ClCompile>
+    <ClCompile Include="NavTestOne.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\csv\csv.h">
+      <Filter>Header Files\csv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navmanager\coordimport.h">
+      <Filter>Header Files\navmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h">
+      <Filter>Header Files\navmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navconfig.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfiles.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navfunctions.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navmath.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navsys.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\navtypes.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\serialcom.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsys\wphandler.h">
+      <Filter>Header Files\navsys</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\testhelper.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\config.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\context.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\generate.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\generator.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\gmath.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\info.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\nmea.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\nmeatime.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\parse.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\parser.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\sentence.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\tok.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\nmea\units.h">
+      <Filter>Header Files\nmea</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\navmathtests.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\navsystest\wphandlertests.h">
+      <Filter>Header Files\navsystest</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

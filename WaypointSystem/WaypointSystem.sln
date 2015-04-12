@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArduinoSerialPort", "..\Ard
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaypointCreator", "WaypointCreator\WaypointCreator.vcxproj", "{FE5F6A35-6F0C-4B64-8EF1-7DD98E5BBFC0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EZWaypointLists", "EZWaypointLists\EZWaypointLists.vcxproj", "{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NavTestOne", "NavTestOne\NavTestOne.vcxproj", "{6B8D5AAF-0932-46D6-900E-8AE1216F9E45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -33,6 +37,14 @@ Global
 		{FE5F6A35-6F0C-4B64-8EF1-7DD98E5BBFC0}.Debug|Win32.Build.0 = Debug|Win32
 		{FE5F6A35-6F0C-4B64-8EF1-7DD98E5BBFC0}.Release|Win32.ActiveCfg = Release|Win32
 		{FE5F6A35-6F0C-4B64-8EF1-7DD98E5BBFC0}.Release|Win32.Build.0 = Release|Win32
+		{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}.Debug|Win32.Build.0 = Debug|Win32
+		{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}.Release|Win32.ActiveCfg = Release|Win32
+		{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}.Release|Win32.Build.0 = Release|Win32
+		{6B8D5AAF-0932-46D6-900E-8AE1216F9E45}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6B8D5AAF-0932-46D6-900E-8AE1216F9E45}.Debug|Win32.Build.0 = Debug|Win32
+		{6B8D5AAF-0932-46D6-900E-8AE1216F9E45}.Release|Win32.ActiveCfg = Release|Win32
+		{6B8D5AAF-0932-46D6-900E-8AE1216F9E45}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

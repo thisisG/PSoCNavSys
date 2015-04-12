@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D1415A32-68B4-4AB3-917E-BFE749C0E1CE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>EZWaypointLists</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <AdditionalIncludeDirectories>../../source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile />
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\navmanager\gpsemulator.cpp" />
+    <ClCompile Include="..\..\source\navsys\gpsinterface.c" />
+    <ClCompile Include="..\..\source\navsys\navfiles.c" />
+    <ClCompile Include="..\..\source\navsys\navfunctions.c" />
+    <ClCompile Include="..\..\source\navsys\navmath.c" />
+    <ClCompile Include="..\..\source\navsys\nmeafunctions.c" />
+    <ClCompile Include="..\..\source\navsys\serialcom.c" />
+    <ClCompile Include="..\..\source\navsys\wphandler.c" />
+    <ClCompile Include="..\..\source\nmea\context.c" />
+    <ClCompile Include="..\..\source\nmea\generate.c" />
+    <ClCompile Include="..\..\source\nmea\generator.c" />
+    <ClCompile Include="..\..\source\nmea\gmath.c" />
+    <ClCompile Include="..\..\source\nmea\info.c" />
+    <ClCompile Include="..\..\source\nmea\nmeatime.c" />
+    <ClCompile Include="..\..\source\nmea\parse.c" />
+    <ClCompile Include="..\..\source\nmea\parser.c" />
+    <ClCompile Include="..\..\source\nmea\sentence.c" />
+    <ClCompile Include="..\..\source\nmea\tok.c" />
+    <ClCompile Include="EZWaypointLists.cpp">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CompileAsCpp</CompileAs>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\source\csv\csv.h" />
+    <ClInclude Include="..\..\source\navmanager\coordimport.h" />
+    <ClInclude Include="..\..\source\navmanager\gpsemulator.h" />
+    <ClInclude Include="..\..\source\navsystest\datagenerator.h" />
+    <ClInclude Include="..\..\source\navsystest\navfilestests.h" />
+    <ClInclude Include="..\..\source\navsystest\navmathtests.h" />
+    <ClInclude Include="..\..\source\navsystest\testhelper.h" />
+    <ClInclude Include="..\..\source\navsystest\wphandlertests.h" />
+    <ClInclude Include="..\..\source\navsys\gpsinterface.h" />
+    <ClInclude Include="..\..\source\navsys\navconfig.h" />
+    <ClInclude Include="..\..\source\navsys\navfiles.h" />
+    <ClInclude Include="..\..\source\navsys\navfunctions.h" />
+    <ClInclude Include="..\..\source\navsys\navmath.h" />
+    <ClInclude Include="..\..\source\navsys\navsys.h" />
+    <ClInclude Include="..\..\source\navsys\navtypes.h" />
+    <ClInclude Include="..\..\source\navsys\nmeafunctions.h" />
+    <ClInclude Include="..\..\source\navsys\serialcom.h" />
+    <ClInclude Include="..\..\source\navsys\wphandler.h" />
+    <ClInclude Include="..\..\source\nmea\config.h" />
+    <ClInclude Include="..\..\source\nmea\context.h" />
+    <ClInclude Include="..\..\source\nmea\generate.h" />
+    <ClInclude Include="..\..\source\nmea\generator.h" />
+    <ClInclude Include="..\..\source\nmea\gmath.h" />
+    <ClInclude Include="..\..\source\nmea\info.h" />
+    <ClInclude Include="..\..\source\nmea\nmea.h" />
+    <ClInclude Include="..\..\source\nmea\nmeatime.h" />
+    <ClInclude Include="..\..\source\nmea\parse.h" />
+    <ClInclude Include="..\..\source\nmea\parser.h" />
+    <ClInclude Include="..\..\source\nmea\sentence.h" />
+    <ClInclude Include="..\..\source\nmea\tok.h" />
+    <ClInclude Include="..\..\source\nmea\units.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
