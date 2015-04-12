@@ -27,9 +27,9 @@
 // Default value for WP distances for when they should be considered out of
 // range or within range for being considered arrived at. Units are metres.
 // navfunctions.h/c
-#define MAX_WP_DISTANCE (1200)
+#define MAX_WP_DISTANCE (1100)
 #define ARRIVED_WP_DISTANCE (100)
-#define EXCEPTION_MAX_WP_DISTANCE (100000)
+#define EXCEPTION_MAX_WP_DISTANCE (500)
 #define EXCEPTION_ARRIVED_WP_DISTANCE (300)
 
 // Sizes for datastructures in packed binary style since sizeof() would return

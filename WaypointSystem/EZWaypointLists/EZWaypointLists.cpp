@@ -67,7 +67,6 @@ int main() {
              wpFileCount, csvExtension);
     snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", wpBase,
              wpFileCount, wpOutputExtension);
-    printf("got here\r\n");
     makeTemplateWPListFile(tempShortName, NAV_VERSION_1, WAYPOINT_LIST_FILE);
     // Add list to config file
     addWPListToCfgFile(wpConfigName, tempShortName, WAYPOINT_LIST_FILE);
@@ -91,10 +90,10 @@ int main() {
              exWPFileCount, csvExtension);
     snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", exWPBase,
              exWPFileCount, exWPOutputExtension);
-    printf("got here\r\n");
     makeTemplateWPListFile(tempShortName, NAV_VERSION_1, WAYPOINT_LIST_FILE);
     // Add list to config file
-    addWPListToCfgFile(wpConfigName, tempShortName, WAYPOINT_LIST_FILE);
+    addWPListToCfgFile(wpConfigName, tempShortName,
+                       EXCEPTION_WAYPOINT_LIST_FILE);
     // Load the source csv file using a csv reader
     io::CSVReader<2> in(tempFullName);
     // Read all coords and load into wp file

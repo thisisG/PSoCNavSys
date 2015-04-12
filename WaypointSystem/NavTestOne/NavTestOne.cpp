@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "navmanager\gpsemulator.h"
 
 #ifdef __cplusplus
@@ -23,18 +24,38 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-
+char justAChar;
 int main()
 {
   NavState myNavState;
   initNavState(&myNavState);
-  updateNavState(&myNavState);
-  updateNavState(&myNavState);
 
-  printf("%f\r\n", myNavState.distanceToCurrentWP);
-  printf("%s\r\n", myNavState.stateData.WPHandler.fileManager.wpListFileName);
-  printCoordData(&myNavState.currentLocation);
-  printCoordData(&myNavState.nextWaypoint);
+  GpsEmulator gpsEmu;
+  gpsEmu.parseCsvToInfoVector("./../../data/NavTestOne/SimPath.csv");
+  gpsEmu.generatePseudoRandomData();
+  std::string dataString;
+  std::ostringstream stringBuffer;
+  /*
+  while (gpsEmu.getNextStringToNavState(&myNavState) != -1)
+  {
+    updateNavState(&myNavState);
+    printf("dist to WP: %f\r\n", myNavState.distanceToCurrentWP);
+    printf("Current loc:\r\n");
+    printCoordData(&myNavState.currentLocation);
+    printf("Next WP:\r\n");
+    printCoordData(&myNavState.nextWaypoint);
+    printf("Heading to WP: %f\r\n", dHeadingToCurrentWP(&myNavState));
+    stringBuffer << latitudeFromCoordinate(&myNavState.currentLocation) << ","
+                 << longitudeFromCoordinate(&myNavState.currentLocation) << ","
+                 << latitudeFromCoordinate(&myNavState.nextWaypoint) << ","
+                 << longitudeFromCoordinate(&myNavState.nextWaypoint) << ","
+                 << dHeadingToCurrentWP(&myNavState) << std::endl;
+    //getchar();
+  }
+  std::ofstream output;
+  output.open("SimOutput.csv");
+  output << stringBuffer.str();
+  */
 
   return 0;
 }

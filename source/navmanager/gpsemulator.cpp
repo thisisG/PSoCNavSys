@@ -52,25 +52,30 @@ void GpsEmulator::generatePseudoRandomData()
   }
 }
 
-void GpsEmulator::getNextStringToCharBuffer(char* buffer, int bufferSize)
+int32_t GpsEmulator::getNextStringToCharBuffer(char* buffer, int bufferSize)
 {
   static int strCounter = 0;
+  int32_t returnValue = 0;
   int gpsStringLength = nmea_generate(&buffer[0], bufferSize,
                                       &nmeaInfoVector[strCounter], GPRMC);
   buffer[gpsStringLength] = 0;
   if (strCounter < nmeaVectorLength - 1)
   {
     ++strCounter;
+    returnValue = strCounter;
   }
   else
   {
-    // Do not increment counter since we are at the final point
+    // Change returnvalue to indicate no more strings
+    returnValue = -1;
   }
+  return returnValue;
 }
 
-void GpsEmulator::getNextStringToNavState(NavState* navS)
+int32_t GpsEmulator::getNextStringToNavState(NavState* navS)
 {
-  getNextStringToCharBuffer(navS->gpsBuffer.gpsStringBuffer,
+  navS->gpsBuffer.newGPSString = 1;
+  return getNextStringToCharBuffer(navS->gpsBuffer.gpsStringBuffer,
                             navS->gpsBuffer.gpsBufferLength);
 }
 

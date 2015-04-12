@@ -34,8 +34,8 @@ class GpsEmulator
   ~GpsEmulator();
   void parseCsvToInfoVector(const std::string& csvFile);
   void generatePseudoRandomData();
-  void getNextStringToCharBuffer(char* buffer, int bufferSize);
-  void getNextStringToNavState(NavState* navS);
+  int32_t getNextStringToCharBuffer(char* buffer, int bufferSize);
+  int32_t getNextStringToNavState(NavState* navS);
 
   private:
   int nmeaVectorLength = 0;

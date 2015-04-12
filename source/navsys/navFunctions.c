@@ -112,33 +112,43 @@ void updateNavState(NavState* navS)
   switch (navS->stateData.stateKeeper)
   {
   case closestWP:
+    printf("got closestWP!\r\n\r\n");
     newState = closestWPHandler(navS);
     break;
   case toWP:
+    printf("got toWP!\r\n\r\n");
     newState = toWPHandler(navS);
     break;
   case atWP:
+    printf("got atWP!\r\n\r\n");
     newState = atWPHandler(navS);
     break;
   case nextWP:
+    printf("got nextWP!\r\n\r\n");
     newState = nextWPHandler(navS);
     break;
   case atGoal:
+    printf("got atGoal!\r\n\r\n");
     newState = atGoalHandler(navS);
     break;
   case closestExceptionWP:
+    printf("got closestExceptionWP!\r\n\r\n");
     newState = closestExceptionWPHandler(navS);
     break;
   case toExceptionWP:
+    printf("got toExceptionWP!\r\n\r\n");
     newState = toExceptionWPHandler(navS);
     break;
   case atExceptionWP:
+    printf("got atExceptionWP!\r\n\r\n");
     newState = atExceptionWPHandler(navS);
     break;
   case nextExceptionWP:
+    printf("got nextExceptionWP!\r\n\r\n");
     newState = nextExceptionWPHandler(navS);
     break;
   case atExceptionGoal:
+    printf("got atExceptionGoal!\r\n\r\n");
     newState = atExceptionGoalHandler(navS);
     break;
   case firstCurrentNavState:
@@ -355,8 +365,6 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
     &fileHeader, &cfgHeader);
 
-  
-
   uint32_t currExList = 1;
   uint32_t maxExList = cfgHeader.numberOfExeptionWPLists;
   // Want the minDist to be a distance not possible to achieve on the face of
@@ -421,7 +429,7 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   // Update the minimum distance for detecting arrival
   navS->stateData.exceptionMaxWPDistance = 2 * minDist;
 
-  return closestWP;
+  return toExceptionWP;
 }
 
 CurrentNavState toExceptionWPHandler(NavState* navS)
