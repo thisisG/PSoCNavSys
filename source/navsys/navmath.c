@@ -130,7 +130,7 @@ floatDegree dInitialHeading(const floatDegree dLatA, const floatDegree dLonA,
                    - (sin(rLatA) * cos(rLatB) * cos(rLonB - rLonA));
 
   // Return value is within +-180 degrees, normalise this to 0->360
-  floatDegree dHeading = fmodf(toDegree(atan2f(rY, rX)) + 360, 360);
+  floatDegree dHeading = fmodf((toDegree(atan2f(rY, rX)) + 360.0), 360.0);
 
   return dHeading;
 }

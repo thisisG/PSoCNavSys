@@ -188,11 +188,12 @@ void moveCharArraysDown(NAV_FILE* cfgFile, const size_t copySize,
   }
 }
 
-void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char listName[20])
+void getWPListName(NAV_FILE* cfgFile, const size_t listNumber,
+                   char listName[20])
 {
   // Calculate offset and seek to position
   size_t baseOffset = SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER;
-  size_t totalOffset = baseOffset + ((listNumber-1) * sizeof(char[20]));
+  size_t totalOffset = baseOffset + ((listNumber - 1) * sizeof(char[20]));
   NAV_fseek(cfgFile, totalOffset, NAV_SEEK_SET);
   // Read the name
   NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
@@ -201,6 +202,7 @@ void getWPListName(NAV_FILE* cfgFile, const size_t listNumber, char listName[20]
 void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
                             char* listName)
 {
+
   // See to the cfg header and read the cfg header
   NAV_fseek(cfgFile, SIZE_NAV_FILE_HEADER, NAV_SEEK_SET);
   NavConfigFileHeader cfgHeader;
@@ -209,8 +211,9 @@ void getExceptionWPListName(NAV_FILE* cfgFile, const size_t listNumber,
 
   // Find offset, seek to it and read the exception list name
   size_t regularWPListCount = cfgHeader.numberOfWPLists;
-  size_t offset = (regularWPListCount + listNumber - 1) * sizeof(char[20]);
-  NAV_fseek(cfgFile, offset, NAV_SEEK_CUR);
+  size_t offset = (SIZE_NAV_FILE_HEADER + SIZE_NAV_CFG_FILE_HEADER)
+      + ((regularWPListCount + listNumber - 1) * sizeof(char[20]));
+  NAV_fseek(cfgFile, offset, NAV_SEEK_SET);
   NAV_fread(listName, sizeof(char[20]), 1, cfgFile);
 }
 

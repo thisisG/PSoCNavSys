@@ -7,6 +7,11 @@
 **
 */
 
+// Defines for this nav test
+#define MAX_WP_DISTANCE (1100)
+#define ARRIVED_WP_DISTANCE (300)
+#define EXCEPTION_MAX_WP_DISTANCE (500)
+#define EXCEPTION_ARRIVED_WP_DISTANCE (300)
 
 #include <iostream>
 #include <fstream>
@@ -31,11 +36,11 @@ int main()
   initNavState(&myNavState);
 
   GpsEmulator gpsEmu;
-  gpsEmu.parseCsvToInfoVector("./../../data/NavTestOne/SimPath.csv");
+  gpsEmu.parseCsvToInfoVector("./../../data/NavTestOne/SimPathA.csv");
   gpsEmu.generatePseudoRandomData();
   std::string dataString;
   std::ostringstream stringBuffer;
-  /*
+  stringBuffer << "curLat,curLon,wpLat,wpLon,heading" << std::endl;
   while (gpsEmu.getNextStringToNavState(&myNavState) != -1)
   {
     updateNavState(&myNavState);
@@ -51,11 +56,15 @@ int main()
                  << longitudeFromCoordinate(&myNavState.nextWaypoint) << ","
                  << dHeadingToCurrentWP(&myNavState) << std::endl;
     //getchar();
+    if (dHeadingToCurrentWP(&myNavState) < 0)
+    {
+      std::cout << "Heading negative!!!" << std::endl;
+      getchar();
+    }
   }
   std::ofstream output;
-  output.open("SimOutput.csv");
+  output.open("SimOutputA.csv");
   output << stringBuffer.str();
-  */
 
   return 0;
 }

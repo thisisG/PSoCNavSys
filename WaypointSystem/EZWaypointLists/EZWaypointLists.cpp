@@ -65,7 +65,7 @@ int main() {
     // Generate the file name and path and make a template WP list file
     snprintf(tempFullName, sizeof(tempFullName), "%s%s%d.%s", dir, wpBase,
              wpFileCount, csvExtension);
-    snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", wpBase,
+    snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", wpOutputBase,
              wpFileCount, wpOutputExtension);
     makeTemplateWPListFile(tempShortName, NAV_VERSION_1, WAYPOINT_LIST_FILE);
     // Add list to config file
@@ -88,7 +88,7 @@ int main() {
     // Generate the file name and path and make a template WP list file
     snprintf(tempFullName, sizeof(tempFullName), "%s%s%d.%s", dir, exWPBase,
              exWPFileCount, csvExtension);
-    snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", exWPBase,
+    snprintf(tempShortName, sizeof(tempShortName), "%s%d.%s", exWPOutputBase,
              exWPFileCount, exWPOutputExtension);
     makeTemplateWPListFile(tempShortName, NAV_VERSION_1, WAYPOINT_LIST_FILE);
     // Add list to config file

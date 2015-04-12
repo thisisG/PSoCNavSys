@@ -188,6 +188,7 @@ CurrentNavState closestWPHandler(NavState* navS)
   
   // We are now done with the cfg file, so we should close it.
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+  navS->stateData.WPHandler.fileManager.ptrCfgFile = NULL;
 
   // Open the WP list file
   WPHandlerOpen(&(navS->stateData.WPHandler),
@@ -223,11 +224,9 @@ CurrentNavState closestWPHandler(NavState* navS)
   }
   
   // If the closest WP is within allowable distances set it as current WP, seek
-  // to the next WP following the chosen WP using WPSeek and set returnstate to
-  // toWP
+  // WP set returnstate to toWP
   if (minDist < navS->stateData.maxWPDistance)
   {
-    nextWPNumber++;
     WPHandlerSeekWP(&(navS->stateData.WPHandler), nextWPNumber);
     navS->nextWaypoint = selectedCoord;
     navS->distanceToCurrentWP = minDist;
@@ -356,7 +355,15 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
 {
   // Open cfg file and get the maximum number of exception waypoints.
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
-  NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
+  navS->stateData.WPHandler.fileManager.ptrCfgFile
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
+
+  if (navS->stateData.WPHandler.fileManager.ptrCfgFile == 0)
+  {
+    printf("null!\r\n");
+    getchar();
+  }
+
   // Read file header and config header
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
@@ -365,8 +372,11 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
     &fileHeader, &cfgHeader);
 
+  checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
   uint32_t currExList = 1;
   uint32_t maxExList = cfgHeader.numberOfExeptionWPLists;
+
   // Want the minDist to be a distance not possible to achieve on the face of
   // the planet to ensure that the calculated distances are all less than this.
   float minDist = (2 * M_PI * earthRadiusM) + earthRadiusM;
@@ -382,9 +392,12 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   for (currExList = 1; currExList <= maxExList; currExList++)
   {
     // Get file name
+    navS->stateData.WPHandler.fileManager.ptrCfgFile
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
     getExceptionWPListName(
       navS->stateData.WPHandler.fileManager.ptrCfgFile, currExList,
       navS->stateData.WPHandler.fileManager.eWPListFileName);
+    checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
     // Open file
     WPHandlerOpen(&(navS->stateData.WPHandler),
       navS->stateData.WPHandler.fileManager.eWPListFileName);
@@ -409,17 +422,21 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
       }
     }
   }
-  // Close the cfg file as we are now done with it
-  NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   // Open the list with the closest waypoint
+  navS->stateData.WPHandler.fileManager.ptrCfgFile
+    = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
   getExceptionWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    selectedExWPList,
-    navS->stateData.WPHandler.fileManager.eWPListFileName);
+                         selectedExWPList,
+                         navS->stateData.WPHandler.fileManager.eWPListFileName);
+
+  // Close the cfg file as we are now done with it
+  checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
+
   WPHandlerOpen(&(navS->stateData.WPHandler),
-    navS->stateData.WPHandler.fileManager.eWPListFileName);
-  // Seek to the next wp in line after the selected
-  WPHandlerSeekWP(&(navS->stateData.WPHandler), ++selectedExWP);
+                navS->stateData.WPHandler.fileManager.eWPListFileName);
+  // Seek to the selected WP
+  WPHandlerSeekWP(&(navS->stateData.WPHandler), selectedExWP);
   // Set the selected waypoint as the current waypoint
   navS->nextWaypoint = selectedCoord;
   // Update the EWP goal

@@ -280,8 +280,8 @@ size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
 // Test
 // VS2013: OK
 // PSoC: OK
-size_t freadNavConfigFileHeader(NavConfigFileHeader* ptrCfgHeader,
-  NAV_FILE* ptrNavFile)
+size_t freadNavConfigFileHeader(NavConfigFileHeader *ptrCfgHeader,
+                                NAV_FILE *ptrNavFile) 
 {
   size_t itemsRead = 0;
 
