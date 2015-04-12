@@ -6,13 +6,13 @@ plot(wpLon,wpLat, 'LineStyle', 'none', 'Marker', 'x', 'MarkerSize', 12,...
 plot(Ex1Lon,Ex1Lat, 'LineStyle', 'none', 'Marker', 'o', 'MarkerSize', 12,...
 'MarkerEdgeColo', 'blue')
 plot(Ex2Lon,Ex2Lat, 'LineStyle', 'none', 'Marker', 'o', 'MarkerSize', 12,...
-'MarkerEdgeColo', 'black')
+'MarkerEdgeColo', 'blue')
 r = 0.001;
 dHeading = heading+270;
 dHeading = mod(dHeading,360);
 dHeading = 360-dHeading;
 rHeading = (pi*dHeading)/(180)
-n = 10
+n = 1
 arrowLat = curLat(2 : n : end);
 arrowLon = curLon(2 : n : end);
 arrowHeading = dHeading(2 : n : end);
@@ -21,4 +21,4 @@ u = r*cosd(arrowHeading)
 v = r*sind(arrowHeading)
 
 
-h = quiver(arrowLon, arrowLat,u, v,0.3)
+h = quiver(arrowLon, arrowLat,u, v)

@@ -205,6 +205,7 @@ CurrentNavState closestWPHandler(NavState* navS)
   int32_t nextWPNumber = 0;
   Coordinate selectedCoord;
   initCoordinate(&selectedCoord);
+  float tempDist = 0;
   // WPHandlerNextWP returns -1 when there are no more waypoints in the list
   while (WPCount != -1)
   {
@@ -212,7 +213,7 @@ CurrentNavState closestWPHandler(NavState* navS)
       &(navS->stateData.nextWP));
     if (WPCount != -1)
     {
-      float tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
+      tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
         &(navS->stateData.nextWP));
       if (tempDist < minDist)
       {
@@ -272,7 +273,7 @@ CurrentNavState atWPHandler(NavState* navS)
   // of undefined behaviour.
   CurrentNavState returnState = closestWP;
 
-  if (coordsEqual(&(navS->currentLocation), &(navS->stateData.WPGoal)) == 1)
+  if (coordsEqual(&(navS->nextWaypoint), &(navS->stateData.WPGoal)) == 1)
   {
     returnState = atGoal;
   }
@@ -358,12 +359,6 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   navS->stateData.WPHandler.fileManager.ptrCfgFile
       = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
 
-  if (navS->stateData.WPHandler.fileManager.ptrCfgFile == 0)
-  {
-    printf("null!\r\n");
-    getchar();
-  }
-
   // Read file header and config header
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
@@ -371,7 +366,6 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
     &fileHeader, &cfgHeader);
-
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   uint32_t currExList = 1;
@@ -425,7 +419,7 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
 
   // Open the list with the closest waypoint
   navS->stateData.WPHandler.fileManager.ptrCfgFile
-    = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
   getExceptionWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
                          selectedExWPList,
                          navS->stateData.WPHandler.fileManager.eWPListFileName);
@@ -444,7 +438,9 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   // Update the distance to the waypoint
   navS->distanceToCurrentWP = minDist;
   // Update the minimum distance for detecting arrival
-  navS->stateData.exceptionMaxWPDistance = 2 * minDist;
+  navS->stateData.exceptionWPArrivalDistance = EXCEPTION_ARRIVED_WP_DISTANCE;
+  // Update the distance to detect if we are lost while in exception mode
+  navS->stateData.exceptionMaxWPDistance = minDist + EXCEPTION_MAX_WP_DISTANCE;
 
   return toExceptionWP;
 }
