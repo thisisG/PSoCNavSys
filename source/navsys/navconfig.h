@@ -36,10 +36,10 @@
 #define EXCEPTION_ARRIVED_WP_DISTANCE (300)
 */
 // For NavTestTwo
-#define MAX_WP_DISTANCE (2500)
+#define MAX_WP_DISTANCE (1500)
 #define ARRIVED_WP_DISTANCE (500)
-#define EXCEPTION_MAX_WP_DISTANCE (1000)
-#define EXCEPTION_ARRIVED_WP_DISTANCE (1000)
+#define EXCEPTION_MAX_WP_DISTANCE (300)
+#define EXCEPTION_ARRIVED_WP_DISTANCE (2000)
 
 
 // Sizes for datastructures in packed binary style since sizeof() would return

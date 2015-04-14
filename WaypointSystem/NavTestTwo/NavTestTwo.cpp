@@ -47,6 +47,8 @@ int main()
   while (gpsEmu.getNextStringToNavState(&myNavState) != -1)
   {
     updateNavState(&myNavState);
+    updateNavState(&myNavState);
+    updateNavState(&myNavState);
     printf("dist to WP: %f\r\n", myNavState.distanceToCurrentWP);
     printf("Current loc:\r\n");
     printCoordData(&myNavState.currentLocation);
