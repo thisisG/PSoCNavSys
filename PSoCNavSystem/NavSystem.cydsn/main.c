@@ -404,6 +404,7 @@ int main()
       {
         uartReader(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, UART_BUFFER_LENGTH);
         myNavState.gpsBuffer.newGPSString = 1;
+        rxStringReady = 0;
       }
       updateNavState(&myNavState);
     }

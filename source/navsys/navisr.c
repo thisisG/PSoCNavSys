@@ -28,6 +28,15 @@ CY_ISR(gpsRxISR)
   size_t headPlusOne = (ptrUartBuff->inputHead + 1) 
                         % (ptrUartBuff->bufferLength - 1);
   uint8 readChar = UART_GPS_GetChar();
+  // Check if rxStringReady show an unread string in the buffer
+  if (rxStringReady == 1)
+  {
+    // If there is a string ready due to the system being unable to keep up with
+    // the data feed, reset the buffer to allow the system to parse sensible 
+    // data.
+    rxStringReady = 0;
+    ptrUartBuff->inputTail = ptrUartBuff->inputHead;
+  }
   while (readChar != 0)
   {
     // Detect line terminators in the form of either \r\n or \n\r, in which
