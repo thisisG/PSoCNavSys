@@ -211,22 +211,22 @@ uint8_t testmakeTemplateCfgFile()
   if (cfgHeader.numberOfWPLists != 0)
   {
     testPassed = 0;
-    NAV_printf("cfgHeader.numberOfWPLists != 0");
+    NAV_printf("cfgHeader.numberOfWPLists != 0\r\n");
   }
-  else if (cfgHeader.currentWPList != 0)
+  else if (cfgHeader.currentWPList != 1)
   {
     testPassed = 0;
-    NAV_printf("cfgHeader.currentWPList != 0");
+    NAV_printf("cfgHeader.currentWPList != 1\r\n");
   }
   else if (cfgHeader.numberOfExeptionWPLists != 0)
   {
     testPassed = 0;
-    NAV_printf("cfgHeader.numberOfExeptionWPLists != 0");
+    NAV_printf("cfgHeader.numberOfExeptionWPLists != 0\r\n");
   }
-  else if (cfgHeader.currentExeptionWPList != 0)
+  else if (cfgHeader.currentExeptionWPList != 1)
   {
     testPassed = 0;
-    NAV_printf("cfgHeader.currentExeptionWPList != 0");
+    NAV_printf("cfgHeader.currentExeptionWPList != 1\r\n");
   }
 
   printConclusion(testPassed, testName);
