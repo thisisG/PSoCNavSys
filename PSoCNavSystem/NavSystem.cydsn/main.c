@@ -63,6 +63,9 @@ int main()
   
   // Initialize file system
   FS_Init();
+  
+  // Parameters to change when GPS device changes
+  uint8 usingUltimateGPS = 1;
 
   
   /********************************************
@@ -71,6 +74,8 @@ int main()
   // Attach the Rx ISR handler to the UART Rx interrupt.
   // The Rx ISR is triggered on byte received in its initial state.
   GPS_RX_ISR_StartEx(gpsRxISR);
+  // Disable the interrupt for setup process
+  GPS_RX_ISR_Disable();
   
   // Attach the Tx ISR handler to the UART Tx interrupt.
   // The Tx ISR is triggered by nothing in its initial state. The interrupts 
@@ -80,6 +85,18 @@ int main()
   // Enable global interrupts
   CyGlobalIntEnable;
   
+  /********************************************
+  ** GPS setup
+  ********************************************/
+  
+  CyDelay(1000);
+  if (usingUltimateGPS == 1)
+  {
+    // Set the GPS device to only transmit RMC messages
+    UART_GPS_PutString("$PMTK314,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n");
+  }
+  GPS_RX_ISR_Enable();
+  
   size_t lcdLength = 16;
   int counter = 0;
   char aChar = '\0';
@@ -88,6 +105,14 @@ int main()
   
   uint8 helloSent = 0;
   uint8 performedTests = 0;
+  
+  // Variables for data logging test
+  uint8 dataLogMode = 0;
+  //NAV_FILE *logFile = NAV_fopen("pos.log", "ab");
+  //char logString[UART_BUFFER_LENGTH];
+  
+  // Variables for navigation test IRL
+  uint8 navTestReal = 1;
   
   for(;;)
   {
@@ -207,7 +232,6 @@ int main()
     }
     */
     
-  
     // File open and read SD card test sequence
     /*
     static char wpListFileName[20] = "wplist1.wp";
@@ -322,7 +346,9 @@ int main()
       txStringReady = 0;
     }
     */
-  
+    
+    // Test suite
+    /*
     if (performedTests == 0)
     {
       // File tests
@@ -351,6 +377,38 @@ int main()
       
       performedTests = 1;
     }
+    */
+    
+    // Test logging of GPS data
+    /*
+    if (dataLogMode == 1)
+    {
+      if (rxStringReady == 1)
+      {
+        uartReader(&myUartBuffer, logString, UART_BUFFER_LENGTH);
+        rxStringReady = 0;
+        // Replace last char in string with new line to avoid parsing error for logging
+        if (strlen(logString) > 1)
+        {
+          logString[strlen(logString)-1] = '\n';
+        }
+        NAV_fwrite(logString, strlen(logString), 1, logFile);
+      }
+    }
+    */
+    
+    // Test navigation with navS!
+    if (navTestReal == 1)
+    {
+      if (rxStringReady == 1)
+      {
+        uartReader(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, UART_BUFFER_LENGTH);
+        myNavState.gpsBuffer.newGPSString = 1;
+      }
+      updateNavState(&myNavState);
+    }
+    
+    
   } // Main for loop
 } // Main
 

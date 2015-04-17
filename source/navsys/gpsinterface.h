@@ -29,6 +29,6 @@ extern "C" {
 #ifdef __GNUC__ // ARM specific implementation
 #endif          // __GNUC__
 
-void decodeGpsStringInNavState(NavState* navS);
+uint8_t decodeGpsStringInNavState(NavState* navS);
 
 #endif

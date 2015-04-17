@@ -51,4 +51,7 @@ void longLongitudeFromNmeaInfo(nmeaINFO* nmeaInfo, signed16Degree* ptrDegree,
 
 // TODO
 void nmeaInfoToCoord(nmeaINFO* nmeaInfo, Coordinate* coord);
+
+// TODO
+void nmeaTimeInfoToSysTime(const nmeaINFO* nmeaInfo, SystemTime* time);
 #endif

@@ -76,3 +76,13 @@ void nmeaInfoToCoord(nmeaINFO* nmeaInfo, Coordinate* coord)
   longLongitudeFromNmeaInfo(nmeaInfo, &(coord->dLongitude),
                             &(coord->mLongitude));
 }
+
+void nmeaTimeInfoToSysTime(const nmeaINFO* nmeaInfo, SystemTime* time)
+{
+  time->Year = 1900 + nmeaInfo->utc.year;
+  time->Month = 1 + nmeaInfo->utc.mon;
+  time->DayOfMonth = nmeaInfo->utc.day;
+  time->Hour = nmeaInfo->utc.hour;
+  time->Min = nmeaInfo->utc.min;
+  time->Sec = nmeaInfo->utc.sec;
+}

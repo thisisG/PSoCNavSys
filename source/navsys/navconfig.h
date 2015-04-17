@@ -10,6 +10,12 @@
 #ifndef NAV_SYSTEM_CONFIG_H
 #define NAV_SYSTEM_CONFIG_H
 
+// Log file name and enable switch
+// Uncomment these to enable logging
+#define NAV_LOG_ON
+#define NAV_LOG_FILE_NAME "nav.log"
+#define NAV_LOG_GPS_STRINGS "gps.log"
+
 // Default config filename used to initialise NavWPFileManager structures
 // wphandler.h/c
 #define DEFAULT_CONFIG_FILE "navsys.cfg"

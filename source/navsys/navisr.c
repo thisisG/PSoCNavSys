@@ -25,8 +25,8 @@ void gpsISRSetUartBuffer(volatile struct UartBuffer* mainBuffer)
 CY_ISR(gpsRxISR)
 {
   static uint8 lastChar = '\0';
-  size_t headPlusOne = (ptrUartBuff->inputHead + 1)
-                       % (ptrUartBuff->bufferLength - 1);
+  size_t headPlusOne = (ptrUartBuff->inputHead + 1) 
+                        % (ptrUartBuff->bufferLength - 1);
   uint8 readChar = UART_GPS_GetChar();
   while (readChar != 0)
   {

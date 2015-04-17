@@ -88,11 +88,39 @@ void initNavState(NavState* navS)
 
 void updateNavState(NavState* navS)
 {
+#ifdef NAV_LOG_ON
+  uint8_t updateLog = 0;
+#endif
   // First we want to handle new data that has arrived.
   if (navS->gpsBuffer.newGPSString == 1)
   {
-    decodeGpsStringInNavState(navS);
+    if (decodeGpsStringInNavState(navS) == 1)
+    {
+
+#ifdef NAV_LOG_ON
+      NAV_FILE* gpsStrings = NAV_fopen(NAV_LOG_GPS_STRINGS, "ab");
+      // Avoid logging strings that are in error (max length of GPS strings is
+      // 79+3 = 82 characters)
+      if (strlen(navS->gpsBuffer.gpsStringBuffer) < 82)
+      {
+        // Log if we successfully received a GPS string
+        updateLog = 1;
+        // Replace last char in string with new line to avoid parsing error for
+        // logging
+        if (strlen(navS->gpsBuffer.gpsStringBuffer) > 1)
+        {
+          navS->gpsBuffer
+              .gpsStringBuffer[strlen(navS->gpsBuffer.gpsStringBuffer) - 1]
+              = '\n';
+        }
+        NAV_fwrite(navS->gpsBuffer.gpsStringBuffer,
+                   strlen(navS->gpsBuffer.gpsStringBuffer), 1, gpsStrings);
+      }
+      NAV_fclose(gpsStrings);
+#endif // NAV_LOG_ON
+    }
     navS->gpsBuffer.newGPSString = 0;
+
   }
 
   // Then we want to calculate the distance from the current position to the
@@ -112,43 +140,33 @@ void updateNavState(NavState* navS)
   switch (navS->stateData.stateKeeper)
   {
   case closestWP:
-    printf("got closestWP!\r\n\r\n");
     newState = closestWPHandler(navS);
     break;
   case toWP:
-    printf("got toWP!\r\n\r\n");
     newState = toWPHandler(navS);
     break;
   case atWP:
-    printf("got atWP!\r\n\r\n");
     newState = atWPHandler(navS);
     break;
   case nextWP:
-    printf("got nextWP!\r\n\r\n");
     newState = nextWPHandler(navS);
     break;
   case atGoal:
-    printf("got atGoal!\r\n\r\n");
     newState = atGoalHandler(navS);
     break;
   case closestExceptionWP:
-    printf("got closestExceptionWP!\r\n\r\n");
     newState = closestExceptionWPHandler(navS);
     break;
   case toExceptionWP:
-    printf("got toExceptionWP!\r\n\r\n");
     newState = toExceptionWPHandler(navS);
     break;
   case atExceptionWP:
-    printf("got atExceptionWP!\r\n\r\n");
     newState = atExceptionWPHandler(navS);
     break;
   case nextExceptionWP:
-    printf("got nextExceptionWP!\r\n\r\n");
     newState = nextExceptionWPHandler(navS);
     break;
   case atExceptionGoal:
-    printf("got atExceptionGoal!\r\n\r\n");
     newState = atExceptionGoalHandler(navS);
     break;
   case firstCurrentNavState:
@@ -160,6 +178,23 @@ void updateNavState(NavState* navS)
     newState = closestWPHandler(navS);
   }
   navS->stateData.stateKeeper = newState;
+#ifdef NAV_LOG_ON
+  if (updateLog == 1)
+  {
+    NAV_FILE *logFile = NAV_fopen(NAV_LOG_FILE_NAME, "ab");
+    char logBuffer[128];
+    sprintf(logBuffer, "%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f\r\n",
+            navS->time.DayOfMonth, navS->time.Month, navS->time.Year,
+            navS->time.Hour, navS->time.Min, navS->time.Sec,
+            latitudeFromCoordinate(&(navS->currentLocation)),
+            longitudeFromCoordinate(&(navS->currentLocation)),
+            latitudeFromCoordinate(&(navS->nextWaypoint)),
+            longitudeFromCoordinate(&(navS->nextWaypoint)),
+            dHeadingToCurrentWP(navS));
+    NAV_fwrite(logBuffer, strlen(logBuffer), 1, logFile);
+    NAV_fclose(logFile);
+  }
+#endif // NAV_LOG_ON
 }
 
 CurrentNavState closestWPHandler(NavState* navS)

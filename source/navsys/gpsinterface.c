@@ -19,8 +19,9 @@ extern "C" {
 
 #endif // _WIN32
 
-void decodeGpsStringInNavState(NavState* navS)
+uint8_t decodeGpsStringInNavState(NavState* navS)
 {
+  uint8_t success = 0;
   // Need to pass the address to the second char value since the 0th is
   // occupied by '$'
   int pack = nmea_pack_type(&(navS->gpsBuffer.gpsStringBuffer)[1],
@@ -30,6 +31,7 @@ void decodeGpsStringInNavState(NavState* navS)
   // the data if the string type is recognized.
   if (pack == GPRMC)
   {
+    success = 1;
     nmeaGPRMC gprmcBuffer;
     nmea_zero_GPRMC(&gprmcBuffer);
     nmea_parse_GPRMC((navS->gpsBuffer.gpsStringBuffer),
@@ -40,6 +42,7 @@ void decodeGpsStringInNavState(NavState* navS)
     nmea_GPRMC2info(&gprmcBuffer, &nmeaBuffer);
 
     nmeaInfoToCoord(&nmeaBuffer, &(navS->currentLocation));
+    nmeaTimeInfoToSysTime(&nmeaBuffer, &(navS->time));
 
     navS->dCurrentHeading = (floatDegree)nmeaBuffer.direction;
 
@@ -47,6 +50,7 @@ void decodeGpsStringInNavState(NavState* navS)
   }
   else
   {
-    return;
+    // Do nothing, case here for completion
   }
+  return success;
 }
