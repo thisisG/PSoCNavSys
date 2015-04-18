@@ -49,10 +49,10 @@
 #define EXCEPTION_ARRIVED_WP_DISTANCE (2000)
 */
 // For ProperTest
-#define MAX_WP_DISTANCE (300)
-#define ARRIVED_WP_DISTANCE (100)
+#define MAX_WP_DISTANCE (100)
+#define ARRIVED_WP_DISTANCE (50)
 #define EXCEPTION_MAX_WP_DISTANCE (100)
-#define EXCEPTION_ARRIVED_WP_DISTANCE (200)
+#define EXCEPTION_ARRIVED_WP_DISTANCE (75)
 
 
 // Sizes for datastructures in packed binary style since sizeof() would return
