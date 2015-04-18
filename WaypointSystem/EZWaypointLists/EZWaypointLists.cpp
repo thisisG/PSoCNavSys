@@ -36,7 +36,7 @@ void floatDegreeToCoord(const float csvLat, const float csvLon,
 
 int main() {
   // Set the directory the data should be pulled from
-  char dir[64] = "./../../data/NavTestTwo/";
+  char dir[64] = "./../../data/ProperTest/";
   // Set config filename
   char wpConfigName[20] = DEFAULT_CONFIG_FILE;
   // Set base name of csvs where wplists and exception lists are defined
@@ -44,12 +44,12 @@ int main() {
   char exWPBase[20] = "Ex";
   char csvExtension[4] = "csv";
   // Set number of wplists and exception lists
-  size_t numberWPLists = 2;
+  size_t numberWPLists = 1;
   size_t numberExWPLists = 4;
   // Set base name of generated WP lists and EWP lists
-  char wpOutputBase[20] = "ts2WP";
+  char wpOutputBase[20] = "ptWP";
   char wpOutputExtension[20] = "wp";
-  char exWPOutputBase[20] = "ts2EWP";
+  char exWPOutputBase[20] = "ptEWP";
   char exWPOutputExtension[20] = "ewp";
 
   // Create template config file
