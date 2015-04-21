@@ -119,6 +119,12 @@ CurrentNavState atExceptionGoalHandler(NavState* navS);
 uint8_t coordsEqual(const struct Coordinate* coordA,
                     const struct Coordinate* coordB);
 
+// TODO Description
+uint8_t logGpsString(NavState* navS);
+
+// TODO Description
+void logNavData(NavState* navS);
+
 #ifdef _WIN32
 void printCoordData(const Coordinate* coord);
 void printCurrentCoordAndHeading(NavState* navS);

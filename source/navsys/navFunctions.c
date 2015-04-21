@@ -94,39 +94,20 @@ void updateNavState(NavState* navS)
   // First we want to handle new data that has arrived.
   if (navS->gpsBuffer.newGPSString == 1)
   {
+    // Decode the data if anything is received
     if (decodeGpsStringInNavState(navS) == 1)
     {
-
 #ifdef NAV_LOG_ON
-      NAV_FILE* gpsStrings = NAV_fopen(NAV_LOG_GPS_STRINGS, "ab");
-      // Avoid logging strings that are in error (max length of GPS strings is
-      // 79+3 = 82 characters)
-      if (strlen(navS->gpsBuffer.gpsStringBuffer) < 82)
-      {
-        // Log if we successfully received a GPS string
-        updateLog = 1;
-        // Replace last char in string with new line to avoid parsing error for
-        // logging
-        if (strlen(navS->gpsBuffer.gpsStringBuffer) > 1)
-        {
-          navS->gpsBuffer
-              .gpsStringBuffer[strlen(navS->gpsBuffer.gpsStringBuffer) - 1]
-              = '\n';
-        }
-        NAV_fwrite(navS->gpsBuffer.gpsStringBuffer,
-                   strlen(navS->gpsBuffer.gpsStringBuffer), 1, gpsStrings);
-      }
-      NAV_fclose(gpsStrings);
+      updateLog = logGpsString(navS);
 #endif // NAV_LOG_ON
     }
     navS->gpsBuffer.newGPSString = 0;
-
   }
 
   // Then we want to calculate the distance from the current position to the
   // current WP and update this in navS.
   navS->distanceToCurrentWP
-    = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
+      = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
 
   // Then we want to evaluate our current state based on the stateKeeper in
   // the passed NavState structure.
@@ -181,18 +162,7 @@ void updateNavState(NavState* navS)
 #ifdef NAV_LOG_ON
   if (updateLog == 1)
   {
-    NAV_FILE *logFile = NAV_fopen(NAV_LOG_FILE_NAME, "ab");
-    char logBuffer[128];
-    sprintf(logBuffer, "%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f\r\n",
-            navS->time.DayOfMonth, navS->time.Month, navS->time.Year,
-            navS->time.Hour, navS->time.Min, navS->time.Sec,
-            latitudeFromCoordinate(&(navS->currentLocation)),
-            longitudeFromCoordinate(&(navS->currentLocation)),
-            latitudeFromCoordinate(&(navS->nextWaypoint)),
-            longitudeFromCoordinate(&(navS->nextWaypoint)),
-            dHeadingToCurrentWP(navS));
-    NAV_fwrite(logBuffer, strlen(logBuffer), 1, logFile);
-    NAV_fclose(logFile);
+    logNavData(navS);
   }
 #endif // NAV_LOG_ON
 }
@@ -203,10 +173,10 @@ CurrentNavState closestWPHandler(NavState* navS)
 
   // Check if cfg file is currently open, if it is close it
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
-  
+
   // Open config file
   navS->stateData.WPHandler.fileManager.ptrCfgFile
-    = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
+      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "rb");
 
   // Read the file header and config file header.
   NavFileHeader fileHeader;
@@ -214,26 +184,26 @@ CurrentNavState closestWPHandler(NavState* navS)
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    &fileHeader, &cfgHeader);
-  
+                            &fileHeader, &cfgHeader);
+
   // Get the name of the current WP list
   getWPListName(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    cfgHeader.currentWPList,
-    navS->stateData.WPHandler.fileManager.wpListFileName);
-  
+                cfgHeader.currentWPList,
+                navS->stateData.WPHandler.fileManager.wpListFileName);
+
   // We are now done with the cfg file, so we should close it.
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
   navS->stateData.WPHandler.fileManager.ptrCfgFile = NULL;
 
   // Open the WP list file
   WPHandlerOpen(&(navS->stateData.WPHandler),
-    navS->stateData.WPHandler.fileManager.wpListFileName);
-  
+                navS->stateData.WPHandler.fileManager.wpListFileName);
+
   // Get the distance to the goal that was updated by WPHandlerOpen() for a
   // baseline distance that we compare the rest of the list to
   float minDist = distanceCirclePathAtoB(&(navS->currentLocation),
-    &(navS->stateData.WPHandler.wpGoal));
-  
+                                         &(navS->stateData.WPHandler.wpGoal));
+
   // Cycle through the waypoints using WPHandlerGetNextWP and find the
   // closest wp and store the number of the WP
   int32_t WPCount = 0;
@@ -245,11 +215,11 @@ CurrentNavState closestWPHandler(NavState* navS)
   while (WPCount != -1)
   {
     WPCount = WPHandlerNextWP(&(navS->stateData.WPHandler),
-      &(navS->stateData.nextWP));
+                              &(navS->stateData.nextWP));
     if (WPCount != -1)
     {
       tempDist = distanceCirclePathAtoB(&(navS->currentLocation),
-        &(navS->stateData.nextWP));
+                                        &(navS->stateData.nextWP));
       if (tempDist < minDist)
       {
         nextWPNumber = WPCount;
@@ -258,7 +228,7 @@ CurrentNavState closestWPHandler(NavState* navS)
       }
     }
   }
-  
+
   // If the closest WP is within allowable distances set it as current WP, seek
   // WP set returnstate to toWP
   if (minDist < navS->stateData.maxWPDistance)
@@ -274,7 +244,7 @@ CurrentNavState closestWPHandler(NavState* navS)
   {
     returnState = closestExceptionWP;
   }
-  
+
   return returnState;
 }
 
@@ -326,13 +296,13 @@ CurrentNavState nextWPHandler(NavState* navS)
 
   // Update the WP and the distance
   int32_t wpCount
-    = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+      = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
 
   // Check that the WP number is indeed valid
   if (wpCount != -1)
   {
-    navS->distanceToCurrentWP
-      = distanceCirclePathAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
+    navS->distanceToCurrentWP = distanceCirclePathAtoB(&(navS->currentLocation),
+                                                       &(navS->nextWaypoint));
   }
   // If we get -1 the last wp in the list is different from the WPgoal, this
   // should never happen.
@@ -354,17 +324,16 @@ CurrentNavState atGoalHandler(NavState* navS)
 
   // Load the config file
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
-  NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName,
-    "r+b");
+  NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
   // Read file header and config header
   NavFileHeader fileHeader;
   initNavFileHeader(&fileHeader);
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    &fileHeader, &cfgHeader);
+                            &fileHeader, &cfgHeader);
 
-  // Check if there are more WPlists available in the file. 
+  // Check if there are more WPlists available in the file.
   // If there is add one to the count.
   if (cfgHeader.currentWPList < cfgHeader.numberOfWPLists)
   {
@@ -378,9 +347,9 @@ CurrentNavState atGoalHandler(NavState* navS)
 
   // Seek back the size of the cfg header, write it to file and close the file.
   NAV_fseek(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
+            -SIZE_NAV_CFG_FILE_HEADER, NAV_SEEK_CUR);
   fwriteNavConfigFileHeader(&cfgHeader,
-    navS->stateData.WPHandler.fileManager.ptrCfgFile);
+                            navS->stateData.WPHandler.fileManager.ptrCfgFile);
   NAV_fclose(navS->stateData.WPHandler.fileManager.ptrCfgFile);
   navS->stateData.WPHandler.fileManager.ptrCfgFile = NULL;
 
@@ -400,7 +369,7 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   NavConfigFileHeader cfgHeader;
   initNavConfigFileHeader(&cfgHeader);
   cfgGetFileHeaderCfgHeader(navS->stateData.WPHandler.fileManager.ptrCfgFile,
-    &fileHeader, &cfgHeader);
+                            &fileHeader, &cfgHeader);
   checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
 
   uint32_t currExList = 1;
@@ -422,14 +391,14 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   {
     // Get file name
     navS->stateData.WPHandler.fileManager.ptrCfgFile
-      = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
+        = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");
     getExceptionWPListName(
-      navS->stateData.WPHandler.fileManager.ptrCfgFile, currExList,
-      navS->stateData.WPHandler.fileManager.eWPListFileName);
+        navS->stateData.WPHandler.fileManager.ptrCfgFile, currExList,
+        navS->stateData.WPHandler.fileManager.eWPListFileName);
     checkAndCloseNavFile(navS->stateData.WPHandler.fileManager.ptrCfgFile);
     // Open file
     WPHandlerOpen(&(navS->stateData.WPHandler),
-      navS->stateData.WPHandler.fileManager.eWPListFileName);
+                  navS->stateData.WPHandler.fileManager.eWPListFileName);
     // Check each waypoint in each file
     WPCount = 0;
     while (WPCount != -1)
@@ -438,7 +407,7 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
       if (WPCount != -1)
       {
         tempDist
-          = distanceCirclePathAtoB(&(navS->currentLocation), &(tempCoord));
+            = distanceCirclePathAtoB(&(navS->currentLocation), &(tempCoord));
         // If the distance is less than the previous stored distance
         if (tempDist < minDist)
         {
@@ -491,7 +460,7 @@ CurrentNavState toExceptionWPHandler(NavState* navS)
     returnState = closestWP;
   }
   else if ((navS->distanceToCurrentWP)
-    < (navS->stateData.exceptionWPArrivalDistance))
+           < (navS->stateData.exceptionWPArrivalDistance))
   {
     returnState = atExceptionWP;
   }
@@ -526,7 +495,7 @@ CurrentNavState nextExceptionWPHandler(NavState* navS)
 {
   CurrentNavState returnState = toExceptionWP;
   uint32_t WPCount
-    = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
+      = WPHandlerNextWP(&(navS->stateData.WPHandler), &(navS->nextWaypoint));
   // If we for some reason get an errenous WP as the next (return of -1) set the
   // returnstate to closestWP
   if (WPCount == -1)
@@ -546,7 +515,7 @@ CurrentNavState atExceptionGoalHandler(NavState* navS)
 }
 
 uint8_t coordsEqual(const struct Coordinate* coordA,
-  const struct Coordinate* coordB)
+                    const struct Coordinate* coordB)
 {
   // Set the default return value to 1 which means that the two coordinates
   // are equal.
@@ -582,13 +551,54 @@ uint8_t coordsEqual(const struct Coordinate* coordA,
   return returnValue;
 }
 
+uint8_t logGpsString(NavState* navS)
+{
+  uint8_t updateLog = 0;
+
+  NAV_FILE* gpsStrings = NAV_fopen(NAV_LOG_GPS_STRINGS, "ab");
+  // Avoid logging strings that are in error (max length of GPS strings is
+  // 79+3 = 82 characters)
+  if (strlen(navS->gpsBuffer.gpsStringBuffer) < 82)
+  {
+    // Log if we successfully received a GPS string
+    updateLog = 1;
+    // Replace last char in string with new line to avoid parsing error for
+    // logging
+    if (strlen(navS->gpsBuffer.gpsStringBuffer) > 1)
+    {
+      navS->gpsBuffer
+          .gpsStringBuffer[strlen(navS->gpsBuffer.gpsStringBuffer) - 1] = '\n';
+    }
+    NAV_fwrite(navS->gpsBuffer.gpsStringBuffer,
+               strlen(navS->gpsBuffer.gpsStringBuffer), 1, gpsStrings);
+  }
+  NAV_fclose(gpsStrings);
+  return updateLog;
+}
+
+void logNavData(NavState* navS)
+{
+  NAV_FILE* logFile = NAV_fopen(NAV_LOG_FILE_NAME, "ab");
+  char logBuffer[128];
+  sprintf(logBuffer, "%d,%d,%d,%d,%d,%d,%f,%f,%f,%f,%f\r\n",
+          navS->time.DayOfMonth, navS->time.Month, navS->time.Year,
+          navS->time.Hour, navS->time.Min, navS->time.Sec,
+          latitudeFromCoordinate(&(navS->currentLocation)),
+          longitudeFromCoordinate(&(navS->currentLocation)),
+          latitudeFromCoordinate(&(navS->nextWaypoint)),
+          longitudeFromCoordinate(&(navS->nextWaypoint)),
+          dHeadingToCurrentWP(navS));
+  NAV_fwrite(logBuffer, strlen(logBuffer), 1, logFile);
+  NAV_fclose(logFile);
+}
+
 #ifdef _WIN32
 void printCoordData(const Coordinate* coord)
 {
   printf("Coordinate data: \n");
   printf("lat: %dd%dm \nlon: %dd%dm \nprio: %d\n", coord->dLatitude,
-    coord->mLatitude, coord->dLongitude, coord->mLongitude,
-    coord->priority);
+         coord->mLatitude, coord->dLongitude, coord->mLongitude,
+         coord->priority);
 }
 
 void printCurrentCoordAndHeading(NavState* navS)
@@ -612,7 +622,7 @@ floatDegree longitudeFromCoordinate(const Coordinate* thisCoord)
 }
 
 floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,
-  const struct Coordinate* coordB)
+                                   const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -623,7 +633,7 @@ floatDegree distanceCirclePathAtoB(const struct Coordinate* coordA,
 }
 
 floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
-  const struct Coordinate* coordB)
+                                     const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -634,7 +644,7 @@ floatDegree distanceSphereCosineAtoB(const struct Coordinate* coordA,
 }
 
 floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
-  const struct Coordinate* coordB)
+                                 const struct Coordinate* coordB)
 {
   floatDegree rLatA = toRadian(latitudeFromCoordinate(coordA));
   floatDegree rLonA = toRadian(longitudeFromCoordinate(coordA));
@@ -647,8 +657,8 @@ floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
 floatDegree dHeadingFromAtoB(const Coordinate* coordA, const Coordinate* coordB)
 {
   return dInitialHeading(
-    latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
-    latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
+      latitudeFromCoordinate(coordA), longitudeFromCoordinate(coordA),
+      latitudeFromCoordinate(coordB), longitudeFromCoordinate(coordB));
 }
 
 floatDegree dHeadingToCurrentWP(NavState* navS)
