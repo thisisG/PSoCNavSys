@@ -213,4 +213,10 @@ floatDegree dHeadingFromAtoB(const Coordinate* coordA,
 
 floatDegree dHeadingToCurrentWP(NavState* navS);
 
+floatDegree getCurrentHeading(NavState* navS);
+
+floatDegree getCurrentSpeedKmh(NavState* navS);
+
+floatDegree getHeadingToCurrentWP(NavState* navS);
+
 #endif

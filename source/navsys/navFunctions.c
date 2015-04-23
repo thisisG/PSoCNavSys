@@ -665,3 +665,18 @@ floatDegree dHeadingToCurrentWP(NavState* navS)
 {
   return dHeadingFromAtoB(&(navS->currentLocation), &(navS->nextWaypoint));
 }
+
+floatDegree getCurrentHeading(NavState* navS)
+{
+  return navS->dCurrentHeading;
+}
+
+floatDegree getCurrentSpeedKmh(NavState* navS)
+{
+  return navS->currentSpeedKmh;
+}
+
+floatDegree getHeadingToCurrentWP(NavState* navS)
+{
+  return dHeadingToCurrentWP(navS);
+}
