@@ -85,138 +85,321 @@ reach its goal.
 */
 void updateNavState(NavState* navS);
 
-// TODO
+/*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  toWP:
+  navS->nextWaypoint = selectedCoord;
+  navS->distanceToCurrentWP = minDist;
+  closestExceptionWP:
+  NA
+remarks:
+  Internal parameters of NavState is changed by the state handler.
+  Function to handle the closestWP state. Finds closest WP in current list (in
+  config file) and cycles through all WPs in order to find the closest.
+  If no valid WP in range return state is closestExceptionWP.
+*/
 CurrentNavState closestWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  closestWP if lost
+  atWP if arrived
+remarks:
+  No internal parameters of NavState is changed by this function.
+  Checks if we have arrived at WP or are too far away from selected WP to
+  proceed. If neither state is unchanged.
+*/
 CurrentNavState toWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  atGoal if at goal
+  nextWP if not at goal
+remarks:
+  No internal parameters of NavState is changed by this function.
+  Checks if the arrived at WP is the goal or not.
+*/
 CurrentNavState atWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  toWP:
+  navS->stateData.WPHandler is changed
+  navS->nextWaypoint is changed
+  navS->distanceToCurrentWP is updated with new distance
+  closestWP:
+  NA
+remarks:
+  Internal parameters of NavState is changed by the state handler.
+  Gets the next WP in list using WPHandlers. Returns toWP if next WP is valid.
+  If WP is not valid (should never happen) it returns closestWP. In this case
+  something is really wrong as there are no more WPs in list, and the current
+  WP should've been detected as a goal.
+*/
 CurrentNavState nextWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  closestWP:
+  Updates the config file with the new selection of WP list for the system.
+  navS->stateData.WPHandler.fileManager.ptrCfgFile opened and closed
+remarks:
+  Internal parameters of NavState is changed by the state handler.
+*/
 CurrentNavState atGoalHandler(NavState* navS);
 
-// TODO
+/*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  toExceptionWP:
+  navS->stateData.WPHandler to selected EWP list
+  navS->stateData.eWPGoal to goal of selected list
+  navS->nextWaypoint = selectedCoord;
+  navS->stateData.exceptionWPArrivalDistance = EXCEPTION_ARRIVED_WP_DISTANCE;
+  navS->stateData.exceptionMaxWPDistance = minDist + EXCEPTION_MAX_WP_DISTANCE;
+remarks:
+  Internal parameters of NavState is changed by the state handler.
+  Function to handle the closestExceptionWP state. Finds closest EWP in all
+  exception lists stored on the system. Will find the closest and modify the
+  exception arrival and max distance for exception mode.
+*/
 CurrentNavState closestExceptionWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  closestWP if lost
+  atEWP if arrived
+remarks:
+  No internal parameters of NavState is changed by this function.
+  Checks if we have arrived at EWP or are too far away from selected EWP to
+  proceed. If neither state is unchanged.
+*/
 CurrentNavState toExceptionWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  atEGoal if at goal
+  nextEWP if not at goal
+remarks:
+  No internal parameters of NavState is changed by this function.
+  Checks if the arrived at EWP is the goal or not.
+*/
 CurrentNavState atExceptionWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  toWP:
+  navS->stateData.WPHandler is changed
+  navS->nextWaypoint is changed
+  closestWP:
+  NA
+remarks:
+  Internal parameters of NavState is changed by the state handler.
+  Gets the next EWP in list using WPHandlers. Returns toEWP if next WP is valid.
+  If WP is not valid (should never happen) it returns closestWP. In this case
+  something is really wrong as there are no more EWPs in list, and the current
+  EWP should've been detected as a Egoal.
+*/
 CurrentNavState nextExceptionWPHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  NavState* of which state is assessed.
+output:
+  CurrentNavState with new system state.
+  closestWP:
+  NA
+remarks:
+  Internal parameters of NavState is not changed by the handler
+*/
 CurrentNavState atExceptionGoalHandler(NavState* navS);
 
-// TODO
+ /*
+input:
+  const struct Coordinate* A
+  const struct Coordinate* B
+output:
+  uint8_t, 1 if equal, 0 if different.
+remarks:
+  Used to check of two Coordinate structures contain the same information.
+*/
 uint8_t coordsEqual(const struct Coordinate* coordA,
                     const struct Coordinate* coordB);
 
-// TODO Description
+ /*
+input:
+  NavState* containing the to-be-logged GPS string/sentence
+output:
+  NA
+remarks:
+  Writes to default gps log file defined in NAV_LOG_GPS_STRINGS in navconfig.h
+  Modifies the string stored in gps buffer in NavState to make it conform to the
+  format needed for text based logging.
+*/
 uint8_t logGpsString(NavState* navS);
 
-// TODO Description
+ /*
+input:
+  NavState* containing the to-be-logged navigation information
+output:
+  NA
+remarks:
+  Writes the current navigation data to the NAV_LOG_FILE_NAME file defined in
+  navconfig.h.
+  Logged data is:
+  day,month,year,hour,min,sec,curLat,curLon,wpLat,wpLon,wpHeading
+*/
 void logNavData(NavState* navS);
 
 #ifdef _WIN32
+// These are used for debugging purpouses when testing code in windows.
 void printCoordData(const Coordinate* coord);
 void printCurrentCoordAndHeading(NavState* navS);
 #endif // _WIN32
 
-/* latitudeFromCoordinate();
+/*
 input:
-(reference) Coordinate thisCoord
-
+  (reference) Coordinate thisCoord
 output:
-(value) floatDegree latitude
-
+  (value) floatDegree latitude
 remarks:
-Extracts the latitude from a Coordinate ADS and returns a fractional
-floating value.
-Note that the value stored in the ADS should be in degrees and NOT radians.
-Care should be taken to ensure that this is upheld throughout the program.
+  Extracts the latitude from a Coordinate ADS and returns a fractional
+  floating value.
+  Note that the value stored in the ADS should be in degrees and NOT radians.
+  Care should be taken to ensure that this is upheld throughout the program.
 */
 floatDegree latitudeFromCoordinate(const Coordinate* thisCoord); // OK
 
-/* longitudeFromCoordinate();
+/*
 input:
-(reference) Coordinate thisCoord
-
+  (reference) Coordinate thisCoord
 output:
-(value) floatDegree latitude
-
+  (value) floatDegree latitude
 remarks:
-Extracts the longitude from a Coordinate ADS and returns a fractional
-floating value.
-Note that the value stored in the ADS should be in degrees and NOT radians.
-Care should be taken to ensure that this is upheld throughout the program.
+  Extracts the longitude from a Coordinate ADS and returns a fractional
+  floating value.
+  Note that the value stored in the ADS should be in degrees and NOT radians.
+  Care should be taken to ensure that this is upheld throughout the program.
 */
 floatDegree longitudeFromCoordinate(const Coordinate* thisCoord); // OK
 
-/* distanceCirclePathAtoB();
+/*
 input:
-(reference) Coordinate coordA
-(reference) Coordinate coordB
-
+  (reference) Coordinate coordA
+  (reference) Coordinate coordB
 output:
-(value) floatDegree distanceInM
-
+  (value) floatDegree distanceInM
 remarks:
-Returns the great circle distance between two coordinate points assuming an
-average earth radius
+  Returns the great circle distance between two coordinate points assuming an
+  average earth radius
 */
 floatDegree distanceCirclePathAtoB(
     const struct Coordinate* coordA,
     const struct Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
-/* distanceSphereCosineAtoB();
+/*
 input:
-(reference) Coordinate coordA
-(reference) Coordinate coordB
-
+  (reference) Coordinate coordA
+  (reference) Coordinate coordB
 output:
-(value) floatDegree distanceInKm
-
+  (value) floatDegree distanceInKm
 remarks:
-Returns the spherical cosine law distance between two coordinate points assuming
-an average earth radius
+  Returns the spherical cosine law distance between two coordinate points assuming
+  an average earth radius
 */
 floatDegree distanceSphereCosineAtoB(
     const Coordinate* coordA,
     const Coordinate* coordB); // TO TEST WITH BORDERLINE VALUES
 
-/* distanceEquiRectAtoB();
+/*
 input:
-(reference) Coordinate coordA
-(reference) Coordinate coordB
-
+  (reference) Coordinate coordA
+  (reference) Coordinate coordB
 output:
-(value) floatDegree distanceInM
-
+  (value) floatDegree distanceInM
 remarks:
-Returns the equirectangular approximation of distance between two coordinate
-points assuming an average earth radius.
+  Returns the equirectangular approximation of distance between two coordinate
+  points assuming an average earth radius.
 */
-
 floatDegree distanceEquiRectAtoB(const struct Coordinate* coordA,
                                  const struct Coordinate* coordB);
 
+/*
+input:
+  (reference) Coordinate coordA
+  (reference) Coordinate coordB
+output:
+  (value) floatDegree distanceInM
+remarks:
+  Returns the equirectangular approximation of distance between two coordinate
+  points assuming an average earth radius.
+*/
 floatDegree dHeadingFromAtoB(const Coordinate* coordA,
                              const Coordinate* coordB);
 
+/*
+input:
+  NavState* that is being considered
+output:
+  floatDegree heading from current NavState location to current WP
+remarks:
+  Uses the spherical form of the inverse geodesic problem by Vincentin to
+  calculate heading.
+*/
 floatDegree dHeadingToCurrentWP(NavState* navS);
 
+/*
+input:
+  NavState* that is being considered
+output:
+  floatDegree most recent GPS heading stored in NavState
+remarks:
+*/
 floatDegree getCurrentHeading(NavState* navS);
 
+/*
+input:
+  NavState* that is being considered
+output:
+  floatDegree most recent GPS speed in km/h stored in NavState
+remarks:
+*/
 floatDegree getCurrentSpeedKmh(NavState* navS);
 
+/*
+input:
+  NavState* that is being considered
+output:
+  floatDegree heading from current NavState location to current WP
+remarks:
+  Properly named interface calling dHeadingToCurrentWP.
+*/
 floatDegree getHeadingToCurrentWP(NavState* navS);
 
 #endif

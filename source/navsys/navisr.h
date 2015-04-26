@@ -28,35 +28,46 @@ extern volatile UartBuffer* ptrUartBuff;
 extern volatile uint8 rxStringReady;
 extern volatile uint8 txStringReady;
 
-// TODO
+/* gpsRxISR();
+input:
+  volatile struct UartBuffer* pointing to the UART buffer the ISRs should use
+output:
+  NA
+remarks:
+  Generated an ISR used on a received byte over UART from a GPS devices
+  attached using the CY_ISR_PROTO() and CY_ISR() macros.
+  Takes one (or more if several new bytes) out of the Rx receive buffer and
+  store these in the inputBuffer in an instance of a UartBuffer data
+  structure.
+*/
 void gpsISRSetUartBuffer(volatile struct UartBuffer* mainBuffer);
 
 /* gpsRxISR();
 input:
-    NA
+  NA
 output:
-    NA
+  NA
 remarks:
-    Generated an ISR used on a received byte over UART from a GPS devices
-    attached using the CY_ISR_PROTO() and CY_ISR() macros.
-    Takes one (or more if several new bytes) out of the Rx receive buffer and
-    store these in the inputBuffer in an instance of a UartBuffer data
-    structure.
+  Generated an ISR used on a received byte over UART from a GPS devices
+  attached using the CY_ISR_PROTO() and CY_ISR() macros.
+  Takes one (or more if several new bytes) out of the Rx receive buffer and
+  store these in the inputBuffer in an instance of a UartBuffer data
+  structure.
 */
 CY_ISR_PROTO(gpsRxISR);
 
 /* gpsTxISR();
 input:
-    NA
+  NA
 output:
-    NA
+  NA
 remarks:
-    Generated an ISR used to fill the Tx buffer for the UART connected to a GPS
-    device using the CY_ISR_PROTO() and CY_ISR() macros.
-    When there is a string or part of a string waiting for transfer in an
-    instance of a UartBuffer the ISR will fill the UART Tx buffer until the
-    whole string is sent.
-    It will then disable the Tx interrupt until a new is to be sent over UART.
+  Generated an ISR used to fill the Tx buffer for the UART connected to a GPS
+  device using the CY_ISR_PROTO() and CY_ISR() macros.
+  When there is a string or part of a string waiting for transfer in an
+  instance of a UartBuffer the ISR will fill the UART Tx buffer until the
+  whole string is sent.
+  It will then disable the Tx interrupt until a new is to be sent over UART.
 */
 CY_ISR_PROTO(gpsTxISR);
 

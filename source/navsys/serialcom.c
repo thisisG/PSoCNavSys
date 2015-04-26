@@ -30,8 +30,6 @@ void initUartBuffer(UartBuffer* uartBuff)
   uartBuff->inputTail = 0;
 }
 
-// TODO Revisit uartWriter() and see if it causes the UART bug that causes long
-// strings to echo improperly.
 ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size)
 {
   UartBuffer* outWriteCookie = (UartBuffer*)outCookie;
@@ -84,8 +82,6 @@ ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size)
   return byteCount;
 }
 
-// TODO Revisit uartReader() and see if it causes the UART bug that causes long
-// strings to echo improperly.
 ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size)
 {
   UartBuffer* inReadCookie = (UartBuffer*)inCookie;

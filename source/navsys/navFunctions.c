@@ -389,6 +389,10 @@ CurrentNavState closestExceptionWPHandler(NavState* navS)
   // Check each file
   for (currExList = 1; currExList <= maxExList; currExList++)
   {
+    // The file is opened and closed multiple times due to issues with not doing
+    // this. At a later point attempt to figure out why keeping the file open
+    // prevents the system from successfully reading from it. For now it is
+    // opened and closed for each iteration of the loop.
     // Get file name
     navS->stateData.WPHandler.fileManager.ptrCfgFile
         = NAV_fopen(navS->stateData.WPHandler.fileManager.cfgFileName, "r+b");

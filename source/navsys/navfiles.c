@@ -21,9 +21,6 @@ extern "C" {
 ** Initialisation function implementations
 ***********************************************/
 
-// Test
-// VS2013: OK
-// PSoC: OK
 void initNavFileHeader(NavFileHeader* ptrFileHeader)
 {
   ptrFileHeader->fileType = INVALID_FILE_TYPE;
@@ -31,9 +28,6 @@ void initNavFileHeader(NavFileHeader* ptrFileHeader)
   ptrFileHeader->nextHeaderSize = 0;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
 {
   ptrCfgFileHeader->numberOfWPLists = 0;
@@ -42,9 +36,6 @@ void initNavConfigFileHeader(NavConfigFileHeader* ptrCfgFileHeader)
   ptrCfgFileHeader->currentExeptionWPList = 1;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 void initNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader)
 {
   initCoordinate(&(ptrWPListHeader->startCoordinate));
@@ -53,9 +44,6 @@ void initNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader)
   ptrWPListHeader->nextHeaderSize = 0;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 void initNavDatablockHeader(NavDatablockHeader* ptrDataHeader)
 {
   ptrDataHeader->dataType = INVALID_DATA_TYPE;
@@ -67,9 +55,6 @@ void initNavDatablockHeader(NavDatablockHeader* ptrDataHeader)
 ** Basic file interfaces
 ***********************************************/
 
-// TODO Test
-// PC: OK
-// PSoC:
 NAV_FILE* NAV_fopen(const char* filename, const char* mode)
 {
 #ifdef __GNUC__
@@ -79,9 +64,6 @@ NAV_FILE* NAV_fopen(const char* filename, const char* mode)
 #endif // __GNUC__
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 int NAV_fclose(NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
@@ -91,9 +73,6 @@ int NAV_fclose(NAV_FILE* ptrNavFile)
 #endif // __GNUC__
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 {
 #ifdef __GNUC__
@@ -103,9 +82,6 @@ int NAV_fseek(NAV_FILE* ptrNavFile, const int32_t offset, const int origin)
 #endif // __GNUC__
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
                   NAV_FILE* ptrNavFile)
 {
@@ -116,9 +92,6 @@ size_t NAV_fwrite(const void* ptrData, size_t size, size_t count,
 #endif // __GNUC__
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
                    NAV_FILE* ptrNavFile)
 {
@@ -129,9 +102,6 @@ uint32_t NAV_fread(void* ptrData, size_t size, size_t count,
 #endif // __GNUC__
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 int32_t NAV_ftell(NAV_FILE* ptrNavFile)
 {
 #ifdef __GNUC__
@@ -158,101 +128,86 @@ void checkAndCloseNavFile(NAV_FILE* navFile)
 ** Structure read/write functions
 ***********************************************/
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t fwriteCoordinate(const Coordinate* ptrCoord, NAV_FILE* ptrNavFile)
 {
-  size_t bytesWritten = 0;
+  size_t itemsWritten = 0;
 
-  bytesWritten += NAV_fwrite(&(ptrCoord->dLongitude),
+  itemsWritten += NAV_fwrite(&(ptrCoord->dLongitude),
                              sizeof((ptrCoord->dLongitude)), 1, ptrNavFile);
 
-  bytesWritten += NAV_fwrite(&(ptrCoord->mLongitude),
+  itemsWritten += NAV_fwrite(&(ptrCoord->mLongitude),
                              sizeof((ptrCoord->mLongitude)), 1, ptrNavFile);
 
-  bytesWritten += NAV_fwrite(&(ptrCoord->dLatitude),
+  itemsWritten += NAV_fwrite(&(ptrCoord->dLatitude),
                              sizeof((ptrCoord->dLatitude)), 1, ptrNavFile);
 
-  bytesWritten += NAV_fwrite(&(ptrCoord->mLatitude),
+  itemsWritten += NAV_fwrite(&(ptrCoord->mLatitude),
                              sizeof((ptrCoord->mLatitude)), 1, ptrNavFile);
 
-  bytesWritten += NAV_fwrite(&(ptrCoord->priority),
+  itemsWritten += NAV_fwrite(&(ptrCoord->priority),
                              sizeof((ptrCoord->priority)), 1, ptrNavFile);
 
-  return bytesWritten;
+  return itemsWritten;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t freadCoordinate(Coordinate* ptrCoord, NAV_FILE* ptrNavFile)
 {
-  size_t bytesRead = 0;
+  size_t itemsRead = 0;
 
-  bytesRead += NAV_fread(&(ptrCoord->dLongitude),
+  itemsRead += NAV_fread(&(ptrCoord->dLongitude),
                          sizeof((ptrCoord->dLongitude)), 1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrCoord->mLongitude),
+  itemsRead += NAV_fread(&(ptrCoord->mLongitude),
                          sizeof((ptrCoord->mLongitude)), 1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrCoord->dLatitude), sizeof((ptrCoord->dLatitude)),
+  itemsRead += NAV_fread(&(ptrCoord->dLatitude), sizeof((ptrCoord->dLatitude)),
                          1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrCoord->mLatitude), sizeof((ptrCoord->mLatitude)),
+  itemsRead += NAV_fread(&(ptrCoord->mLatitude), sizeof((ptrCoord->mLatitude)),
                          1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrCoord->priority), sizeof((ptrCoord->priority)), 1,
+  itemsRead += NAV_fread(&(ptrCoord->priority), sizeof((ptrCoord->priority)), 1,
                          ptrNavFile);
 
-  return bytesRead;
+  return itemsRead;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t fwriteNavFileHeader(const NavFileHeader* ptrFileHeader,
                            NAV_FILE* ptrNavFile)
 {
-  size_t bytesWritten = 0;
+  size_t itemsWritten = 0;
 
-  bytesWritten += NAV_fwrite(&(ptrFileHeader->fileType),
+  itemsWritten += NAV_fwrite(&(ptrFileHeader->fileType),
                              sizeof((ptrFileHeader->fileType)), 1, ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += NAV_fwrite(&(ptrFileHeader->fileVersion),
                     sizeof((ptrFileHeader->fileVersion)), 1, ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += NAV_fwrite(&(ptrFileHeader->nextHeaderSize),
                     sizeof((ptrFileHeader->nextHeaderSize)), 1, ptrNavFile);
 
-  return bytesWritten;
+  return itemsWritten;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t freadNavFileHeader(NavFileHeader* ptrFileHeader, NAV_FILE* ptrNavFile)
 {
-  size_t bytesRead = 0;
+  size_t itemsRead = 0;
 
-  bytesRead += NAV_fread(&(ptrFileHeader->fileType),
+  itemsRead += NAV_fread(&(ptrFileHeader->fileType),
                          sizeof((ptrFileHeader->fileType)), 1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrFileHeader->fileVersion),
+  itemsRead += NAV_fread(&(ptrFileHeader->fileVersion),
                          sizeof((ptrFileHeader->fileVersion)), 1, ptrNavFile);
 
-  bytesRead
+  itemsRead
       += NAV_fread(&(ptrFileHeader->nextHeaderSize),
                    sizeof((ptrFileHeader->nextHeaderSize)), 1, ptrNavFile);
 
-  return bytesRead;
+  return itemsRead;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
                                  NAV_FILE* ptrNavFile)
 {
@@ -277,11 +232,8 @@ size_t fwriteNavConfigFileHeader(const NavConfigFileHeader* ptrCfgHeader,
   return itemsWritten;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t freadNavConfigFileHeader(NavConfigFileHeader *ptrCfgHeader,
-                                NAV_FILE *ptrNavFile) 
+                                NAV_FILE *ptrNavFile)
 {
   size_t itemsRead = 0;
 
@@ -302,91 +254,79 @@ size_t freadNavConfigFileHeader(NavConfigFileHeader *ptrCfgHeader,
   return itemsRead;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t fwriteNavFileWPListHeader(const NavFileWPListHeader* ptrWPListHeader,
                                  NAV_FILE* ptrNavFile)
 {
-  size_t bytesWritten = 0;
-  bytesWritten
+  size_t itemsWritten = 0;
+  itemsWritten
       += fwriteCoordinate(&(ptrWPListHeader->startCoordinate), ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += fwriteCoordinate(&(ptrWPListHeader->endCoordinate), ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += NAV_fwrite(&(ptrWPListHeader->numberOfEntries),
                     sizeof(ptrWPListHeader->numberOfEntries), 1, ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += NAV_fwrite(&(ptrWPListHeader->nextHeaderSize),
                     sizeof(ptrWPListHeader->nextHeaderSize), 1, ptrNavFile);
 
-  return bytesWritten;
+  return itemsWritten;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t freadNavFileWPListHeader(NavFileWPListHeader* ptrWPListHeader,
                                 NAV_FILE* ptrNavFile)
 {
-  size_t bytesRead = 0;
+  size_t itemsRead = 0;
 
-  bytesRead += freadCoordinate(&(ptrWPListHeader->startCoordinate), ptrNavFile);
+  itemsRead += freadCoordinate(&(ptrWPListHeader->startCoordinate), ptrNavFile);
 
-  bytesRead += freadCoordinate(&(ptrWPListHeader->endCoordinate), ptrNavFile);
+  itemsRead += freadCoordinate(&(ptrWPListHeader->endCoordinate), ptrNavFile);
 
-  bytesRead
+  itemsRead
       += NAV_fread(&(ptrWPListHeader->numberOfEntries),
                    sizeof(ptrWPListHeader->numberOfEntries), 1, ptrNavFile);
-  bytesRead
+  itemsRead
       += NAV_fread(&(ptrWPListHeader->nextHeaderSize),
                    sizeof(ptrWPListHeader->nextHeaderSize), 1, ptrNavFile);
 
-  return bytesRead;
+  return itemsRead;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t fwriteNavDatablockHeader(const NavDatablockHeader* ptrDataHeader,
                                 NAV_FILE* ptrNavFile)
 {
-  size_t bytesWritten = 0;
+  size_t itemsWritten = 0;
 
-  bytesWritten += NAV_fwrite(&(ptrDataHeader->dataType),
+  itemsWritten += NAV_fwrite(&(ptrDataHeader->dataType),
                              sizeof(ptrDataHeader->dataType), 1, ptrNavFile);
 
-  bytesWritten += NAV_fwrite(&(ptrDataHeader->dataVersion),
+  itemsWritten += NAV_fwrite(&(ptrDataHeader->dataVersion),
                              sizeof(ptrDataHeader->dataVersion), 1, ptrNavFile);
 
-  bytesWritten
+  itemsWritten
       += NAV_fwrite(&(ptrDataHeader->nextDataSize),
                     sizeof(ptrDataHeader->nextDataSize), 1, ptrNavFile);
 
-  return bytesWritten;
+  return itemsWritten;
 }
 
-// Test
-// VS2013: OK
-// PSoC: OK
 size_t freadNavDatablockHeader(NavDatablockHeader* ptrDataHeader,
                                NAV_FILE* ptrNavFile)
 {
-  size_t bytesRead = 0;
+  size_t itemsRead = 0;
 
-  bytesRead += NAV_fread(&(ptrDataHeader->dataType),
+  itemsRead += NAV_fread(&(ptrDataHeader->dataType),
                          sizeof(ptrDataHeader->dataType), 1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrDataHeader->dataVersion),
+  itemsRead += NAV_fread(&(ptrDataHeader->dataVersion),
                          sizeof(ptrDataHeader->dataVersion), 1, ptrNavFile);
 
-  bytesRead += NAV_fread(&(ptrDataHeader->nextDataSize),
+  itemsRead += NAV_fread(&(ptrDataHeader->nextDataSize),
                          sizeof(ptrDataHeader->nextDataSize), 1, ptrNavFile);
 
-  return bytesRead;
+  return itemsRead;
 }
 
 /* [] END OF FILE */
