@@ -110,67 +110,82 @@ typedef struct UartBuffer UartBuffer;
 
 /* initUartBuffer();
 input:
-    (ptr) UartBuffer uartBuff
+  (ptr) UartBuffer uartBuff
 output:
-    NA
+  NA
 remarks:
-
+  Initialised the structure to default values.
 */
 void initUartBuffer(UartBuffer* uartBuff);
 
 /* uartWriter();
 input:
-    (ptr) void outCookie
-    (ptr) const char buffer
-    (value) size_t size
+  volatile void outCookie where the data is written to
+  const char* buffer where the data is read from
+  size_t the size to write to outCookie
 output:
-    NA
+  ssize_t byteCount written
+  outWriteCookie->outputBuffer
+  outWriteCookie->outputHead
 remarks:
-
+  Used to transfer data from a buffer string to a UART ring buffer structure
+  Is used for TX using a UART on a PSoC
+  Will disable TX ISR before modifying data
+  Will enable TX ISR when done modifying data
 */
 ssize_t uartWriter(volatile void* outCookie, const char* buffer, size_t size);
 
-/* uartReader();
+/*
 input:
-    (ptr) void inCookie
-    (ptr) char buffer
-    (value) size_t size
+  volatile void inCookie* where the data is read from
+  char* buffer where the data is written to
+  size_t to write to buffer
 output:
-    (value) ssize_t byteCount
+  ssize_t byteCount read
+  buffer[N] is written to with N-1 characters
+  inReadCookie->inputTail tail is updated when data transfer is complete
 remarks:
-
+  Used to transfer data from a UART ring buffer to a buffer
+  Is used for RX using a UART on a PSoC
+  Will disable RX ISR before modifying data
+  Will enable RX ISR when done modifying data
+  Will continoue reading until the end of a string is detected
+  NOTE: No check is made to ensure the buffer* is kept within the size of the
+  buffer. This could lead to improper behaviour of the system by writing to out
+  of bounds values. Should be corrected.
+  // TODO: Ensure buffer overflow is prevented.
 */
 ssize_t uartReader(volatile void* inCookie, char* buffer, size_t size);
 
 /* uartSeeker();
 input:
-    (ptr) void cookie
-    (ptr) off_t position
-    (value) int whence
+  (ptr) void cookie
+  (ptr) off_t position
+  (value) int whence
 output:
-    (value) ssize_t byteCount
+  (value) ssize_t byteCount
 remarks:
-
+  Not currently used.
 */
 int uartSeeker(volatile void* cookie, off_t* position, int whence);
 
 /* longitudeFromCoordinate();
 input:
-    (ptr) void cookie
+  (ptr) void cookie
 output:
-    (value) int // TODO add return value
+  (value) int // TODO add return value
 remarks:
-
+  Not currently used.
 */
 int uartCleaner(volatile void* cookie);
 
 /* navDataToSerialBuffer();
 input:
-    (ptr) NavState navS
+  (ptr) NavState navS
 output:
-    NA
+  NA
 remarks:
-
+  Not currently used.
 */
 void navDataToSerialBuffer(NavState* navS);
 
