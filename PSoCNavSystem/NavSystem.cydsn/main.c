@@ -116,12 +116,28 @@ int main()
   
   for(;;)
   {
+
+    // Test navigation with navS!
+    if (navTestReal == 1)
+    {
+      if (rxStringReady == 1)
+      {
+        uartReader(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, UART_BUFFER_LENGTH);
+        myNavState.gpsBuffer.newGPSString = 1;
+        rxStringReady = 0;
+      }
+      updateNavState(&myNavState);
+    }
+    // Send hello if running tests over serial
+    /*
     if (helloSent == 0)
     {
       UART_GPS_PutString("PSoC ready in 1 second!\r\n");
       CyDelay(1000);
       helloSent = 1;
     }
+    */
+    
     // General SD card test sequence
     /* 
     static char logFileName[32] = "\\DIR\\stdlog.txt";
@@ -397,17 +413,7 @@ int main()
     }
     */
     
-    // Test navigation with navS!
-    if (navTestReal == 1)
-    {
-      if (rxStringReady == 1)
-      {
-        uartReader(&myUartBuffer, myNavState.gpsBuffer.gpsStringBuffer, UART_BUFFER_LENGTH);
-        myNavState.gpsBuffer.newGPSString = 1;
-        rxStringReady = 0;
-      }
-      updateNavState(&myNavState);
-    }
+
     
     
   } // Main for loop
