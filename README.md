@@ -39,4 +39,4 @@ Requires Visual Studio 2013 (or later)
 
 *Happy Coding!*
 
-MIT license laid out inlocated in LICENSE.txt
+MIT license in LICENSE.txt
